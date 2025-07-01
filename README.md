@@ -1,27 +1,24 @@
 # RuangSela
-Website Pelayanan Kesehatan Mental dan Konsultasi
 
-# Deskripsi
-Ruangsela merupakan platform yang dapat membantu seseorang dalam perjalanan mereka menuju kesehatan mental yang lebih baik. Ruangsela dirancang agar individu dapat lebih mengenali apa yang mereka butuhkan dan mendapatkan akses ke berbagai layanan yang sesuai. Dengan berbagai fitur yang disediakan, Ruangsela menciptakan ruang yang aman bagi setiap individu yang ingin mencari ketenangan dan memahami diri mereka lebih dalam. Dengan adanya Ruangsela, seseorang diharapkan dapat merasa bahwa dirinya didengar, dipahami, dan memiliki akses yang mudah untuk sebuah layanan kesehatan mental. Ruangsela juga dapat menjadi jembatan bagi mereka yang membutuhkan ruang untuk bernapas dan menemukan ketenangan dalam hiruk pikuk kehidupan.
+## Deskripsi Proyek
+RuangSela adalah platform konsultasi kesehatan mental dan layanan psikologis online yang dirancang untuk menghubungkan individu dengan psikolog dan terapis profesional. Platform ini menyediakan berbagai fitur untuk mendukung perjalanan kesehatan mental pengguna, termasuk konsultasi online, psikotes, artikel edukasi, audio frekuensi terapi, manajemen paket layanan, serta fitur komunitas dan notifikasi. RuangSela bertujuan untuk menciptakan ruang yang aman dan mudah diakses bagi setiap individu yang mencari dukungan dan pemahaman diri.
 
-# Alamat Website
-localhost
+## Fitur Utama
+*   **Manajemen Akun:** Pendaftaran, Login, dan pembaruan Profil Pengguna (termasuk foto profil).
+*   **Konsultasi:** Penjadwalan dan pengelolaan sesi konsultasi online dengan terapis.
+*   **Psikotes:** Akses ke berbagai tes psikologis.
+*   **Audio Terapi:** Koleksi audio frekuensi untuk relaksasi dan fokus.
+*   **Artikel:** Konten edukasi seputar kesehatan mental.
+*   **Paket Layanan:** Pembelian dan pengelolaan paket konsultasi.
+*   **Komunitas:** Fitur interaksi sosial melalui postingan dan komentar.
+*   **FAQ:** Pertanyaan yang sering diajukan.
+*   **Verifikasi Terapis:** Proses verifikasi dokumen lisensi untuk terapis (fitur Admin).
+*   **Manajemen Sistem:** Pengelolaan pengguna, konten, dan pengaturan sistem (fitur Admin).
 
-# Menu Utama 
-- Register
-- Login
-- Beranda
-- Konsultasi
-- Psikotes
-- Frekuensi
-- Artikel
-- Transaksi
-- FAQ
-- Komunitas
-- Verifikasi Terapis
-- Manajemen Sistem
+## Teknologi
+*   **Bahasa Pemrograman:** PHP, HTML, CSS, JavaScript
+*   **Framework:** CodeIgniter 4
+*   **Database:** MySQL
 
-# Teknologi
-- html
-- css
-- javascript
+## Alamat Website
+`http://localhost/RuangSela/public/` (Sesuaikan dengan konfigurasi server lokal Anda)
