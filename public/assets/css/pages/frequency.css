@@ -1,0 +1,296 @@
+/* public/assets/css/pages/frequency.css */
+
+/* --- Hero Section --- */
+.audio-hero-section {
+    background-color: var(--primary-dark); /* Use darker green for hero */
+    padding: 120px 20px 80px 20px; /* Adjusted padding for consistency */
+    text-align: center;
+    color: var(--white-text); /* White text for contrast, using global var */
+}
+
+.audio-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.audio-hero-container h1 {
+    font-size: 3.5rem; /* Larger font size for consistency */
+    font-weight: 700;
+    color: var(--white-text); /* White text, using global var */
+    margin-bottom: 1.5rem; /* Increased margin */
+    line-height: 1.2;
+}
+
+.audio-hero-container h1 .highlight-text {
+    color: var(--star-yellow); /* Using global variable for highlight */
+}
+
+.audio-hero-container p {
+    font-size: 1.15rem; /* Slightly larger text */
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    line-height: 1.7;
+}
+
+/* --- Frequency Selection Section --- */
+.frequency-selection-section {
+    padding: 100px 20px; /* Increased padding for consistency */
+    background-color: var(--bg-light-gray); /* Using global var */
+}
+
+.frequency-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.frequency-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Slightly wider cards */
+    gap: 30px; /* Increased gap */
+    margin-top: 3rem; /* Increased margin */
+}
+
+.frequency-card {
+    padding: 35px; /* Increased padding */
+    display: flex;
+    flex-direction: column;
+}
+
+.frequency-card:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 12px 25px var(--shadow-medium); /* Stronger shadow on hover */
+}
+
+.frequency-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px; /* Increased margin */
+}
+
+.frequency-info {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased gap */
+}
+
+.frequency-icon {
+    background-color: var(--primary-color); /* Icon background matches page-specific green */
+    width: 60px; /* Larger icon container */
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px var(--shadow-light); /* Shadow for icon */
+}
+
+.frequency-icon i {
+    font-size: 30px; /* Larger icon */
+    color: var(--white-text); /* White icon, using global var */
+}
+
+.frequency-title h3 {
+    margin: 0;
+    font-size: 1.5rem; /* Larger title */
+    font-weight: 600;
+    color: var(--dark-text); /* Using global var */
+}
+
+.frequency-title span {
+    font-size: 1.05rem; /* Slightly larger subtitle */
+    color: var(--light-text); /* Using global var */
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.play-btn i {
+    font-size: 60px; /* Larger play button icon */
+    color: var(--primary-color); /* Using page-specific green */
+    transition: transform 0.2s, color 0.2s;
+}
+
+.play-btn:hover i {
+    transform: scale(1.05); /* Subtle scale on hover */
+    color: var(--primary-dark); /* Darker green on hover */
+}
+
+.play-btn.playing i {
+    color: var(--danger-main); /* Red for pause, using global var */
+}
+
+.frequency-card .description {
+    font-size: 1.05rem; /* Slightly larger description */
+    color: var(--light-text); /* Using global var */
+    margin: 0 0 30px 0; /* Increased margin */
+    line-height: 1.7;
+    flex-grow: 1;
+}
+
+.duration-label {
+    font-size: 1rem; /* Slightly larger label */
+    font-weight: 500;
+    margin-bottom: 15px; /* Increased margin */
+    color: var(--dark-text); /* Using global var */
+}
+
+.duration-options {
+    display: flex;
+    gap: 12px; /* Increased gap */
+    flex-wrap: wrap;
+}
+
+.duration-btn {
+    background-color: var(--bg-light-gray); /* Using global var */
+    border: 1px solid var(--border-light); /* Using global var */
+    color: var(--light-text); /* Using global var */
+    padding: 10px 22px; /* Increased padding */
+    border-radius: 10px; /* More rounded corners */
+    font-size: 0.95rem; /* Slightly larger font */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px; /* Ensure consistent button width */
+    text-align: center;
+}
+
+.duration-btn:hover {
+    background-color: var(--primary-light); /* Using global var */
+    border-color: var(--primary-color); /* Using page-specific green */
+    color: var(--dark-text); /* Using global var */
+}
+
+.duration-btn.active {
+    background-color: var(--primary-color); /* Using page-specific green */
+    color: var(--white-text); /* Using global var */
+    border-color: var(--primary-color); /* Using page-specific green */
+    box-shadow: 0 2px 8px var(--shadow-light); /* Shadow for active button */
+}
+
+/* --- About Section --- */
+.about-therapy-section {
+    background-color: var(--bg-white); /* Using global var */
+    padding: 100px 20px; /* Increased padding for consistency */
+}
+
+.about-therapy-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-therapy-container h2 {
+    text-align: center;
+    font-size: 2.8rem; /* Larger title for consistency */
+    margin-bottom: 1.5rem; /* Increased margin */
+    color: var(--dark-text); /* Using global var */
+}
+
+.about-therapy-container .section-subtitle {
+    text-align: center;
+    color: var(--light-text); /* Using global var */
+    max-width: 700px;
+    margin: 0 auto 4rem auto; /* Increased margin */
+    font-size: 1.1rem; /* Slightly larger */
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Keep two columns */
+    gap: 60px; /* Increased gap */
+    text-align: left;
+}
+
+.about-content h3 {
+    font-size: 1.4rem; /* Larger subtitle */
+    margin-bottom: 1.5rem; /* Increased margin */
+    color: var(--dark-text); /* Using global var */
+}
+
+.about-content p, .about-content li {
+    color: var(--light-text); /* Using global var */
+    line-height: 1.8;
+    font-size: 1rem; /* Adjusted for readability */
+}
+
+.info-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-list li {
+    padding-left: 40px; /* Increased padding */
+    position: relative;
+    margin-bottom: 1.5rem; /* Increased margin */
+}
+
+.info-list li::before {
+    content: "\ea14"; /* Remix Icon: check-line */
+    font-family: 'remixicon' !important;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--primary-color); /* Using page-specific green */
+    font-size: 1.4rem; /* Larger icon */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .audio-hero-container h1 {
+        font-size: 2.8rem;
+    }
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .audio-hero-section, .frequency-selection-section, .about-therapy-section {
+        padding: 60px 15px; /* Smaller padding on mobile */
+    }
+    .audio-hero-container h1 {
+        font-size: 2.2rem;
+    }
+    .audio-hero-container p {
+        font-size: 1rem;
+    }
+    .frequency-grid {
+        grid-template-columns: 1fr;
+    }
+    .frequency-card {
+        padding: 25px;
+    }
+    .frequency-icon {
+        width: 50px;
+        height: 50px;
+    }
+    .frequency-icon i {
+        font-size: 26px;
+    }
+    .frequency-title h3 {
+        font-size: 1.3rem;
+    }
+    .frequency-title span {
+        font-size: 0.95rem;
+    }
+    .play-btn i {
+        font-size: 50px;
+    }
+    .duration-btn {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+        min-width: unset;
+    }
+    .about-therapy-container h2 {
+        font-size: 2.2rem;
+    }
+    .about-therapy-container .section-subtitle {
+        font-size: 1rem;
+    }
+    .about-content p, .about-content li {
+        font-size: 0.95rem;
+    }
+}

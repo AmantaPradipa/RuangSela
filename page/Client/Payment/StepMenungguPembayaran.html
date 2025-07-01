@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menunggu Pembayaran</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-light: #ffffff;
+            --bg-subtle: #f7f8fa;
+            --primary-green: #708d7a;
+            --bg-status-green: #e9f4ec; /* Light green for status box */
+            --text-dark: #3c424f;
+            --text-light: #7a7a7a;
+            --text-on-dark-bg: #ffffff;
+            --border-color: #e4e7eb;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* HEADER & STEPPER */
+        .main-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .step {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: grid; place-items: center;
+            font-weight: 700;
+        }
+        
+        .step.done {
+            background-color: var(--primary-green);
+            color: var(--text-on-dark-bg);
+            border: 2px solid var(--primary-green);
+        }
+
+        .step-line {
+            width: 80px; height: 2px;
+            background-color: var(--primary-green);
+        }
+
+        /* NEW: PAYMENT STATUS BOX */
+        .status-box {
+            width: 100%;
+            background-color: var(--bg-status-green);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .status-box .icon {
+            font-size: 48px;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+        .status-box .title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .status-box .countdown-timer {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        .status-box .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* SECTIONS & COMPONENTS (Reused from previous page) */
+        .payment-section {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-weight: 600; font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        /* Detail Pesanan */
+        .detail-pesanan-box {
+            background-color: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            padding: 25px 30px;
+            border-radius: 12px;
+        }
+        .summary-row {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .summary-row:first-child { padding-top: 0; }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row span:first-child { color: var(--text-light); }
+        .summary-row span:last-child { font-weight: 600; }
+        
+        .summary-total {
+            border-top: 2px solid var(--border-color);
+            margin-top: 10px; padding-top: 15px;
+        }
+        .summary-total span { font-weight: 700; font-size: 18px; }
+
+        /* Selected Payment Method */
+        .selected-method {
+            display: flex; align-items: center;
+            padding: 15px; border-radius: 8px;
+            border: 2px solid var(--primary-green);
+        }
+        .selected-method img { height: 22px; margin-right: 20px; }
+        .selected-method .rekening { flex-grow: 1; }
+        .selected-method .check-icon { color: var(--primary-green); font-size: 22px; }
+
+        /* Payment Instructions Box */
+        .instruction-box {
+            background-color: var(--bg-subtle);
+            border-radius: 12px;
+            padding: 25px 30px;
+        }
+        .va-container {
+            background-color: var(--bg-light); padding: 15px 20px;
+            border-radius: 8px; display: flex;
+            justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border: 1px solid var(--border-color);
+        }
+        .va-details .label { font-size: 13px; color: var(--text-light); }
+        .va-details .number { font-size: 18px; font-weight: 700; }
+        .btn-copy {
+            background: none; border: none;
+            color: var(--primary-green);
+            font-weight: 600; cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .instructions-list {
+            list-style-position: inside; padding-left: 5px;
+            color: var(--text-light); line-height: 1.8;
+            font-size: 15px;
+        }
+        .timer-notice {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-light); font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex; gap: 15px; width: 100%;
+        }
+        .btn-action {
+            flex-grow: 1; padding: 15px; font-size: 16px;
+            font-weight: 600; border-radius: 8px;
+            cursor: pointer; border: none; transition: all 0.3s ease;
+        }
+        .btn-cancel {
+            background: transparent; color: #666;
+            border: 1px solid var(--border-color);
+        }
+        .btn-cancel:hover { background-color: #f5f5f5; }
+        .btn-check-status {
+            background-color: var(--primary-green);
+            color: var(--text-on-dark-bg);
+        }
+        .btn-check-status:hover { background-color: #5a7865; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Stepper -->
+        <div class="stepper">
+            <div class="step done">1</div><div class="step-line"></div>
+            <div class="step done">2</div><div class="step-line"></div>
+            <div class="step done">3</div>
+        </div>
+
+        <!-- Payment Status Box -->
+        <div class="status-box">
+            <div class="icon"><i class="fa-regular fa-clock"></i></div>
+            <h2 class="title">Pembayaran Sedang Diproses</h2>
+            <div class="countdown-timer" id="countdown-timer">23:59:59</div>
+            <p class="subtitle">Selesaikan pembayaran sebelum 24 jam</p>
+        </div>
+        
+        <!-- Detail Pesanan -->
+        <section class="payment-section">
+            <h2 class="section-title">Detail Pesanan</h2>
+            <div class="detail-pesanan-box">
+                <div class="summary-row"><span>Paket Konsultasi</span><span>Paket Premium - 4 Sesi</span></div>
+                <div class="summary-row"><span>Durasi Paket</span><span>1 Bulan</span></div>
+                <div class="summary-row"><span>Harga Paket</span><span>Rp 800.000</span></div>
+                <div class="summary-row summary-total"><span>Total Pembayaran</span><span>Rp 800.000</span></div>
+            </div>
+        </section>
+
+        <!-- Selected Bank -->
+        <section class="payment-section">
+             <div class="selected-method">
+                <img src="https://i.ibb.co/L9bT9k6/bca-logo.png" alt="BCA Bank">
+                <span class="rekening">No. Rekening: 1234567890</span>
+                <i class="fa-solid fa-circle-check check-icon"></i>
+            </div>
+        </section>
+
+        <!-- Payment Instructions -->
+        <section class="payment-section">
+            <h2 class="section-title">Cara Pembayaran</h2>
+            <div class="instruction-box">
+                <div class="timer-notice"><i class="fa-regular fa-clock"></i><span>Selesaikan pembayaran dalam 24:00:00</span></div>
+                <div class="va-container">
+                    <div class="va-details"><div class="label">Nomor Virtual Account</div><div class="number" id="vaNumber">8800123456789</div></div>
+                    <button class="btn-copy" id="copyButton"><i class="fa-regular fa-copy"></i><span id="copyText">Salin</span></button>
+                </div>
+                <ol class="instructions-list">
+                    <li>Pilih transfer Virtual Account di menu utama ATM atau m-banking</li>
+                    <li>Masukkan nomor Virtual Account yang tertera</li>
+                    <li>Pastikan nominal pembayaran sudah sesuai</li>
+                    <li>Ikuti instruksi untuk menyelesaikan pembayaran</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-action btn-cancel">Batalkan Pesanan</button>
+            <button class="btn-action btn-check-status">Cek Status Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Countdown Timer Logic ---
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown-timer');
+            let duration = 23 * 3600 + 59 * 60 + 59; // 23h 59m 59s in seconds
+
+            const interval = setInterval(() => {
+                if (duration <= 0) {
+                    clearInterval(interval);
+                    countdownElement.textContent = "Waktu Habis";
+                    return;
+                }
+
+                duration--; // Decrement the duration by one second
+
+                let hours = Math.floor(duration / 3600);
+                let minutes = Math.floor((duration % 3600) / 60);
+                let seconds = duration % 60;
+
+                // Add leading zero if number is less than 10
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                countdownElement.textContent = `${hours}:${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        // --- Copy to Clipboard Logic (Reused) ---
+        document.getElementById('copyButton').addEventListener('click', () => {
+            const vaNumber = document.getElementById('vaNumber').innerText;
+            navigator.clipboard.writeText(vaNumber).then(() => {
+                const copyTextElement = document.getElementById('copyText');
+                copyTextElement.innerText = 'Tersalin!';
+                setTimeout(() => { copyTextElement.innerText = 'Salin'; }, 2000);
+            }).catch(err => console.error('Gagal menyalin:', err));
+        });
+
+        // --- Button Actions ---
+        document.querySelector('.btn-cancel').addEventListener('click', () => {
+            if(confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+                alert('Pesanan telah dibatalkan.');
+                // Redirect logic here: window.location.href = '/halaman-utama.html';
+            }
+        });
+        
+        document.querySelector('.btn-check-status').addEventListener('click', () => {
+            alert('Mengecek status pembayaran... (Status: Masih Menunggu Pembayaran)');
+        });
+
+        // Start the countdown when the page loads
+        window.onload = startCountdown;
+    </script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Verifikasi Terapis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-page: #f9fafb;
+            --bg-card: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --accent-green: #5D7B6F;
+            --accent-green-dark: #4F6A5F;
+            --border-color: #e5e7eb;
+            --border-focus-color: #A4B4AC;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .form-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--accent-green);
+        }
+
+        .section-header i {
+            font-size: 24px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label.field-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        label.field-label .required {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        .input-field,
+        .select-field,
+        .textarea-field {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-field::placeholder,
+        .textarea-field::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .input-field:focus,
+        .select-field:focus,
+        .textarea-field:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(93, 123, 111, 0.2);
+        }
+
+        .textarea-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Select Field with custom arrow */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-field {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 40px;
+            background-color: var(--accent-green);
+            color: white;
+            font-weight: 500;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+        }
+
+        .select-field:focus {
+            box-shadow: 0 0 0 3px rgba(93, 123, 111, 0.4);
+        }
+
+        /* Specialization Checkboxes */
+        .specialization-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .specialization-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-green);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 16px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* File Upload Styling */
+        .file-upload-box {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .file-upload-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .file-upload-box:hover {
+            border-color: var(--border-focus-color);
+        }
+
+        .file-upload-icon {
+            color: var(--accent-green);
+            margin-bottom: 12px;
+        }
+
+        .file-upload-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .file-upload-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .file-upload-caption {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .choose-file-btn {
+            display: inline-block;
+            color: var(--accent-green);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: #eef3f1;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .choose-file-btn:hover {
+            background-color: #e5ebe8;
+        }
+
+        .hidden-file-input {
+            display: none;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background-color: var(--accent-green);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 24px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent-green-dark);
+        }
+
+        .submission-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specialization-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form onsubmit="event.preventDefault(); alert('Formulir berhasil dikirim untuk verifikasi!');">
+
+            <!-- BAGIAN: Informasi Pribadi -->
+            <section class="form-section">
+                <header class="section-header">
+                    <i class="ri-user-line"></i>
+                    <h2>Informasi Pribadi</h2>
+                </header>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="full-name" class="field-label">Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="full-name" class="input-field" placeholder="Masukkan nama lengkap Anda"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob" class="field-label">Tanggal Lahir</label>
+                        <input type="date" id="dob" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-number" class="field-label">Nomor Kontak</label>
+                        <input type="tel" id="contact-number" class="input-field"
+                            placeholder="Masukkan nomor kontak Anda">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="email" class="field-label">Email Profesional <span
+                                class="required">*</span></label>
+                        <input type="email" id="email" class="input-field" placeholder="Masukkan email profesional Anda"
+                            required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="work-address" class="field-label">Alamat Kerja Saat Ini</label>
+                        <textarea id="work-address" class="textarea-field"
+                            placeholder="Masukkan alamat kerja Anda saat ini"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAGIAN: Kredensial Profesional -->
+            <section class="form-section">
+                <header class="section-header">
+                    <i class="ri-award-line"></i>
+                    <h2>Kredensial Profesional</h2>
+                </header>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="license-number" class="field-label">Nomor Lisensi <span
+                                class="required">*</span></label>
+                        <input type="text" id="license-number" class="input-field"
+                            placeholder="Masukkan nomor lisensi Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="license-type" class="field-label">Jenis Lisensi</label>
+                        <div class="select-wrapper">
+                            <select id="license-type" class="select-field">
+                                <option>Pilih jenis lisensi</option>
+                                <option>LPC - Konselor Profesional Berlisensi</option>
+                                <option>LCSW - Pekerja Sosial Klinis Berlisensi</option>
+                                <option>PhD - Doktor Filsafat, Psikologi</option>
+                                <option>PsyD - Doktor Psikologi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="practice-location" class="field-label">Negara/Wilayah Praktik</label>
+                        <input type="text" id="practice-location" class="input-field"
+                            placeholder="Masukkan lokasi praktik Anda">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience" class="field-label">Tahun Pengalaman</label>
+                        <input type="number" id="experience" class="input-field"
+                            placeholder="Masukkan tahun pengalaman">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="specialization-label">Bidang Spesialisasi</label>
+                        <div class="specialization-grid">
+                            <div class="checkbox-group"><input type="checkbox" id="spec-anxiety"><label
+                                    for="spec-anxiety">Kecemasan</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-depression"><label
+                                    for="spec-depression">Depresi</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-trauma"><label
+                                    for="spec-trauma">Trauma</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-relationships"><label
+                                    for="spec-relationships">Hubungan</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-career"><label
+                                    for="spec-career">Konseling Karir</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-family"><label
+                                    for="spec-family">Terapi Keluarga</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-addiction"><label
+                                    for="spec-addiction">Kecanduan</label></div>
+                            <div class="checkbox-group"><input type="checkbox" id="spec-stress"><label
+                                    for="spec-stress">Manajemen Stres</label></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAGIAN: Dokumen yang Diperlukan -->
+            <section class="form-section">
+                <header class="section-header">
+                    <i class="ri-file-text-line"></i>
+                    <h2>Dokumen yang Diperlukan</h2>
+                </header>
+                <!-- File 1 -->
+                <div class="file-upload-box">
+                                        <div class="file-upload-icon"><i class="ri-upload-cloud-2-line" style="font-size: 36px;"></i></div>
+                    <label class="file-upload-label">Salinan Lisensi Profesional</label>
+                    <p class="file-upload-caption">PDF, JPG, atau PNG (maks. 5MB)</p>
+                    <label for="license-file" class="choose-file-btn">Pilih File</label>
+                    <input type="file" id="license-file" class="hidden-file-input">
+                </div>
+                <!-- File 2 -->
+                <div class="file-upload-box">
+                    <div class="file-upload-icon"><i class="ri-upload-cloud-2-line" style="font-size: 36px;"></i></div>
+                    <label class="file-upload-label">Kartu Tanda Penduduk</label>
+                    <p class="file-upload-caption">PDF, JPG, atau PNG (maks. 5MB)</p>
+                    <label for="id-file" class="choose-file-btn">Pilih File</label>
+                    <input type="file" id="id-file" class="hidden-file-input">
+                </div>
+            </section>
+
+            <!-- BAGIAN: Informasi Tambahan -->
+            <section class="form-section">
+                <header class="section-header">
+                    <i class="ri-information-line"></i>
+                    <h2>Informasi Tambahan</h2>
+                </header>
+                <div class="form-group full-width" style="margin-bottom: 24px;">
+                    <label for="biography" class="field-label">Biografi Profesional</label>
+                    <textarea id="biography" class="textarea-field"
+                        placeholder="Tulis biografi profesional singkat"></textarea>
+                </div>
+                <div class="form-group full-width" style="margin-bottom: 24px;">
+                    <label for="website" class="field-label">Situs Web Profesional</label>
+                    <input type="url" id="website" class="input-field"
+                        placeholder="Masukkan URL situs web profesional Anda">
+                </div>
+                <div class="form-group full-width">
+                    <label for="associations" class="field-label">Keanggotaan Asosiasi Profesional</label>
+                    <input type="text" id="associations" class="input-field"
+                        placeholder="Sebutkan asosiasi profesional Anda">
+                </div>
+            </section>
+
+            <!-- PENGIRIMAN -->
+            <button type="submit" class="submit-btn">Kirim untuk Verifikasi</button>
+            <p class="submission-note">Dengan mengirimkan, Anda menyetujui persyaratan dan proses verifikasi kami. Perkiraan waktu pemrosesan: 5-7 hari kerja.</p>
+
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,552 @@
+/* public/assets/css/pages/services.css */
+
+/* Custom Variables for this page if needed, otherwise use global */
+/* Using global variables from global/variables.css */
+
+/* SECTION 1: PAGE HERO */
+.page-hero-section {
+    background-color: var(--primary-color);
+    padding: 120px 20px 80px 20px; /* Adjusted padding */
+    text-align: center;
+    color: var(--white-text);
+}
+
+.page-hero-container {
+    max-width: 900px; /* Slightly wider */
+    margin: 0 auto;
+}
+
+.page-hero-section h1 {
+    font-size: 3.5rem; /* Larger font size */
+    font-weight: 700;
+    color: var(--white-text);
+    margin-bottom: 25px; /* Increased margin */
+    line-height: 1.2;
+}
+
+.page-hero-section .intro-text {
+    font-size: 1.15rem; /* Slightly larger text */
+    color: var(--primary-light); /* Using global var */
+    line-height: 1.7;
+    max-width: 700px; /* Constrain width */
+    margin: 0 auto;
+}
+
+
+/* SECTION 2: KONSULTASI */
+.consultation-section {
+    background-color: var(--bg-white);
+    padding: 100px 20px;
+}
+
+.consultation-container {
+    max-width: 1200px; /* Wider container */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 80px; /* Increased gap */
+}
+
+.consultation-section .text-content {
+    flex: 1;
+    max-width: 55%; /* Adjusted width */
+}
+
+.consultation-section .image-content {
+    flex: 1;
+    max-width: 45%; /* Adjusted width */
+}
+
+.consultation-section .image-content img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px var(--shadow-medium); /* Using global shadow variable */
+}
+
+.consultation-section h2 {
+    font-size: 2.8rem; /* Larger font size */
+    line-height: 1.3;
+    margin-bottom: 25px; /* Increased margin */
+    color: var(--dark-text); /* Using global var */
+}
+
+.consultation-section h2 span {
+    color: var(--primary-color);
+}
+
+.consultation-section .description {
+    font-size: 1.05rem; /* Slightly larger */
+    color: var(--light-text); /* Using global var */
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+
+.steps-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px; /* Increased margin */
+}
+
+.steps-list .step-number {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    font-weight: 600;
+    font-size: 1.1rem; /* Larger number */
+    border-radius: 50%;
+    min-width: 40px; /* Larger circle */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px; /* Increased margin */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Added shadow */
+}
+
+.steps-list li p {
+    color: var(--dark-text); /* Using global var */
+    padding-top: 5px; /* Align text better */
+    font-size: 1.05rem;
+}
+
+/* SECTION 3: MENGAPA MEMILIH KAMI */
+.why-us-section {
+    background-color: var(--bg-light-gray); /* Using global var */
+    padding: 100px 20px;
+}
+
+.why-us-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.why-us-section .section-title {
+    font-size: 2.5rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.why-us-section .section-subtitle {
+    font-size: 1.1rem; /* Larger subtitle */
+    color: var(--light-text); /* Using global var */
+    max-width: 700px;
+    margin: 0 auto 60px auto; /* Increased margin */
+    line-height: 1.7;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Flexible columns */
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 50px; /* Increased margin */
+}
+
+.feature-card {
+    /* Inherits .card styles for background, border-radius, box-shadow, and transition */
+    padding: 35px; /* Increased padding */
+    display: flex;
+    align-items: flex-start;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px var(--shadow-medium); /* Using global shadow variable */
+}
+
+.feature-card .icon-container {
+    flex-shrink: 0;
+    background-color: var(--primary-light); /* Using global var */
+    border-radius: 12px; /* More rounded */
+    width: 65px; /* Larger icon container */
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px; /* Increased margin */
+    font-size: 32px; /* Larger icon */
+    color: var(--primary-color); /* Using global var */
+}
+
+.feature-card h3 {
+    font-size: 1.3rem; /* Larger title */
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.feature-card p {
+    font-size: 0.95rem; /* Adjusted font size */
+    color: var(--light-text); /* Using global var */
+    line-height: 1.6;
+}
+
+.why-us-section .cta-button {
+    /* Using .btn and .btn-primary principles */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Increased gap */
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    padding: 16px 40px; /* Larger padding */
+    border-radius: 10px; /* More rounded */
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.why-us-section .cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+/* SECTION 4: TES PSIKOLOGI */
+.psychology-test-section {
+    padding: 100px 20px;
+    background-color: var(--bg-white);
+}
+
+.psychology-test-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.psychology-test-section .header-content {
+    text-align: center;
+    max-width: 750px; /* Wider header */
+    margin: 0 auto 60px auto; /* Increased margin */
+}
+
+.psychology-test-section .section-title {
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 700;
+    color: var(--dark-text); /* Using global var */
+}
+
+.title-underline {
+    width: 80px; /* Wider underline */
+    height: 5px; /* Thicker underline */
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    margin: 20px auto 30px auto; /* Adjusted margins */
+}
+
+.psychology-test-section .section-subtitle {
+    color: var(--light-text); /* Using global var */
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.content-card {
+    display: flex;
+    background-color: var(--bg-white);
+    border-radius: 20px; /* More rounded */
+    box-shadow: 0 15px 40px var(--shadow-medium); /* Stronger shadow */
+    overflow: hidden;
+    align-items: center; /* Vertically align content */
+}
+
+.card-image-wrapper {
+    flex: 1 1 50%; /* Equal width */
+    min-height: 450px; /* Taller image */
+}
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    flex: 1 1 50%; /* Equal width */
+    padding: 50px; /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-card h3 {
+    font-size: 2.2rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px; /* Increased margin */
+    color: var(--dark-text); /* Using global var */
+}
+
+.content-card p {
+    color: var(--light-text); /* Using global var */
+    margin-bottom: 35px; /* Increased margin */
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.content-card .feature-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Increased margin */
+    gap: 15px; /* Increased gap */
+    font-size: 1rem;
+    color: var(--dark-text); /* Using global var */
+}
+.content-card .feature-list li i {
+    color: var(--primary-color); /* Using global var */
+    font-size: 1.3rem;
+}
+.psychology-test-section .cta-button {
+    /* Using .btn and .btn-primary principles */
+    display: inline-flex;
+    align-self: flex-start;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    padding: 16px 35px; /* Larger padding */
+    border-radius: 10px; /* More rounded */
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.psychology-test-section .cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+/* SECTION 5: ARTIKEL KESEHATAN MENTAL */
+.articles-section {
+    padding: 100px 20px;
+    background-color: var(--bg-light-gray); /* Using global var */
+}
+.articles-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.articles-header {
+    text-align: center;
+    max-width: 800px; /* Wider header */
+    margin: 0 auto 60px auto;
+}
+.articles-header h2 {
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+.articles-header p {
+    font-size: 1.1rem;
+    color: var(--light-text); /* Using global var */
+    line-height: 1.7;
+}
+.articles-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px; /* Increased gap */
+}
+.articles-image-column {
+    flex: 1 1 50%; /* Equal width */
+}
+.articles-text-column {
+    flex: 1 1 50%; /* Equal width */
+}
+.articles-text-column h3 {
+    font-size: 2.2rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--dark-text); /* Using global var */
+}
+.articles-text-column .description {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--light-text); /* Using global var */
+    margin-bottom: 40px;
+}
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Flexible columns */
+    gap: 20px; /* Increased gap */
+    margin-bottom: 50px; /* Increased margin */
+}
+.info-card {
+    /* Inherits .card styles for background, border, border-radius, box-shadow, and transition */
+    padding: 25px 15px; /* Adjusted padding */
+    text-align: center;
+    transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+}
+.info-card:hover {
+    border-color: var(--primary-color); /* Highlight border on hover */
+    background-color: var(--primary-light); /* Subtle background on hover */
+    transform: translateY(-5px);
+}
+.info-card .icon {
+    font-size: 32px; /* Larger icon */
+    color: var(--primary-color); /* Using global var */
+    margin-bottom: 15px; /* Increased margin */
+}
+.info-card .card-text {
+    color: var(--light-text); /* Using global var */
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+.info-card .card-text strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark-text); /* Using global var */
+    margin-bottom: 5px;
+}
+.articles-cta-button {
+    /* Using .btn and .btn-primary principles */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    padding: 16px 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.articles-cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+
+/* SECTION 6: LAYANAN PENDUKUNG */
+.support-services-section {
+    padding: 100px 20px;
+    background-color: var(--bg-white); /* Using global var */
+}
+.support-services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.support-services-section .section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+.support-services-section .section-header h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+.support-services-section .section-header p {
+    color: var(--light-text); /* Using global var */
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+.services-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.support-services-section .service-card {
+    flex: 1;
+    max-width: 480px;
+    min-width: 320px; /* Adjusted min-width */
+    /* Inherits .card styles for background, border, border-radius, box-shadow, and transition */
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.support-services-section .service-card:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 15px 35px var(--shadow-medium); /* Using global shadow variable */
+}
+.support-services-section .card-icon {
+    font-size: 42px; /* Larger icon */
+    color: var(--primary-color); /* Using global var */
+    margin-bottom: 25px;
+}
+.support-services-section .service-card h3 {
+    font-size: 1.8rem; /* Larger title */
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+.support-services-section .service-card p {
+    color: var(--light-text); /* Using global var */
+    margin-bottom: 30px;
+    flex-grow: 1;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+.support-services-section .card-cta {
+    /* Using .btn and .btn-secondary principles */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bg-light-gray); /* Using global var */
+    color: var(--dark-text); /* Using global var */
+    padding: 12px 25px; /* Adjusted padding */
+    border: 1px solid var(--border-light); /* Using global var */
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+.support-services-section .card-cta:hover {
+    background-color: var(--primary-light); /* Using global var */
+    border-color: var(--primary-color); /* Using global var */
+    transform: translateY(-2px);
+}
+.support-services-section .card-cta.disabled {
+    background-color: var(--bg-light-gray);
+    color: var(--light-text);
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .consultation-container, .articles-content-wrapper {
+        flex-direction: column-reverse; /* Stack on smaller screens */
+        gap: 50px;
+    }
+    .consultation-section .text-content, .consultation-section .image-content,
+    .articles-image-column, .articles-text-column {
+        max-width: 100%;
+        text-align: center;
+    }
+    .steps-list { max-width: 500px; margin-left: auto; margin-right: auto; text-align: left; }
+    .content-card { flex-direction: column; }
+    .card-image-wrapper { min-height: 350px; }
+    .info-cards-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+    .support-services-section .service-card { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .page-hero-section, .consultation-section, .why-us-section, .psychology-test-section, .articles-section, .support-services-section {
+        padding: 60px 15px; /* Smaller padding on mobile */
+    }
+    .page-hero-section h1 { font-size: 2.8rem; }
+    .consultation-section h2, .why-us-section .section-title, .psychology-test-section .section-title, .articles-header h2, .support-services-section .section-header h2 { font-size: 2.2rem; }
+    .content-card h3, .articles-text-column h3, .support-services-section .service-card h3 { font-size: 1.6rem; }
+    .info-cards-grid { grid-template-columns: 1fr; }
+    .info-card { padding: 20px 10px; }
+    .steps-list .step-number { min-width: 35px; height: 35px; font-size: 1rem; margin-right: 15px; }
+    .steps-list li p { font-size: 0.95rem; }
+    .feature-card { flex-direction: column; text-align: center; align-items: center; }
+    .feature-card .icon-container { margin-right: 0; margin-bottom: 20px; }
+    .why-us-section .cta-button, .psychology-test-section .cta-button, .articles-cta-button, .support-services-section .card-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero-section h1 { font-size: 2.2rem; }
+    .consultation-section h2, .why-us-section .section-title, .psychology-test-section .section-title, .articles-header h2, .support-services-section .section-header h2 { font-size: 1.8rem; }
+    .content-card h3, .articles-text-column h3, .support-services-section .service-card h3 { font-size: 1.4rem; }
+    .page-hero-section .intro-text, .consultation-section .description, .why-us-section .section-subtitle, .psychology-test-section .section-subtitle, .articles-header p, .articles-text-column .description, .support-services-section .section-header p, .support-services-section .service-card p {
+        font-size: 0.9rem;
+    }
+    .info-card .card-text strong { font-size: 0.95rem; }
+    .info-card .card-text { font-size: 0.85rem; }
+}

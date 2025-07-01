@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Lengkap Kami - RuangSela</title>
+
+    <!-- Mengimpor Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Mengimpor Ikon dari Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Gaya Global dan Reset --- */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fcfcfc;
+            /* Latar belakang umum untuk halaman */
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+        
+        /* NOTE: Sisa CSS tetap sama, disembunyikan untuk keringkasan */
+        /* --- Section 1: Layanan Unggulan Kami --- */
+        .services-section { background-color: #6b8273; padding: 80px 20px; text-align: center; }
+        .services-container { max-width: 1200px; margin: 0 auto; }
+        .services-section h2 { font-size: 42px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
+        .services-section .intro-text { font-size: 16px; color: #e0e0e0; line-height: 1.7; max-width: 750px; margin: 0 auto 50px auto; }
+        .cards-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .service-card { background-color: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); flex: 1; max-width: 320px; min-width: 280px; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); }
+        .service-card .icon { font-size: 48px; color: #6b8273; margin-bottom: 25px; }
+        .service-card h3 { font-size: 22px; font-weight: 600; color: #1a1a1a; margin: 0 0 15px 0; }
+        .service-card p { font-size: 15px; line-height: 1.6; color: #555555; margin: 0; }
+        /* --- Section 2: Konsultasi Terapis Profesional --- */
+        .consultation-section { background-color: #fcfcfc; padding: 100px 20px; }
+        .consultation-container { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 60px; }
+        .text-content { flex: 1; max-width: 50%; }
+        .image-content { flex: 1; max-width: 50%; }
+        .image-content img { width: 100%; height: auto; border-radius: 16px; display: block; }
+        .text-content h2 { font-size: 42px; font-weight: 700; color: #1a1a1a; margin-top: 0; margin-bottom: 20px; line-height: 1.3; }
+        .text-content h2 span { color: #6b8273; }
+        .text-content .description { font-size: 16px; color: #555555; line-height: 1.7; margin-bottom: 40px; }
+        .steps-list { list-style: none; padding: 0; margin: 0; }
+        .steps-list li { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .steps-list .step-number { background-color: #6b8273; color: #ffffff; font-weight: 600; font-size: 16px; border-radius: 50%; min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; margin-right: 20px; flex-shrink: 0; }
+        .steps-list li p { margin: 0; color: #333333; line-height: 1.6; padding-top: 3px; }
+        /* --- SECTION 3: Mengapa Memilih Konsultasi --- */
+        .why-us-section { background-color: #6A8275; padding: 80px 20px; }
+        .why-us-section .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .why-us-section .section-title { font-size: 36px; color: #ffffff; font-weight: 700; margin-bottom: 15px; }
+        .why-us-section .section-subtitle { font-size: 16px; color: #ffffff; max-width: 600px; margin: 0 auto 50px auto; line-height: 1.6; }
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left; }
+        .feature-card { background-color: #ffffff; border-radius: 12px; padding: 30px; display: flex; align-items: flex-start; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
+        .icon-container { flex-shrink: 0; background-color: #f0f0f0; border-radius: 8px; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; margin-right: 20px; }
+        .icon-container i { font-size: 24px; color: #555555; }
+        .feature-card h3 { margin: 0 0 10px 0; font-size: 18px; font-weight: 600; color: #333333; }
+        .feature-card p { margin: 0; font-size: 15px; color: #666666; line-height: 1.5; }
+        .why-us-section .cta-text { margin-top: 50px; color: #ffffff; font-size: 16px; }
+        .why-us-section .cta-button { display: inline-block; background-color: #ffffff; color: #333333; text-decoration: none; padding: 15px 35px; border-radius: 8px; font-weight: 600; margin-top: 20px; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .why-us-section .cta-button:hover { background-color: #e0e0e0; transform: translateY(-2px); }
+        .why-us-section .cta-button i.fa-chevron-right { margin-right: 10px; }
+        /* --- SECTION 4: Tes Psikologi Online --- */
+        .psychology-test-section { padding: 100px 20px; background-color: #ffffff; }
+        .psychology-test-section .container { max-width: 1100px; margin: 0 auto; }
+        .header-content { text-align: center; max-width: 650px; margin: 0 auto 50px auto; }
+        .psychology-test-section .section-title { font-size: 36px; color: #333; font-weight: 700; margin: 0; }
+        .title-underline { width: 60px; height: 4px; background-color: #6c8c82; border-radius: 2px; margin: 15px auto 25px auto; }
+        .psychology-test-section .section-subtitle { font-size: 16px; color: #666; line-height: 1.7; }
+        .content-card { display: flex; background-color: #ffffff; border-radius: 16px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); overflow: hidden; }
+        .card-image-wrapper { flex: 1 1 45%; min-height: 400px; }
+        .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card-content { flex: 1 1 55%; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .content-card h3 { font-size: 28px; color: #333; font-weight: 700; margin: 0 0 15px 0; }
+        .content-card p { font-size: 15px; color: #555; line-height: 1.6; margin: 0 0 30px 0; }
+        .content-card .feature-list { list-style: none; padding: 0; margin: 0 0 35px 0; text-align: left; }
+        .content-card .feature-list li { display: flex; align-items: center; margin-bottom: 15px; color: #555; font-size: 15px; }
+        .content-card .feature-list li i { color: #6c8c82; font-size: 16px; margin-right: 12px; min-width: 20px; }
+        .psychology-test-section .cta-button { display: inline-block; align-self: flex-start; background-color: #6c8c82; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 8px; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .psychology-test-section .cta-button:hover { background-color: #5a7a70; transform: translateY(-2px); }
+        .psychology-test-section .cta-button i { margin-right: 8px; }
+        /* --- SECTION 5: Layanan Pendukung Lainnya --- */
+        .support-services-section { padding: 80px 20px; background-color: #fcfcfc; }
+        .support-services-section .container { max-width: 1100px; margin: 0 auto; }
+        .support-services-section .section-header { text-align: center; max-width: 700px; margin: 0 auto 50px auto; }
+        .support-services-section .section-header h2 { font-size: 32px; color: #212529; font-weight: 700; margin: 0 0 15px 0; }
+        .support-services-section .section-header p { font-size: 16px; color: #6c757d; line-height: 1.7; margin: 0; }
+        .services-wrapper { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .support-services-section .service-card { flex: 1; max-width: 480px; min-width: 300px; background-color: #ffffff; border: 1px solid #eef0f2; border-radius: 16px; padding: 40px; text-align: center; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .support-services-section .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07); }
+        .support-services-section .card-icon { font-size: 32px; color: #6c8c82; margin-bottom: 25px; }
+        .support-services-section .service-card h3 { font-size: 24px; font-weight: 600; color: #343a40; margin: 0 0 15px 0; }
+        .support-services-section .service-card p { font-size: 15px; color: #6c757d; line-height: 1.7; margin-bottom: 30px; flex-grow: 1; }
+        .support-services-section .card-cta { display: inline-block; background-color: #f8f9fa; color: #555; text-decoration: none; padding: 10px 20px; border: 1px solid #e9ecef; border-radius: 8px; font-weight: 500; font-size: 15px; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .support-services-section .card-cta:hover { background-color: #f1f3f5; border-color: #dee2e6; }
+        .support-services-section .card-cta i { margin-left: 8px; font-size: 13px; color: #888; }
+        /* --- SECTION 6: Artikel Kesehatan Mental --- */
+        .articles-section { padding: 100px 20px; }
+        .articles-section .container { max-width: 1200px; margin: 0 auto; }
+        .articles-header { text-align: center; max-width: 700px; margin: 0 auto 60px auto; }
+        .articles-header h2 { font-size: 38px; color: #212529; font-weight: 700; margin: 0 0 15px 0; }
+        .articles-header p { font-size: 17px; color: #666; line-height: 1.7; margin: 0; }
+        .articles-content-wrapper { display: flex; align-items: center; gap: 40px; }
+        .articles-image-column { flex: 1 1 48%; }
+        .articles-image-column img { max-width: 100%; height: auto; display: block; }
+        .articles-text-column { flex: 1 1 52%; text-align: left; }
+        .articles-text-column h3 { font-size: 28px; font-weight: 600; color: #333; margin: 0 0 15px 0; }
+        .articles-text-column p.description { font-size: 16px; color: #555; line-height: 1.8; margin: 0 0 40px 0; }
+        .info-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 40px; }
+        .info-card { background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px 10px; text-align: center; transition: border-color 0.3s ease, background-color 0.3s ease; }
+        .info-card:hover { border-color: #d1e6dc; background-color: #fdfdfd; }
+        .info-card .icon { font-size: 24px; color: #6c8c82; margin-bottom: 12px; }
+        .info-card .card-text { color: #555; font-size: 14px; line-height: 1.4; font-weight: 500; }
+        .info-card .card-text strong { display: block; font-size: 15px; font-weight: 600; color: #444; margin-bottom: 2px; }
+        .articles-cta-button { display: inline-block; background-color: #6c8c82; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 8px; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .articles-cta-button:hover { background-color: #5a7a70; transform: translateY(-2px); }
+        .articles-cta-button i { margin-left: 10px; transition: transform 0.3s ease; }
+        .articles-cta-button:hover i { transform: translateX(4px); }
+        /* --- Aturan Responsif Gabungan --- */
+        @media (max-width: 992px) {
+            .cards-container { flex-direction: column; align-items: center; }
+            .consultation-container { flex-direction: column-reverse; gap: 40px; }
+            .text-content, .image-content { max-width: 100%; text-align: center; }
+            .steps-list { max-width: 450px; margin-left: auto; margin-right: auto; text-align: left; }
+            .features-grid { grid-template-columns: 1fr; }
+            .content-card { flex-direction: column; }
+            .card-image-wrapper { min-height: 300px; }
+            .articles-content-wrapper { flex-direction: column; gap: 50px; text-align: center; }
+            .articles-text-column { text-align: center; }
+            .info-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        }
+        @media (max-width: 768px) {
+            .services-section h2, .text-content h2, .why-us-section .section-title, .psychology-test-section .section-title, .support-services-section .section-header h2, .articles-header h2 { font-size: 30px; }
+            .why-us-section, .psychology-test-section, .articles-section { padding: 60px 20px; }
+            .content-card .card-content { padding: 30px; }
+            .content-card h3, .support-services-section .service-card h3, .articles-text-column h3 { font-size: 24px; }
+            .services-wrapper { flex-direction: column; align-items: center; }
+            .support-services-section .service-card { max-width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Placeholder untuk Header (Navbar) -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- SECTION 1: LAYANAN UNGGULAN KAMI -->
+        <section class="services-section">
+            <div class="services-container">
+                <h2>Layanan Unggulan Kami</h2>
+                <p class="intro-text">
+                    RuangSela hadir sebagai ruang aman untuk berbagi cerita dan menemukan solusi untuk kesehatan mental
+                    Anda. Didukung oleh para profesional yang siap mendampingi perjalanan Anda menuju kesehatan mental yang
+                    lebih baik.
+                </p>
+
+                <div class="cards-container">
+                    <div class="service-card">
+                        <i class="fas fa-user icon"></i>
+                        <h3>Konsultasi Online</h3>
+                        <p>Konsultasi dengan terapis profesional melalui video call atau chat sesuai kenyamanan Anda.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-users icon"></i>
+                        <h3>Terapi Kelompok</h3>
+                        <p>Bergabung dengan sesi terapi kelompok untuk berbagi pengalaman dan dukungan bersama.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-file-shield icon"></i>
+                        <h3>Program Kesehatan Mental</h3>
+                        <p>Program terstruktur untuk membantu Anda mengatasi masalah kesehatan mental spesifik.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: KONSULTASI TERAPIS PROFESIONAL -->
+        <section class="consultation-section">
+            <div class="consultation-container">
+                <div class="text-content">
+                    <h2>Konsultasi Terapis <span>Profesional</span></h2>
+                    <p class="description">Dapatkan dukungan kesehatan mental dari terapis berpengalaman dan berlisensi yang
+                        siap membantu Anda mengatasi tantangan emosional melalui sesi konsultasi yang nyaman dan aman.</p>
+                    <ul class="steps-list">
+                        <li><span class="step-number">1</span>
+                            <p>Pilih terapis sesuai kebutuhan Anda</p>
+                        </li>
+                        <li><span class="step-number">2</span>
+                            <p>Jadwalkan sesi konsultasi yang nyaman</p>
+                        </li>
+                        <li><span class="step-number">3</span>
+                            <p>Lakukan konsultasi via video call atau chat</p>
+                        </li>
+                        <li><span class="step-number">4</span>
+                            <p>Dapatkan solusi dan rencana tindak lanjut</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="image-content">
+                    <img src="https://i.ibb.co/6P93M1m/consultation-image.jpg"
+                        alt="Seorang terapis sedang berkonsultasi dengan klien di kantor yang cerah.">
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTEN LAINNYA DI DALAM <main> ... (disembunyikan untuk keringkasan) -->
+        <!-- SECTION 3: MENGAPA MEMILIH KONSULTASI -->
+        <section class="why-us-section">
+            <div class="container">
+                <h2 class="section-title">Mengapa Memilih Konsultasi di RuangSela?</h2>
+                <p class="section-subtitle">Konsultasi dengan psikolog atau konselor dapat membantu Anda mengatasi berbagai tantangan emosional. Terapis RuangSela memberikan panduan dan dukungan yang Anda butuhkan.</p>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="icon-container"><i class="fa-solid fa-lock"></i></div><div><h3>Sesi privat dan rahasia</h3><p>Semua sesi konsultasi bersifat privat dan dijamin kerahasiaannya sesuai kode etik profesional.</p></div></div>
+                    <div class="feature-card"><div class="icon-container"><i class="fa-solid fa-user-doctor"></i></div><div><h3>Pilihan terapis dengan berbagai spesialisasi</h3><p>Temukan terapis yang sesuai dengan kebutuhan Anda dari berbagai spesialisasi yang tersedia.</p></div></div>
+                    <div class="feature-card"><div class="icon-container"><i class="fa-solid fa-calendar-alt"></i></div><div><h3>Jadwal fleksibel (sesi video call atau chat)</h3><p>Atur jadwal konsultasi sesuai waktu yang nyaman bagi Anda dengan opsi video call atau chat.</p></div></div>
+                    <div class="feature-card"><div class="icon-container"><i class="fa-solid fa-clipboard-check"></i></div><div><h3>Pendekatan berbasis bukti (evidence-based)</h3><p>Semua metode terapi yang digunakan berbasis pada penelitian ilmiah terkini.</p></div></div>
+                </div>
+                <p class="cta-text">Kami menawarkan berbagai paket konsultasi yang disesuaikan dengan kebutuhan Anda.</p>
+                <a href="#" class="cta-button"><i class="fa-solid fa-chevron-right"></i> Lihat Paket Konsultasi</a>
+            </div>
+        </section>
+        
+        <!-- SECTION 4: TES PSIKOLOGI ONLINE -->
+        <section class="psychology-test-section">
+            <div class="container">
+                <div class="header-content"><h2 class="section-title">Tes Psikologi Online</h2><div class="title-underline"></div><p class="section-subtitle">Dirancang untuk mengetahui kondisi psikologis Anda melalui serangkaian tes terpercaya yang mudah diakses dari mana saja.</p></div>
+                <div class="content-card">
+                    <div class="card-image-wrapper"><img src="https://images.pexels.com/photos/3184398/pexels-photo-3184398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sekelompok orang sedang mengerjakan tes di meja"></div>
+                    <div class="card-content"><h3>Pahami Diri Lebih Dalam</h3><p>Tes psikologi ini memberikan wawasan tentang berbagai aspek kepribadian, tingkat stres, kecemasan, depresi, hingga potensi minat dan bakat Anda.</p><ul class="feature-list"><li><i class="fa-solid fa-check"></i> Proses pengerjaan mudah dan cepat</li><li><i class="fa-solid fa-check"></i> Laporan hasil yang komprehensif dan mudah dipahami</li><li><i class="fa-solid fa-check"></i> Dikembangkan berdasarkan standar psikometri</li><li><i class="fa-solid fa-check"></i> Membantu mengidentifikasi area yang perlu perhatian</li></ul><a href="#" class="cta-button"><i class="fa-solid fa-arrow-right"></i> Mulai Tes Sekarang</a></div>
+                </div>
+            </div>
+        </section>
+        <!-- SECTION 5: ARTIKEL KESEHATAN MENTAL -->
+        <section class="articles-section">
+            <div class="container">
+                <header class="articles-header"><h2>Artikel Kesehatan Mental</h2><p>Wawasan dan informasi terpercaya untuk kesehatan mental yang lebih baik</p></header>
+                <div class="articles-content-wrapper">
+                    <div class="articles-image-column"><img src="https://i.ibb.co/3r5G5Qd/articles-illustration.png" alt="Ilustrasi sekelompok orang berdiskusi di sekitar meja"></div>
+                    <div class="articles-text-column">
+                        <h3>Sumber Informasi Terpercaya Anda</h3><p class="description">Kami berkomitmen menyediakan artikel berkualitas tentang kesehatan mental yang mencakup berbagai topik seperti manajemen stres, mindfulness, hubungan interpersonal, dan gangguan mood. Semua konten ditulis oleh para profesional kesehatan mental yang berpengalaman.</p>
+                        <div class="info-cards-grid">
+                            <div class="info-card"><div class="icon"><i class="fa-solid fa-file-lines"></i></div><div class="card-text"><strong>Topik</strong> Beragam</div></div>
+                            <div class="info-card"><div class="icon"><i class="fa-solid fa-book-open-reader"></i></div><div class="card-text"><strong>Bahasa</strong> Sederhana</div></div>
+                            <div class="info-card"><div class="icon"><i class="fa-solid fa-lightbulb"></i></div><div class="card-text"><strong>Tips</strong> Praktis</div></div>
+                            <div class="info-card"><div class="icon"><i class="fa-solid fa-calendar-check"></i></div><div class="card-text"><strong>Update</strong> Berkala</div></div>
+                        </div><a href="#" class="articles-cta-button">Baca Artikel Terbaru <i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SECTION 6: LAYANAN PENDUKUNG LAINNYA -->
+        <section class="support-services-section">
+            <div class="container">
+                <header class="section-header"><h2>Layanan Pendukung Lainnya</h2><p>Selain layanan utama, kami juga menyediakan berbagai dukungan lain untuk kesejahteraan mental Anda.</p></header>
+                <div class="services-wrapper">
+                    <div class="service-card"><div class="card-icon"><i class="fa-solid fa-spa"></i></div><h3>Terapi Relaksasi & Mindfulness</h3><p>Temukan berbagai teknik dan panduan audio untuk relaksasi, meditasi, dan latihan mindfulness guna menenangkan pikiran serta mengurangi stres.</p><a href="#" class="card-cta">Jelajahi Teknik Relaksasi <i class="fa-solid fa-chevron-right"></i></a></div>
+                    <div class="service-card"><div class="card-icon"><i class="fa-solid fa-comments"></i></div><h3>Diskusi Komunitas Suportif</h3><p>Bergabunglah dengan forum komunitas kami untuk berbagi pengalaman, mendapatkan dukungan dari sesama, dan merasa tidak sendirian dalam perjalanan Anda. (Segera Hadir)</p><a href="#" class="card-cta">Gabung Komunitas <i class="fa-solid fa-chevron-right"></i></a></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Placeholder untuk Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Fungsi untuk memuat komponen HTML ke dalam placeholder
+            const loadComponent = (url, placeholderId, callback = null) => {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Gagal memuat ${url}: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(placeholderId).innerHTML = data;
+                        if (callback) {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error memuat komponen:", error);
+                        document.getElementById(placeholderId).innerHTML = `<p style="text-align:center; color:red;">Gagal memuat konten.</p>`;
+                    });
+            };
+
+            // Fungsi untuk mengatur kelas 'active' pada menu navigasi
+            const setActiveMenuItem = () => {
+                const currentPath = window.location.pathname.split('/').pop(); // Mengambil nama file dari URL
+                const navLinks = document.querySelectorAll('.header-nav ul li a');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkPath = link.getAttribute('href').split('/').pop();
+                    if (currentPath === linkPath) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            loadComponent('Header.html', 'header-placeholder', setActiveMenuItem);
+            loadComponent('Footer.html', 'footer-placeholder');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+/* public/assets/css/pages/articles_admin.css */
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.content-tabs {
+    margin-bottom: 24px;
+}
+
+.content-tabs nav a {
+    padding: 12px 20px;
+    font-weight: 500;
+}
+
+.section-header {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.filters {
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-item {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-item i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light-text);
+}
+
+.filter-item .form-control {
+    padding-left: 38px;
+}
+
+.btn-filter {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-filter:hover {
+    background-color: var(--primary-dark);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table th, .data-table td {
+    font-size: 14px;
+}
+
+.data-table td .tag {
+    font-size: 12px;
+}
+
+.table-actions a {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.pagination a {
+    width: 36px;
+    height: 36px;
+}

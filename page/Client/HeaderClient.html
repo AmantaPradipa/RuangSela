@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Klien</title>
+
+    <!-- Impor Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* CSS Reset & Pengaturan Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* Styling untuk Navbar Utama */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Mendorong 'nav-left' ke kiri dan 'nav-user-section' ke kanan */
+            background-color: #647970;
+            padding: 12px 30px;
+            color: white;
+        }
+
+        /* [BARU] Wrapper untuk menggabungkan Logo dan Menu */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            /* Jarak antara logo dan blok menu navigasi */
+        }
+
+        /* ---- Bagian Kiri: Logo ---- */
+        .nav-logo i {
+            font-size: 32px;
+            color: white;
+            display: block;
+        }
+
+        /* ---- Bagian Tengah: Menu Navigasi ---- */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* Jarak antar item menu */
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Jarak antara ikon dan teks */
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 400;
+            padding: 10px 18px;
+            border-radius: 12px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .nav-item a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Style untuk tombol yang aktif */
+        .nav-item a.active {
+            background-color: #4D5C56;
+            font-weight: 500;
+        }
+
+        .nav-item a i {
+            font-size: 20px;
+        }
+
+        /* ---- Bagian Kanan: Notifikasi & Pengguna ---- */
+        .nav-user-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 24px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: #e53935;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            border: 2px solid #647970;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #4D5C56;
+            padding: 5px 15px 5px 5px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-profile span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <!-- [DIUBAH] Menggabungkan Logo dan Menu -->
+        <div class="nav-left">
+            <div class="nav-logo">
+                <i class="ri-leaf-fill"></i>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="DashboardClient.html" class="active">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="KonsultasiClient.html">
+                        <i class="ri-calendar-2-line"></i>
+                        <span>Konsultasi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="PsikotesClient.html">
+                        <i class="ri-file-text-line"></i>
+                        <span>Psikotes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="FrekuensiClient.html">
+                        <i class="ri-radio-2-line"></i>
+                        <span>Frekuensi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="ArtikelClient.html">
+                        <i class="ri-newspaper-line"></i>
+                        <span>Artikel</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="KomunitasClient.html">
+                        <i class="ri-group-line"></i>
+                        <span>Komunitas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="FAQClient.html">
+                        <i class="ri-question-line"></i>
+                        <span>FAQ</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Bagian Kanan -->
+        <div class="nav-user-section">
+            <div class="notification-icon">
+                <i class="ri-notification-3-line"></i>
+                <div class="badge">3</div>
+            </div>
+            <div class="notification-icon">
+                    <i class="ri-message-2-line"></i>
+                    <div class="badge">5</div>
+                </div>
+            <div class="user-profile">
+                <img src="https://i.imgur.com/rS25Jui.jpeg" alt="Avatar Rino Wulandari">
+                <span>Rino Wulandari</span>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // JavaScript untuk mengubah kelas 'active' saat item menu diklik
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-menu .nav-item a');
+
+            // Dapatkan path halaman saat ini
+            const currentPage = window.location.pathname.split('/').pop();
+
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+
+                // Cek jika href link sama dengan halaman saat ini
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+
+                link.addEventListener('click', function (event) {
+                    // Hapus event.preventDefault() agar link bisa navigasi
+
+                    // Hapus kelas 'active' dari semua link
+                    navLinks.forEach(item => item.classList.remove('active'));
+
+                    // Tambahkan kelas 'active' ke link yang diklik
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

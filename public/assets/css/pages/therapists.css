@@ -1,0 +1,266 @@
+/* public/assets/css/pages/therapists.css */
+
+/* === BAGIAN 1: HERO === */
+.therapist-hero-section {
+    background-color: var(--primary-color);
+    padding: 120px 20px 80px 20px; /* Adjusted padding for consistency */
+    text-align: center;
+}
+.therapist-hero-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.therapist-hero-section h2 {
+    font-size: 3.2rem; /* Larger font size for consistency */
+    font-weight: 700;
+    color: var(--dark-text); /* Using global variable */
+    margin-bottom: 25px; /* Increased margin */
+}
+.therapist-hero-section .highlight-text {
+    color: var(--white-text); /* Using global variable */
+}
+.therapist-hero-section p {
+    font-size: 1.15rem; /* Slightly larger */
+    color: var(--white-text); /* Using global variable */
+    line-height: 1.7;
+}
+
+/* === BAGIAN 2: DAFTAR TERAPIS & FILTER === */
+.therapist-list-section {
+    padding: 100px 20px; /* Increased padding for consistency */
+}
+.therapist-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Filter Box */
+.filter-box {
+    /* Inherits .card styles for background, border-radius, box-shadow */
+    background-color: var(--bg-light-gray); /* Changed background color */
+    padding: 30px 40px; /* Increased padding */
+    margin-bottom: 60px; /* Increased margin */
+    border: 1px solid var(--border-light); /* Using global variable */
+}
+.filter-form {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr auto;
+    gap: 20px;
+    align-items: end;
+}
+.form-group label {
+    /* Inherits from components/forms.css */
+    font-size: 15px; /* Adjusted font size */
+    font-weight: 500;
+    margin-bottom: 10px; /* Increased margin */
+    color: var(--dark-text); /* Using global variable */
+}
+.input-wrapper,
+.select-wrapper {
+    position: relative;
+}
+.filter-form input,
+.filter-form select {
+    /* Inherits .form-control from components/forms.css */
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--border-light); /* Using global variable */
+    border-radius: 8px;
+    background-color: var(--bg-white); /* Using global variable */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.filter-form select {
+    padding-right: 40px;
+}
+.input-wrapper .icon,
+.select-wrapper .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--light-text); /* Using global variable */
+    font-size: 20px;
+}
+.filter-button {
+    /* Using .btn and .btn-primary principles */
+    width: 100%;
+    padding: 14px 25px; /* Increased padding */
+    font-size: 1.05rem; /* Slightly larger */
+    font-weight: 600;
+    color: var(--white-text); /* Using global variable */
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px; /* More rounded */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.filter-button:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Therapist Grid */
+.therapist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted minmax for better card size */
+    gap: 30px; /* Increased gap */
+}
+.therapist-card {
+    /* Inherits .card styles for background, border-radius, box-shadow, and transition */
+    padding: 30px; /* Increased padding */
+    display: flex;
+    flex-direction: column;
+}
+.therapist-card:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 8px 30px var(--shadow-medium); /* Stronger shadow on hover */
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.profile-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.therapist-info h3 {
+    font-size: 1.25rem; /* Slightly larger */
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    color: var(--dark-text); /* Using global variable */
+}
+.therapist-info p {
+    font-size: 0.95rem; /* Slightly larger */
+    color: var(--light-text); /* Using global variable */
+    margin: 0;
+}
+.card-content {
+    flex-grow: 1;
+}
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.card-tags span {
+    background-color: var(--bg-light-gray); /* Using global variable */
+    color: var(--light-text); /* Using global variable */
+    font-size: 0.85rem; /* Slightly larger */
+    font-weight: 500;
+    padding: 5px 12px; /* Adjusted padding */
+    border-radius: 20px;
+}
+.rating-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+    color: var(--star-yellow); /* Using global variable */
+}
+.rating-info i {
+    font-size: 18px;
+}
+.rating-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--light-text); /* Using global variable */
+}
+.experience-text {
+    font-size: 0.95rem;
+    color: var(--light-text); /* Using global variable */
+    margin-bottom: 25px;
+}
+.profile-button {
+    /* Using .btn and .btn-primary principles */
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1.05rem; /* Slightly larger */
+    font-weight: 600;
+    background-color: var(--primary-color);
+    color: var(--white-text); /* Using global variable */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+.profile-button:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Pagination */
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    gap: 10px;
+}
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--light-text); /* Using global variable */
+    background-color: var(--bg-white); /* Using global variable */
+    border: 1px solid var(--border-light); /* Using global variable */
+    border-radius: 8px;
+    min-width: 40px;
+    height: 40px;
+    font-weight: 500;
+    padding: 0 10px;
+    transition: all 0.2s ease;
+}
+.page-link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.page-link.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-text); /* Using global variable */
+}
+.page-link .icon {
+    font-size: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .filter-form {
+        grid-template-columns: 1fr 1fr;
+    }
+    .filter-form .button-group {
+        grid-column: 1 / -1;
+    }
+    .therapist-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .therapist-hero-section { padding: 80px 20px 40px; }
+    .therapist-hero-section h2 { font-size: 2.2rem; }
+    .filter-form { grid-template-columns: 1fr; }
+    .therapist-grid { grid-template-columns: 1fr; }
+    .filter-box { padding: 25px; }
+    .filter-button { padding: 12px 20px; font-size: 1rem; }
+    .therapist-card { padding: 20px; }
+    .therapist-info h3 { font-size: 1.1rem; }
+    .therapist-info p { font-size: 0.85rem; }
+    .card-tags span { font-size: 0.75rem; padding: 4px 8px; }
+    .rating-text, .experience-text { font-size: 0.9rem; }
+    .profile-button { padding: 12px 20px; font-size: 1rem; }
+}

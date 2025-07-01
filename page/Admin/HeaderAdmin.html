@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Navbar</title>
+    
+    <!-- Impor Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset & Pengaturan Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5; 
+        }
+
+        /* Styling untuk Navbar Utama */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Ini akan mendorong 'nav-left' ke kiri dan 'nav-user-section' ke kanan */
+            background-color: #647970;
+            padding: 12px 30px;
+            color: white;
+        }
+
+        /* [BARU] Wrapper untuk menggabungkan Logo dan Menu */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 50px; /* Jarak antara logo dan blok menu navigasi */
+        }
+
+        /* ---- Bagian Kiri: Logo ---- */
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            display: block; /* Mencegah spasi ekstra di bawah SVG */
+        }
+        
+        /* ---- Bagian Tengah: Menu Navigasi ---- */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Jarak antar item menu */
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Jarak antara ikon dan teks */
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 400;
+            padding: 10px 18px;
+            border-radius: 12px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .nav-item a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Style untuk tombol yang aktif */
+        .nav-item a.active {
+            background-color: #4D5C56;
+            font-weight: 500;
+        }
+
+        .nav-item a svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.5;
+        }
+
+        /* ---- Bagian Kanan: Notifikasi & Pengguna ---- */
+        .nav-user-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: #e53935;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            border: 2px solid #647970;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #4D5C56;
+            padding: 5px 15px 5px 5px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        
+        .user-profile img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-profile span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <!-- [DIUBAH] Menggabungkan Logo dan Menu -->
+        <div class="nav-left">
+            <div class="nav-logo">
+                <!-- SVG untuk logo daun -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.96 4.90999C12.96 4.90999 12.97 4.19999 12.55 3.78999C11.64 2.87999 10.02 3.64999 9.17999 4.48999C8.33999 5.32999 8.24999 6.64999 8.24999 6.64999C8.24999 6.64999 7.61999 6.34999 7.10999 6.85999C6.44999 7.51999 6.94999 8.61999 7.42999 9.09999C7.90999 9.57999 9.00999 10.08 9.66999 9.41999C10.21 8.87999 10.12 7.66999 10.12 7.66999C10.12 7.66999 10.74 8.28999 11.16 8.70999C11.83 9.37999 12.89 9.38999 13.56 8.71999C14.23 8.04999 14.18 7.02999 13.54 6.38999C12.9 5.74999 11.96 5.86999 11.96 5.86999C11.96 5.86999 12.59 5.59999 12.96 4.90999Z M20.84 10.38C20.84 10.38 20.32 8.79999 18.91 10.2C17.22 11.9 17.58 14.07 18.42 14.91C19.26 15.75 20.72 16.29 20.72 16.29L14.49 22.52C14.49 22.52 10.51 18.55 5.23 13.26C-0.0400115 7.98999 -0.0500115 4.01999 5.21999 -1.24001C5.21999 -1.24001 2.29999 2.53999 5.48999 5.72999C8.67999 8.91999 12.27 9.87999 12.27 9.87999L13.72 8.42999C13.72 8.42999 15.82 10.59 18.42 7.98999C20.43 5.97999 20.84 10.38 20.84 10.38Z"/>
+                </svg>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="DashboardAdmin.html" class="active">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Verifikasi.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Verifikasi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="ManajemenPengguna.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Pengguna</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="LaporanAdmin.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a href="PengaturanAdmin.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>Pengaturan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Bagian Kanan -->
+        <div class="nav-user-section">
+            <div class="notification-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <div class="badge">3</div>
+            </div>
+            <div class="notification-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <div class="badge">3</div>
+            </div>
+            <div class="user-profile">
+                <img src="https://i.imgur.com/rS25Jui.jpeg" alt="Avatar Admin">
+                <span>Admin 1</span>
+            </div>
+        </div>
+    </nav>
+    
+    <script>
+        // JavaScript untuk mengubah kelas 'active' saat item menu diklik
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-menu .nav-item a');
+
+            // Dapatkan path halaman saat ini
+            const currentPage = window.location.pathname.split('/').pop();
+
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+
+                // Cek jika href link sama dengan halaman saat ini
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+
+                link.addEventListener('click', function(event) {
+                    // Hapus event.preventDefault() agar link bisa navigasi
+
+                    // Hapus kelas 'active' dari semua link
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    
+                    // Tambahkan kelas 'active' ke link yang diklik
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

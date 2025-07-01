@@ -1,0 +1,132 @@
+/* public/assets/css/components/forms.css */
+
+/* General Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-text);
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--dark-text);
+    background-color: var(--bg-white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(123, 153, 127, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--light-text);
+    opacity: 0.8;
+}
+
+/* Input with icon */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .form-control {
+    padding-left: 40px; /* Make space for the icon */
+}
+
+.input-with-icon .icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light-text);
+    font-size: 1.1rem;
+    pointer-events: none; /* Ensure icon doesn't block input clicks */
+}
+
+/* Textarea */
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+    padding-top: 12px;
+}
+
+/* Select */
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23718096'%3E%3Cpath d='M12 15.375L6 9.375H18L12 15.375Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 35px; /* Space for custom arrow */
+}
+
+/* Checkbox and Radio */
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: 10px;
+    accent-color: var(--primary-color); /* Custom color for checkbox/radio */
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-size: 0.95rem;
+    color: var(--dark-text);
+    cursor: pointer;
+}
+
+/* Error messages */
+.form-error {
+    color: var(--danger-main);
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Form actions/buttons container */
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-control {
+        padding: 8px 10px;
+        font-size: 0.95rem;
+    }
+    .input-with-icon .form-control {
+        padding-left: 35px;
+    }
+    .input-with-icon .icon {
+        font-size: 1rem;
+        left: 10px;
+    }
+    .form-group label {
+        font-size: 0.85rem;
+    }
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

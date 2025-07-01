@@ -1,0 +1,20 @@
+/* public/assets/css/pages/client_management.css */
+
+.btn-filter {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-filter:hover {
+    background-color: var(--primary-dark);
+}
+
+.data-table td .tag-green { background-color: rgba(40, 167, 69, 0.1); color: var(--success-main); }
+.data-table td .tag-red { background-color: rgba(220, 53, 69, 0.1); color: var(--danger-main); }

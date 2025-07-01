@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel Kesehatan Mental</title>
+    <style>
+        /* === PENGATURAN GLOBAL & VARIABEL WARNA === */
+        :root {
+            --primary-color: #6c8c7c;  /* Hijau untuk tombol aktif & kategori */
+            --dark-text: #212529;      /* Abu-abu gelap untuk judul */
+            --header-dark-text: #2f3432;
+            --header-highlight-text: #648170;
+            --light-text: #6c757d;    /* Abu-abu terang untuk deskripsi & meta */
+            --header-subtitle-text: #5f6462;
+            --bg-color: #f8f9fa;      /* Latar belakang halaman default */
+            --header-bg: #e0e4e1;     /* Latar belakang header artikel */
+            --card-bg: #ffffff;       /* Latar belakang kartu */
+            --border-color: #dee2e6;  /* Warna border */
+        }
+
+        /* Gaya Dasar Body */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        /* === BAGIAN 1: HEADER ARTIKEL === */
+        .article-header-section {
+            background-color: var(--header-bg);
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .article-header-section .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--header-dark-text);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .article-header-section .section-title .highlight-text {
+            color: var(--header-highlight-text);
+        }
+
+        .article-header-section .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--header-subtitle-text);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+
+        /* === BAGIAN 2: GRID ARTIKEL & FILTER === */
+        .articles-section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white; /* Memberi latar belakang putih seperti di gambar */
+        }
+        
+        .articles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-nav {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: 999px; /* Pill shape */
+            padding: 0.5rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .search-bar {
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 140, 124, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--light-text);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0; /* Menambahkan border halus */
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            height: 200px;
+        }
+
+        .card-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+        }
+
+        .card-image-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .card-image-category {
+            position: absolute;
+            bottom: 1rem; left: 1rem; color: white;
+            font-size: 1.25rem; font-weight: 600; z-index: 1;
+        }
+
+        .card-content {
+            padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;
+        }
+        .card-category {
+            color: var(--primary-color); font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; margin-bottom: 0.5rem;
+        }
+        .card-title {
+            font-size: 1.25rem; font-weight: 600; color: var(--dark-text); margin: 0 0 0.75rem 0;
+        }
+        .card-title a {
+            color: inherit; text-decoration: none;
+        }
+        .card-title a:hover {
+            color: var(--primary-color);
+        }
+        .card-excerpt {
+            color: var(--light-text); font-size: 0.95rem; margin: 0 0 1.5rem 0; flex-grow: 1;
+        }
+        .card-meta {
+            display: flex; gap: 1rem; align-items: center;
+            font-size: 0.85rem; color: var(--light-text); margin-bottom: 1.5rem;
+        }
+        .meta-item {
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .meta-item svg {
+            width: 16px; height: 16px;
+        }
+        .read-more-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--dark-text); text-decoration: none;
+            font-weight: 600; font-size: 0.9rem;
+            transition: color 0.2s ease, gap 0.2s ease;
+        }
+        .read-more-link:hover {
+            color: var(--primary-color); gap: 0.7rem;
+        }
+        .read-more-link svg {
+            width: 16px; height: 16px; transition: transform 0.2s ease;
+        }
+        
+        .pagination {
+            display: flex; justify-content: center; align-items: center; gap: 0.75rem;
+        }
+        .page-link {
+            display: flex; justify-content: center; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; min-width: 40px; height: 40px;
+            box-sizing: border-box; border: 1px solid var(--border-color);
+            color: var(--light-text); border-radius: 8px;
+            text-decoration: none; font-weight: 500; transition: all 0.2s ease;
+        }
+        .page-link.active,
+        .page-link:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Desain Responsif */
+        @media (max-width: 992px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .article-header-section {
+                padding: 3rem 1rem;
+            }
+            .article-header-section .section-title {
+                font-size: 2.2rem;
+            }
+            .article-header-section .section-subtitle {
+                font-size: 1rem;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .articles-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <!-- Bagian Header Artikel -->
+    <section class="article-header-section">
+        <h2 class="section-title">
+            Artikel <span class="highlight-text">Kesehatan Mental</span>
+        </h2>
+        <p class="section-subtitle">
+            Temukan wawasan, tips, dan informasi terbaru dari para ahli untuk mendukung perjalanan...
+        </p>
+    </section>
+    
+    <!-- Bagian Grid Artikel -->
+    <section class="articles-section">
+        <header class="articles-header">
+            <nav class="filter-nav">
+                <button class="filter-btn active">Semua</button>
+                <button class="filter-btn">Stres & Kecemasan</button>
+                <button class="filter-btn">Hubungan</button>
+                <button class="filter-btn">Pengembangan Diri</button>
+                <button class="filter-btn">Mindfulness</button>
+            </nav>
+            <div class="search-bar">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="search-input" placeholder="Cari artikel...">
+            </div>
+        </header>
+
+        <main class="articles-grid">
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1220&auto=format&fit=crop" alt="Orang-orang yoga di pantai">
+                    <h3 class="card-image-category">Manajemen Stres</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Stres & Kecemasan</p>
+                    <h4 class="card-title"><a href="#">5 Cara Efektif Mengelola Stres di Tempat Kerja Modern</a></h4>
+                    <p class="card-excerpt">Temukan strategi praktis untuk mengatasi stres kerja dan meningkatkan produktivitas serta kesejahteraan mental Anda di lingkungan kerja yang menantang.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>28 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Dr. Anisa Rahma</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=1180&auto=format&fit=crop" alt="Wanita dengan kamera vintage">
+                    <h3 class="card-image-category">Komunikasi Sehat</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Hubungan</p>
+                    <h4 class="card-title"><a href="#">Membangun Komunikasi Sehat dalam Hubungan Romantis</a></h4>
+                    <p class="card-excerpt">Pelajari kunci komunikasi efektif untuk memperkuat hubungan Anda, mengatasi konflik dengan cara yang konstruktif, dan membangun fondasi kepercayaan yang kokoh.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>25 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Citra Lestari, M.A.</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1506126613408-4e0e0f7da771?q=80&w=1170&auto=format&fit=crop" alt="Siluet orang meditasi">
+                    <h3 class="card-image-category">Mindfulness Pemula</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Mindfulness</p>
+                    <h4 class="card-title"><a href="#">Mindfulness untuk Pemula: Panduan Praktis Sehari-hari</a></h4>
+                    <p class="card-excerpt">Mulai perjalanan mindfulness Anda dengan panduan langkah demi langkah yang mudah diikuti untuk mengintegrasikan praktik kesadaran penuh dalam rutinitas harian Anda.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>22 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Budi Santoso, S.Psi.</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1590487988256-5ed24e4e9767?q=80&w=1327&auto=format&fit=crop" alt="Orang meditasi di alam">
+                    <h3 class="card-image-category">Teknik Meditasi</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Pengembangan Diri</p>
+                    <h4 class="card-title"><a href="#">7 Teknik Meditasi untuk Mengatasi Kecemasan Harian</a></h4>
+                    <p class="card-excerpt">Temukan berbagai teknik meditasi praktis yang dapat membantu meredakan gejala kecemasan dan menciptakan ketenangan mental dalam aktivitas sehari-hari Anda.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>20 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Ratna Wijaya, M.Psi.</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1498677271512-188bde193c72?q=80&w=1170&auto=format&fit=crop" alt="Meja kerja dengan laptop dan kopi">
+                    <h3 class="card-image-category">Work-Life Balance</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Pengembangan Diri</p>
+                    <h4 class="card-title"><a href="#">Mencapai Work-Life Balance di Era Digital</a></h4>
+                    <p class="card-excerpt">Pelajari strategi efektif untuk menyeimbangkan tanggung jawab pekerjaan dan kehidupan pribadi di era digital yang serba terhubung untuk kesehatan mental yang lebih baik.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>18 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Andi Firmansyah, Ph.D.</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+            <article class="article-card">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1542617304-45e0f7f3a9e6?q=80&w=1170&auto=format&fit=crop" alt="Wanita tersenyum percaya diri">
+                    <h3 class="card-image-category">Konflik Interpersonal</h3>
+                </div>
+                <div class="card-content">
+                    <p class="card-category">Hubungan</p>
+                    <h4 class="card-title"><a href="#">Mengelola Konflik dalam Hubungan Interpersonal</a></h4>
+                    <p class="card-excerpt">Temukan cara efektif menyelesaikan perselisihan dan membangun komunikasi yang lebih sehat dalam berbagai jenis hubungan interpersonal Anda.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>15 Mei 2024</span>
+                        <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Dr. Siti Nurhaliza, M.Psi.</span>
+                    </div>
+                    <a href="#" class="read-more-link">Baca Selengkapnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                </div>
+            </article>
+        </main>
+        
+        <nav class="pagination">
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <a href="#" class="page-link">Berikutnya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+        </nav>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Fungsi untuk memuat komponen HTML ke dalam placeholder
+            const loadComponent = (url, placeholderId, callback = null) => {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Gagal memuat ${url}: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(placeholderId).innerHTML = data;
+                        if (callback) {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error memuat komponen:", error);
+                        document.getElementById(placeholderId).innerHTML = `<p style="text-align:center; color:red;">Gagal memuat konten.</p>`;
+                    });
+            };
+
+            // Fungsi untuk mengatur kelas 'active' pada menu navigasi
+            const setActiveMenuItem = () => {
+                const currentPath = window.location.pathname.split('/').pop(); // Mengambil nama file dari URL
+                const navLinks = document.querySelectorAll('.header-nav ul li a');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkPath = link.getAttribute('href').split('/').pop();
+                    if (currentPath === linkPath) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            loadComponent('Header.html', 'header-placeholder', setActiveMenuItem);
+            loadComponent('Footer.html', 'footer-placeholder');
+        });
+    </script>
+</body>
+</html>

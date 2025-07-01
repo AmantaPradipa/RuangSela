@@ -1,0 +1,74 @@
+/* public/assets/css/pages/test_result.css */
+
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.result-card {
+    padding: 40px;
+    text-align: center;
+}
+
+.result-header i {
+    font-size: 60px;
+    color: var(--success-main);
+    margin-bottom: 15px;
+}
+
+.result-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.result-header .subtitle {
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.result-summary {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-light);
+}
+
+.result-summary h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.result-summary p {
+    font-size: 16px;
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.score-details {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-light);
+}
+
+.score-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.score-item .score-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+}

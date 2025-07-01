@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Remixicon for Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for easier theme management */
+        :root {
+            --primary-green: #61AD6F;
+            --dark-green: #53785E;
+            --light-green-bg: #EAF7EC;
+            --primary-orange: #FFA000;
+            --light-orange-bg: #FFF4E6;
+            --primary-red: #D9534F;
+            --light-red-bg: #FEECEF;
+            --grey-text: #6c757d;
+            --dark-text: #343a40;
+            --border-color: #E9ECEF;
+            --background-color: #f8f9fa;
+            --white-color: #FFFFFF;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --border-radius: 8px;
+        }
+
+        /* Basic Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            padding: 24px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: auto;
+            background-color: var(--white-color);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Header Section */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 10px 10px 10px 40px;
+            width: 250px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--grey-text);
+        }
+        .search-bar .notification-badge {
+            position: absolute;
+            left: 20px;
+            top: 5px;
+            background-color: var(--primary-red);
+            color: white;
+            font-size: 10px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-green);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* Stats Cards Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .stat-card-info .title {
+            font-size: 16px;
+            color: var(--grey-text);
+            margin-bottom: 8px;
+        }
+
+        .stat-card-info .value {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--dark-text);
+            line-height: 1;
+        }
+
+        .stat-card-info .change {
+            font-size: 14px;
+            color: var(--primary-green);
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-card-icon {
+            font-size: 24px;
+            padding: 12px;
+            border-radius: 50%;
+            background-color: var(--light-green-bg);
+            color: var(--primary-green);
+        }
+
+        /* Generic Table Section Wrapper */
+        .data-section {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-top: 32px;
+        }
+        .data-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .data-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .data-filters {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-select, .btn-filter {
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            background-color: var(--white-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        
+        .btn-filter {
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-filter:hover {
+             background-color: #f2f2f2;
+        }
+
+        /* Table Styling */
+        .data-table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px; /* For horizontal scroll on small screens */
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px 16px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .data-table thead th {
+            background-color: var(--background-color);
+            color: var(--grey-text);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: var(--background-color);
+        }
+
+        .therapist-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .therapist-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .therapist-info .name {
+            font-weight: 600;
+        }
+        .therapist-info .role {
+            font-size: 12px;
+            color: var(--grey-text);
+        }
+        
+        /* Tags & Pills */
+        .tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+
+        .tag.green { background-color: var(--light-green-bg); color: var(--primary-green); }
+        .tag.orange { background-color: var(--light-orange-bg); color: var(--primary-orange); }
+        .tag.red { background-color: var(--light-red-bg); color: var(--primary-red); }
+        .tag.grey { background-color: var(--border-color); color: var(--grey-text); }
+        .tag.blue { background-color: #e7f3ff; color: #007bff; }
+        .tag.purple { background-color: #e9e7ff; color: #6f42c1; }
+
+
+        /* Action Buttons in Table */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-buttons .btn {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .btn-success { background-color: var(--primary-green); color: white; }
+        .btn-danger { background-color: var(--primary-red); color: white; }
+        .btn-outline { background-color: transparent; border: 1px solid var(--border-color); color: var(--dark-text); }
+        .btn-outline.red { border-color: var(--primary-red); color: var(--primary-red); }
+
+        .btn-success:hover, .btn-danger:hover {
+            opacity: 0.9;
+        }
+        .btn-outline:hover {
+            background-color: var(--background-color);
+        }
+
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+            align-items: center;
+        }
+        
+        .pagination a {
+            color: var(--grey-text);
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 0 4px;
+            transition: all 0.2s;
+        }
+        
+        .pagination a.active {
+            background-color: var(--dark-green);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .pagination a:hover:not(.active) {
+            background-color: var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- HEADER -->
+    <header class="dashboard-header">
+        <h1>Dashboard Admin</h1>
+        <div class="header-actions">
+            <div class="search-bar">
+                <i class="ri-search-line"></i>
+                <div class="notification-badge">!</div>
+                <input type="text" placeholder="Cari...">
+            </div>
+            <button class="btn btn-primary">
+                <i class="ri-add-line"></i>
+                Tambah Baru
+            </button>
+        </div>
+    </header>
+
+    <!-- STATS CARDS -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-card-info">
+                <p class="title">Total Pengguna</p>
+                <p class="value">1,248</p>
+                <p class="change"><i class="ri-arrow-up-s-line"></i> 12% bulan ini</p>
+            </div>
+            <div class="stat-card-icon">
+                <i class="ri-group-fill"></i>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-info">
+                <p class="title">Total Terapis</p>
+                <p class="value">86</p>
+                                <p class="change"><i class="ri-arrow-up-s-line"></i> 8% dari bulan lalu</p>
+            </div>
+            <div class="stat-card-icon">
+                <i class="ri-calendar-check-fill"></i>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-info">
+                <p class="title">Total Artikel</p>
+                <p class="value">324</p>
+                                <p class="change"><i class="ri-arrow-up-s-line"></i> 15% peningkatan</p>
+            </div>
+            <div class="stat-card-icon">
+                <i class="ri-file-fill"></i>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-info">
+                <p class="title">Sesi Konsultasi</p>
+                <p class="value">528</p>
+                                <p class="change"><i class="ri-arrow-up-s-line"></i> 9% dari minggu lalu</p>
+            </div>
+            <div class="stat-card-icon">
+                <i class="ri-star-fill"></i>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VERIFIKASI TERAPIS TABLE -->
+    <section class="data-section">
+        <div class="data-header">
+            <h2>Verifikasi Terapis</h2>
+            <div class="data-filters">
+                <select class="filter-select">
+                    <option>Semua Status</option>
+                    <option>Menunggu Verifikasi</option>
+                    <option>Terverifikasi</option>
+                    <option>Ditolak</option>
+                </select>
+                <button class="btn-filter">Filter</button>
+            </div>
+        </div>
+
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Nama Terapis</th>
+                        <th>Spesialisasi</th>
+                        <th>Tanggal Daftar</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="therapist-info">
+                                <img src="https://i.pravatar.cc/150?u=maya" alt="Avatar Maya Kusuma">
+                                <div>
+                                    <div class="name">Dr. Maya Kusuma</div>
+                                    <div class="role">Psikolog Klinis</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag green">Kecemasan</span>
+                            <span class="tag blue">Depresi</span>
+                        </td>
+                        <td>12 Mei 2023</td>
+                        <td><span class="tag orange">Menunggu Verifikasi</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-success">Verifikasi</button>
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="therapist-info">
+                                 <img src="https://i.pravatar.cc/150?u=rudi" alt="Avatar Rudi Santoso">
+                                <div>
+                                    <div class="name">Dr. Rudi Santoso</div>
+                                    <div class="role">Psikiater</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag purple">Trauma</span>
+                            <span class="tag grey">PTSD</span>
+                        </td>
+                        <td>10 Mei 2023</td>
+                        <td><span class="tag green">Terverifikasi</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="therapist-info">
+                                 <img src="https://i.pravatar.cc/150?u=anita" alt="Avatar Anita Nugraha">
+                                <div>
+                                    <div class="name">Dr. Anita Nugraha</div>
+                                    <div class="role">Psikolog Anak</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                             <span class="tag blue">ADHD</span>
+                             <span class="tag grey">Autisme</span>
+                        </td>
+                        <td>8 Mei 2023</td>
+                        <td><span class="tag orange">Menunggu Verifikasi</span></td>
+                        <td>
+                             <div class="action-buttons">
+                                <button class="btn btn-success">Verifikasi</button>
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="therapist-info">
+                                 <img src="https://i.pravatar.cc/150?u=budi" alt="Avatar Budi Pratama">
+                                <div>
+                                    <div class="name">Dr. Budi Pratama</div>
+                                    <div class="role">Psikolog Klinis</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="tag green">Kecemasan</span>
+                            <span class="tag grey">Stres</span>
+                        </td>
+                        <td>5 Mei 2023</td>
+                        <td><span class="tag grey">Ditolak</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <a href="#"><i class="ri-arrow-left-s-line"></i></a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#"><i class="ri-arrow-right-s-line"></i></a>
+        </div>
+    </section>
+
+    <!-- MANAJEMEN KONTEN TABLE -->
+    <section class="data-section">
+        <div class="data-header">
+            <h2>Manajemen Konten</h2>
+            <div class="data-filters">
+                <select class="filter-select">
+                    <option>Semua Kategori</option>
+                    <option>Artikel</option>
+                    <option>Video</option>
+                    <option>Podcast</option>
+                </select>
+                                <button class="btn btn-primary"><i class="ri-add-line"></i> Tambah Konten</button>
+            </div>
+        </div>
+        
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Judul</th>
+                        <th>Kategori</th>
+                        <th>Penulis</th>
+                        <th>Tanggal Publikasi</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Mengatasi Kecemasan di Masa Pandemi</td>
+                        <td><span class="tag blue">Artikel</span></td>
+                        <td>Dr. Maya Kusuma</td>
+                        <td>15 Mei 2023</td>
+                        <td><span class="tag green">Dipublikasi</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Edit</button>
+                                <button class="btn btn-outline red">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Teknik Relaksasi untuk Mengurangi Stres</td>
+                        <td><span class="tag purple">Video</span></td>
+                        <td>Dr. Rudi Santoso</td>
+                        <td>12 Mei 2023</td>
+                        <td><span class="tag green">Dipublikasi</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Edit</button>
+                                <button class="btn btn-outline red">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Memahami Depresi pada Remaja</td>
+                        <td><span class="tag grey">Podcast</span></td>
+                        <td>Dr. Anita Nugraha</td>
+                        <td>10 Mei 2023</td>
+                        <td><span class="tag orange">Draft</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Edit</button>
+                                <button class="btn btn-outline red">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Mengatasi Trauma Masa Kecil</td>
+                        <td><span class="tag blue">Artikel</span></td>
+                        <td>Dr. Budi Pratama</td>
+                        <td>8 Mei 2023</td>
+                        <td><span class="tag grey">Ditinjau</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline">Edit</button>
+                                <button class="btn btn-outline red">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <a href="#"><i class='bx bx-chevron-left'></i></a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#"><i class='bx bx-chevron-right'></i></a>
+        </div>
+    </section>
+
+    <!-- LAPORAN PENGGUNA TABLE -->
+    <section class="data-section">
+        <div class="data-header">
+            <h2>Laporan Pengguna</h2>
+            <div class="data-filters">
+                <select class="filter-select">
+                    <option>Semua Kategori</option>
+                    <option>Konten Tidak Pantas</option>
+                    <option>Pelecehan</option>
+                    <option>Spam</option>
+                </select>
+                <button class="btn-filter">Filter</button>
+            </div>
+        </div>
+
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Pelapor</th>
+                        <th>Dilaporkan</th>
+                        <th>Kategori</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Rina Wulandari</td>
+                        <td>Komentar di Artikel "Mengatasi Kecemasan"</td>
+                        <td><span class="tag red">Konten Tidak Pantas</span></td>
+                        <td>15 Mei 2023</td>
+                        <td><span class="tag orange">Belum Ditinjau</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-success">Tinjau</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Budi Santoso</td>
+                        <td>Pengguna @johndoe</td>
+                        <td><span class="tag red">Pelecehan</span></td>
+                        <td>14 Mei 2023</td>
+                        <td><span class="tag green">Ditinjau</span></td>
+                        <td>
+                             <div class="action-buttons">
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Siti Rahma</td>
+                        <td>Forum "Diskusi Kesehatan Mental"</td>
+                        <td><span class="tag red">Spam</span></td>
+                        <td>12 Mei 2023</td>
+                        <td><span class="tag grey">Ditutup</span></td>
+                        <td>
+                             <div class="action-buttons">
+                                <button class="btn btn-outline">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+             <a href="#"><i class='bx bx-chevron-left'></i></a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#"><i class='bx bx-chevron-right'></i></a>
+        </div>
+    </section>
+    
+</div>
+
+</body>
+</html>

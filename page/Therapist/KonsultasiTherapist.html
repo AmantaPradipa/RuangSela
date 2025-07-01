@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Konsultasi</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* === CSS Variables & Global Styles === */
+        :root {
+            --bg-main: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --bg-card-secondary: #F3F4F6;
+            --bg-card-green: #647970;
+            --bg-card-green-light: #EAF0EE;
+            
+            --text-dark: #1F2937;
+            --text-medium: #6B7280;
+            --text-green: var(--bg-card-green);
+
+            --border-color: #E5E7EB;
+            --border-color-darker: #D1D5DB;
+
+            --accent-green: #10B981;
+            --accent-yellow: #F59E0B;
+            --accent-blue: #3B82F6;
+            --accent-red: #EF4444;
+
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            padding: 32px;
+        }
+
+        /* === Layout === */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Main content and sidebar */
+            gap: 32px;
+            align-items: start;
+        }
+
+        .main-content, .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* === General Utility === */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-header h2 { font-size: 20px; font-weight: 600; color: var(--text-dark); }
+        .section-header .badge { align-self: center; }
+
+        .link-arrow {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .link-arrow:hover { color: var(--text-dark); }
+
+        .badge { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 16px; }
+        .badge-yellow { background-color: #FEF3C7; color: #B45309; }
+        .badge-blue { background-color: #DBEAFE; color: #1D4ED8; }
+        .badge-grey { background-color: #F3F4F6; color: #374151; }
+        .badge-green { background-color: #D1FAE5; color: #047857; }
+        .badge-dark-green { background-color: #C9D2CF; color: #3e4a44; }
+
+
+        /* === Main Content Area === */
+        .main-header h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+        .main-header p { font-size: 15px; color: var(--text-medium); }
+        
+        .search-and-filter { display: flex; gap: 16px; }
+        .search-bar { flex-grow: 1; display: flex; align-items: center; gap: 12px; background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 0 16px; border-radius: 12px; }
+        .search-bar i { font-size: 20px; color: var(--text-medium); }
+        .search-bar input { flex-grow: 1; border: none; outline: none; padding: 14px 0; font-size: 15px; background: transparent; color: var(--text-dark); }
+        .search-bar input::placeholder { color: var(--text-medium); }
+        .btn-filter { display: flex; align-items: center; gap: 8px; padding: 0 20px; border: none; background-color: var(--bg-card-green); color: white; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; }
+
+        .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); }
+        .tab-item { padding-bottom: 12px; color: var(--text-medium); text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; }
+        .tab-item.active { color: var(--text-green); border-bottom-color: var(--text-green); }
+
+        .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .summary-card { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .summary-card .header { display: flex; justify-content: space-between; align-items: center; }
+        .summary-card .title { font-size: 16px; font-weight: 600; }
+        .summary-card .icon { color: var(--text-medium); }
+        .summary-card .description { font-size: 14px; color: var(--text-medium); display: flex; align-items: center; gap: 8px;}
+        .summary-card .description i { font-size: 16px;}
+        
+        .featured-client-card { background-color: var(--bg-card-green-light); display: flex; flex-direction: column; gap: 20px; }
+        .featured-client-card .card-top { display: flex; gap: 20px; align-items: start; }
+        .featured-client-card .client-photo { width: 100px; height: 100px; border-radius: 12px; object-fit: cover; }
+        .featured-client-card .client-info { flex-grow: 1; }
+        .featured-client-card .info-header h3 { font-size: 20px; font-weight: 600; }
+        .featured-client-card .info-header p { color: var(--text-medium); font-size: 14px; }
+        .featured-client-card .rating-info { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--text-medium); }
+        .featured-client-card .rating-info i { font-size: 16px; color: var(--accent-yellow); }
+
+        .featured-client-card .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px;}
+        .featured-client-card .detail-item .label { font-size: 14px; color: var(--text-medium); }
+        .featured-client-card .detail-item .value { font-size: 16px; font-weight: 600; }
+        .featured-client-card .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .featured-client-card .status { align-self: flex-start; }
+        .featured-client-card .card-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color-darker); padding-top: 16px; color: var(--text-medium); }
+        .card-bottom .last-session, .card-bottom .actions { display: flex; align-items: center; gap: 8px; }
+        .card-bottom button { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s;}
+        .btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-dark); }
+        .btn-secondary:hover { background-color: var(--bg-card-secondary); }
+        .btn-primary { background-color: var(--bg-card-green); color: white; }
+        .btn-primary:hover { background-color: #52655c; }
+
+        .waiting-clients-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .waiting-card { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .waiting-card .top { display: flex; gap: 16px; align-items: center; flex-grow: 1;}
+        .waiting-card .photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover;}
+        .waiting-card .name-status .name { font-weight: 600; font-size: 18px; }
+        .waiting-card .name-status .status { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-medium); margin-top: 4px;}
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-yellow); }
+        .waiting-card .req-details { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-medium); }
+        .waiting-card .req-details a { color: var(--text-green); font-weight: 500; text-decoration: none; }
+        .waiting-card .actions { border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .waiting-card .actions .date { font-size: 14px; color: var(--text-medium); }
+        .waiting-card .actions .btn-group { display: flex; gap: 8px; }
+        .waiting-card .actions button { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .btn-outline-red { border: 1px solid var(--accent-red); color: var(--accent-red); background-color: transparent; }
+        
+        .schedule-table-card { padding: 12px 0; }
+        .schedule-table { width: 100%; border-collapse: collapse; }
+        .schedule-table th, .schedule-table td { padding: 16px 24px; text-align: left; }
+        .schedule-table thead { color: var(--text-medium); font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border-color);}
+        .schedule-table tbody tr { border-bottom: 1px solid var(--border-color); }
+        .schedule-table tbody tr:last-child { border-bottom: none; }
+        .schedule-table .client-name { font-weight: 600; }
+        .schedule-table .action-link { color: var(--text-green); font-weight: 500; text-decoration: none; }
+
+        .activity-summary-card { background-color: var(--bg-card-green); color: white; }
+        .activity-summary-card h2 { font-size: 24px; font-weight: 600; color: white;}
+        .activity-summary-card .header-desc { opacity: 0.9; }
+        .activity-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+        .activity-stat-card { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border-radius: 12px; text-align: center; padding: 20px; }
+        .activity-stat-card .value { font-size: 28px; font-weight: 700; }
+        .activity-stat-card .label { font-size: 14px; opacity: 0.8; }
+        .btn-full-width { width: 100%; padding: 14px; font-size: 15px; font-weight: 500; border-radius: 12px; cursor: pointer; text-align: center; border: none; }
+        .btn-green-light { background-color: var(--bg-card-green-light); color: var(--text-green); }
+
+        /* === Sidebar === */
+        .sidebar .card { padding: 20px; }
+        .quick-actions .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; background-color: var(--bg-card-green); color: white; border-radius: 12px; width: 100%; padding: 14px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; }
+        
+        .card-header-sm { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+
+        .notification-item { border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+        .notification-header { display: flex; justify-content: space-between; }
+        .notification-title { font-weight: 600; }
+        .notification-time { font-size: 12px; color: var(--text-medium); }
+        .notification-body { font-size: 14px; color: var(--text-medium); }
+
+        .quick-links ul { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+        .quick-links ul li a { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-dark); font-weight: 500; }
+        .quick-links ul li a i { color: var(--text-medium); }
+
+        .calendar .controls { display: flex; justify-content: space-between; align-items: center; }
+        .calendar .controls .month { font-weight: 600; }
+        .calendar .arrow { cursor: pointer; color: var(--text-medium); padding: 4px;}
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 8px; margin-top: 12px;}
+        .calendar-grid span { font-size: 14px; padding: 4px; border-radius: 50%; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; margin: 0 auto; }
+        .calendar-grid .day-name { font-weight: 500; color: var(--text-medium); font-size: 12px; }
+        .calendar-grid .day.current { background-color: var(--bg-card-green); color: white; }
+        
+        .resource-item { background-color: var(--bg-card-green-light); padding: 16px; border-radius: 12px; }
+        .resource-item h4 { font-size: 15px; margin-bottom: 4px; }
+        .resource-item p { font-size: 13px; color: var(--text-medium); }
+        .resource-item a { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; margin-top: 12px; color: var(--text-green); font-weight: 500; text-decoration: none; }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-layout">
+        <!-- === MAIN CONTENT === -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Manajemen Klien & Konsultasi</h1>
+                <p>Kelola jadwal konsultasi dan lihat informasi klien Anda</p>
+            </header>
+
+            <div class="card" style="padding: 16px;">
+                <div class="search-and-filter">
+                    <div class="search-bar" style="border:none; background-color:#F9FAFB;">
+                        <i class="ri-search-line"></i>
+                        <input type="text" placeholder="Cari klien berdasarkan nama atau masalah....">
+                    </div>
+                    <button class="btn-filter">Filter</button>
+                </div>
+                <nav class="tabs" style="border-bottom:none; margin-top:16px;">
+                    <a href="#" class="tab-item active">Klien Aktif</a>
+                    <a href="#" class="tab-item">Klien Menunggu</a>
+                    <a href="#" class="tab-item">Semua Klien</a>
+                </nav>
+            </div>
+            
+            <section class="summary-grid">
+                <div class="card summary-card">
+                    <div class="header"> <span class="title">Jadwal Hari Ini</span> <span class="badge badge-blue">5 Sesi</span> </div>
+                    <div class="description"> <i class="ri-time-line"></i> <span>Sesi berikutnya: 10:00 - 11:00 (30 menit lagi)</span> </div>
+                </div>
+                <div class="card summary-card">
+                    <div class="header"> <span class="title">Klien Menunggu</span> <span class="badge badge-yellow">3 Klien</span> </div>
+                    <div class="description"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg> <span>Perlu konfirmasi jadwal konsultasi</span> </div>
+                </div>
+                <div class="card summary-card">
+                    <div class="header"> <span class="title">Total Klien</span> <span class="badge badge-grey">42 Klien</span> </div>
+                    <div class="description"> <i class="ri-group-line"></i> <span>8 klien baru bulan ini</span> </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <div class="card featured-client-card">
+                    <div class="card-top">
+                        <img src="https://i.imgur.com/Kx26qD0.jpg" alt="Foto Budi Santoso" class="client-photo">
+                        <div class="client-info">
+                            <div class="info-header"> <h3>Budi Santoso</h3> <p>Klien Reguler</p> </div>
+                            <div class="rating-info"> <i class="ri-star-fill"></i> <span>4.8 (12 sesi)</span> </div>
+                            <div class="details-grid">
+                                <div class="detail-item"> <span class="label">Masalah</span> <div class="tags"> <span class="badge badge-dark-green">Kecemasan</span> <span class="badge badge-dark-green">Depresi</span> <span class="badge badge-dark-green">Trauma</span> </div> </div>
+                                <div class="detail-item"> <span class="label">Usia</span> <span class="value">32 tahun</span> </div>
+                                <div class="detail-item"> <span class="label">Sisa Sesi</span> <span class="value">4 sesi tersisa</span> </div>
+                            </div>
+                        </div>
+                        <div class="status"> <span class="badge badge-green" style="font-weight:600;">● Sesi Terjadwal Hari Ini</span> </div>
+                    </div>
+                    <div class="card-bottom">
+                         <div class="last-session"> <i class="ri-time-line"></i> <span>Sesi terakhir: 2 hari lalu</span> </div>
+                         <div class="actions"> <button class="btn-secondary">Lihat Catatan Sesi</button> <button class="btn-primary">Mulai Sesi Konsultasi</button> </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <div class="section-header"><h2>Klien Menunggu Konfirmasi</h2><span class="badge badge-yellow">3 Klien</span></div>
+                <div class="waiting-clients-grid">
+                    <div class="card waiting-card">
+                         <div class="top"><img src="https://i.imgur.com/GOMDk4S.jpg" alt="Foto Rina Wati" class="photo"><div class="name-status"><div class="name">Rina Wati</div><p class="status">Klien Baru</p></div></div>
+                         <div class="tags"><span class="badge badge-grey">Kecemasan</span> <span class="badge badge-grey">Stres</span></div>
+                         <div class="req-details"><span>Permintaan: Video Call</span><a href="#">Lihat Detail</a></div>
+                         <div class="actions"><div class="date">Jadwal: 15 Agt, 14:00</div><div class="btn-group"><button class="btn-outline-red">Tolak</button><button class="btn-primary">Terima</button></div></div>
+                     </div>
+                     <div class="card waiting-card">
+                         <div class="top"><img src="https://i.imgur.com/johY5fH.jpg" alt="Foto Dimas Pratama" class="photo"><div class="name-status"><div class="name">Dimas Pratama</div><p class="status">Klien Baru</p></div></div>
+                         <div class="tags"><span class="badge badge-grey">Depresi</span> <span class="badge badge-grey">Insomnia</span></div>
+                         <div class="req-details"><span>Permintaan: Chat</span><a href="#">Lihat Detail</a></div>
+                         <div class="actions"><div class="date">Jadwal: 16 Agt, 09:00</div><div class="btn-group"><button class="btn-outline-red">Tolak</button><button class="btn-primary">Terima</button></div></div>
+                     </div>
+                </div>
+            </section>
+             
+            <section class="section">
+                <div class="section-header"><h2>Jadwal Hari Ini</h2><a href="#" class="link-arrow">Lihat Semua <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></a></div>
+                <div class="card schedule-table-card"><table class="schedule-table"><thead><tr><th>Klien</th><th>Waktu</th><th>Metode</th><th>Durasi</th><th>Status</th><th>Aksi</th></tr></thead><tbody><tr><td class="client-name">Budi Santoso</td><td>10:00 - 11:00</td><td>Video Call</td><td>60 menit</td><td><span class="badge badge-blue">Segera</span></td><td><a href="#" class="action-link">Mulai Sesi</a></td></tr><tr><td class="client-name">Siti Rahayu</td><td>13:00 - 14:00</td><td>Panggilan Suara</td><td>45 menit</td><td><span class="badge badge-yellow">Nanti</span></td><td><a href="#" class="action-link">Lihat Detail</a></td></tr><tr><td class="client-name">Ahmad Fauzi</td><td>15:30 - 16:30</td><td>Chat</td><td>60 menit</td><td><span class="badge badge-yellow">Nanti</span></td><td><a href="#" class="action-link">Lihat Detail</a></td></tr></tbody></table></div>
+            </section>
+            
+            <section class="section">
+                <div class="card activity-summary-card"><h2 style="color:white;">Ringkasan Aktivitas Terapis</h2><p class="header-desc">Bulan Agustus 2023</p><div class="activity-summary-grid"><div class="activity-stat-card"><div class="value">24</div><div class="label">Total Sesi</div></div><div class="activity-stat-card"><div class="value">12</div><div class="label">Klien Aktif</div></div><div class="activity-stat-card"><div class="value">4.8</div><div class="label">Rating</div></div></div><button class="btn-full-width btn-green-light">Lihat Laporan Lengkap</button></div>
+            </section>
+        </main>
+
+        <!-- === SIDEBAR === -->
+        <aside class="sidebar">
+            <section class="quick-actions" style="display:flex; flex-direction: column; gap:12px;">
+                <button class="btn-action"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Tambah Sesi</button>
+                <button class="btn-action" style="background-color: #43524d;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>Konfirmasi Klien</button>
+            </section>
+            <section class="card notifications section"><h3 class="card-header-sm">Notifikasi Terbaru</h3><div class="notification-item"><div class="notification-header"><span class="notification-title">Permintaan Baru</span><span class="notification-time">10m lalu</span></div><p class="notification-body">Rina Wati mengirim permintaan konsultasi.</p><span class="badge badge-yellow" style="align-self: flex-start;">Menunggu</span></div><div class="notification-item"><div class="notification-header"><span class="notification-title">Pengingat Sesi</span><span class="notification-time">30m lagi</span></div><p class="notification-body">Sesi dengan Budi Santoso akan dimulai.</p><span class="badge badge-blue" style="align-self: flex-start;">Segera</span></div></section>
+            <section class="card quick-links"><h3 class="card-header-sm">Tautan Cepat</h3><ul><li><a href="#"><i class="ri-calendar-2-line"></i>Kelola Jadwal</a></li><li><a href="#"><i class="ri-history-line"></i>Riwayat Sesi</a></li><li><a href="#"><i class="ri-wallet-3-line"></i>Laporan Keuangan</a></li></ul</section>
+            <section class="card calendar-card"><div class="calendar"><div class="controls"><span class="arrow"><i class="ri-arrow-left-s-line"></i></span><span class="month">Agustus 2023</span><span class="arrow"><i class="ri-arrow-right-s-line"></i></span></div><div class="calendar-grid"><span class="day-name">S</span><span class="day-name">S</span><span class="day-name">R</span><span class="day-name">K</span><span class="day-name">J</span><span class="day-name">S</span><span class="day-name">M</span><span class="day" style="color:#CBD5E1;">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day current">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span></div></div></section>
+            <section class="resources section"><h3 class="card-header-sm">Sumber Daya Terapis</h3><div class="resource-item"><h4>Panduan Konseling Online</h4><p>Praktik terbaik untuk sesi online yang efektif.</p><a href="#">Lihat Panduan <i class="ri-arrow-right-line"></i></a></div><div class="resource-item"><h4>Webinar: Menangani Kecemasan</h4><p>Teknik terapeutik spesifik untuk klien cemas.</p><a href="#">Tonton Sekarang <i class="ri-arrow-right-line"></i></a></div></section>
+        </aside>
+    </div>
+
+</body>
+</html>

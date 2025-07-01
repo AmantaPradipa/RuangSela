@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes Psikologi</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #4D645B;
+            --header-bg: #e9efec;
+            --featured-bg: #647970;
+            --featured-btn-bg: #f3f6f5;
+            --light-green: #e9efec;
+            --dark-text: #212121;
+            --light-text: #757575;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f8f9fa;
+            --pill-blue-bg: rgba(33, 150, 243, 0.1);
+            --pill-blue-text: #1976d2;
+            --pill-green-bg: rgba(76, 175, 80, 0.1);
+            --pill-green-text: #388e3c;
+            --pill-gray-bg: rgba(158, 158, 158, 0.1);
+            --pill-gray-text: #616161;
+        }
+
+        /* === Style Dasar & Reset === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--dark-text);
+        }
+
+        /* === Tata Letak Utama === */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 24px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .widget-section {
+            padding: 24px 0 24px 24px;
+        }
+
+        /* === Header === */
+        .page-header {
+            background-color: var(--header-bg);
+            padding: 40px;
+            border-radius: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--light-text);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .search-controls {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .search-bar {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-bar svg {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--light-text);
+        }
+
+        .search-bar input {
+            width: 100%;
+            height: 48px;
+            padding: 12px 12px 12px 50px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            font-size: 15px;
+        }
+
+        .btn-filter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 48px;
+            padding: 0 24px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-filter svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* === Katalog & Tab === */
+        .test-catalog-header {
+            padding: 0 40px;
+        }
+
+        .test-tabs {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .test-tabs a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 4px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .test-tabs a svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .test-tabs a.active,
+        .test-tabs a:hover {
+            color: var(--dark-text);
+            border-bottom-color: var(--primary-green);
+        }
+
+        /* --- Kartu Tes --- */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 24px 40px 0 40px;
+        }
+
+        .test-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-pill {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pill-populer {
+            background: var(--pill-blue-bg);
+            color: var(--pill-blue-text);
+        }
+
+        .pill-rekomendasi {
+            background: var(--pill-green-bg);
+            color: var(--pill-green-text);
+        }
+
+        .pill-baru {
+            background: var(--pill-gray-bg);
+            color: var(--pill-gray-text);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h2 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .card-content .description {
+            font-size: 14px;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--light-text);
+            margin: 16px 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-start-test {
+            width: 100%;
+            text-align: center;
+            display: block;
+            background: var(--primary-green);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        /* === Kartu Unggulan === */
+        .featured-test-card {
+            background: var(--featured-bg);
+            color: white;
+            border-radius: 24px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            gap: 40px;
+            margin: 0 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .featured-test-card .pill-unggulan {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .featured-test-card h2 {
+            font-size: 28px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .featured-test-card p {
+            opacity: 0.9;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .featured-test-card .card-meta {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-start-featured {
+            background: var(--featured-btn-bg);
+            color: var(--dark-text);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .featured-image-container {
+            align-self: stretch;
+            position: relative;
+        }
+
+        .featured-image {
+            width: 140%;
+            height: 140%;
+            object-fit: cover;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(15deg);
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+        }
+
+        /* === FAQ === */
+        .faq-section {
+            padding: 0 40px;
+        }
+
+        .faq-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 16px 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .faq-card h2 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item details {
+            padding: 20px 0;
+        }
+
+        .faq-item summary {
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '›';
+            font-size: 28px;
+            color: var(--light-text);
+            transform: rotate(90deg);
+            transition: transform 0.2s;
+        }
+
+        .faq-item details[open] summary::after {
+            transform: rotate(-90deg);
+        }
+
+        .faq-item .answer {
+            margin-top: 12px;
+            font-size: 15px;
+            color: var(--light-text);
+            line-height: 1.7;
+            padding-right: 24px;
+        }
+
+        /* === Sidebar === */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 24px;
+            padding-left: 0;
+        }
+
+        .widget {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .widget h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .widget .btn {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .widget .btn-primary {
+            background: var(--primary-green);
+            color: white;
+            border: 1px solid var(--primary-green);
+        }
+
+        .widget .btn-secondary {
+            border: 1px solid var(--border-color);
+            color: var(--dark-text);
+            background: white;
+        }
+
+        .emergency-box {
+            background-color: #fff9c4;
+            border-left: 4px solid #ffd54f;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .popular-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .popular-item,
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark-text);
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-green);
+        }
+
+        .item-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--primary-green);
+        }
+
+        .item-info .title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .item-info .subtitle {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .history-list a {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .history-list a:hover {
+            background-color: var(--light-green);
+        }
+
+        .history-list a .item-info {
+            flex-grow: 1;
+        }
+
+        .history-list svg.arrow {
+            color: var(--light-text);
+        }
+
+        .btn-view-all {
+            display: block;
+            text-align: center;
+            background: var(--light-green);
+            color: var(--primary-green);
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Responsive */
+        @media(max-width: 1200px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content,
+            .widget-section {
+                padding: 12px;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 24px 0;
+            }
+
+            .featured-test-card {
+                grid-template-columns: 1fr;
+                margin: 0;
+            }
+
+            .featured-image-container {
+                display: none;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .test-tabs {
+                flex-wrap: wrap;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <!-- ==== KONTEN UTAMA ==== -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Tes Psikologi</h1>
+                <p>Temukan wawasan tentang diri Anda melalui berbagai tes psikologi yang dirancang oleh para ahli. Hasil
+                    tes akan membantu Anda memahami kepribadian, kekuatan, dan area pengembangan diri.</p>
+                <div class="search-controls">
+                    <div class="search-bar">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                        </svg>
+                        <input type="text" placeholder="Cari tes psikologi...">
+                    </div>
+                    <button class="btn-filter">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                        </svg>
+                        Filter
+                    </button>
+                </div>
+            </header>
+
+            <section class="test-catalog">
+                <div class="test-catalog-header">
+                    <nav class="test-tabs">
+                        <a href="#" class="category-tab active">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88.7-1.42 2.76-2.12 6.14-2.12s5.44.7 6.14 2.12C16.43 19.18 14.03 20 12 20z" />
+                            </svg>
+                            Kepribadian</a>
+                        <a href="#" class="category-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 3a9 9 0 0 0-9 9h2c0-3.86 3.14-7 7-7s7 3.14 7 7-3.14 7-7 7v2a9 9 0 0 0 9-9 9 9 0 0 0-9-9z" />
+                            </svg>
+                            Kognitif</a>
+                        <a href="#" class="category-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
+                            Kesehatan Mental</a>
+                        <a href="#" class="category-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
+                            </svg>
+                            Karir</a>
+                    </nav>
+                </div>
+                <div class="test-grid">
+                    <!-- TEST CARD 1 -->
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1599666433232-2b222eb02214?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Love to Learn Sign">
+                        <span class="card-pill pill-populer">Populer</span>
+                        <div class="card-content">
+                            <h2>Myers-Briggs Type Indicator (MBTI)</h2>
+                            <p class="description">Kenali 16 tipe kepribadian dan temukan tipe Anda untuk memahami
+                                kekuatan dan kelemahan.</p>
+                            <div class="card-meta">
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                                        <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                                    </svg>30 menit</span>
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+                                    </svg>93 pertanyaan</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                    <!-- TEST CARD 2 -->
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Person on cliff">
+                        <span class="card-pill pill-rekomendasi">Direkomendasikan</span>
+                        <div class="card-content">
+                            <h2>Big Five Personality</h2>
+                            <p class="description">Ukur lima dimensi kepribadian utama: Openness, Conscientiousness,
+                                Extraversion, dll.</p>
+                            <div class="card-meta">
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                                        <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                                    </svg>15 menit</span>
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+                                    </svg>44 pertanyaan</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                    <!-- TEST CARD 3 -->
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1541782233261-3652d5b91696?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Man with a dog">
+                        <span class="card-pill pill-baru">Baru</span>
+                        <div class="card-content">
+                            <h2>Tes Kecerdasan Emosional</h2>
+                            <p class="description">Evaluasi kemampuan Anda dalam mengenali, memahami, dan mengelola
+                                emosi.</p>
+                            <div class="card-meta">
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                                        <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                                    </svg>20 menit</span>
+                                <span class="meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+                                    </svg>57 pertanyaan</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                    <!-- TAMBAHKAN 3 KARTU LAIN DI SINI (sesuai gambar) -->
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Open book">
+                        <div class="card-content">
+                            <h2>Tes Gaya Belajar</h2>
+                            <p class="description">Temukan apakah Anda adalah pembelajar visual, auditori, atau
+                                kinestetik.</p>
+                            <div class="card-meta"><span class="meta-item">...</span><span class="meta-item">...</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1543269664-7e979f425b1a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Man studying">
+                        <div class="card-content">
+                            <h2>Tes Kekuatan Karakter</h2>
+                            <p class="description">Identifikasi 24 kekuatan karakter Anda dan pelajari cara
+                                memanfaatkannya.</p>
+                            <div class="card-meta"><span class="meta-item">...</span><span class="meta-item">...</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                    <div class="test-card">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
+                            class="card-image" alt="Team meeting">
+                        <div class="card-content">
+                            <h2>Tes Minat Karir Holland</h2>
+                            <p class="description">Temukan minat karir Anda berdasarkan 6 tipe kepribadian: Realistis,
+                                dll.</p>
+                            <div class="card-meta"><span class="meta-item">...</span><span class="meta-item">...</span>
+                            </div>
+                            <a href="#" class="btn-start-test">Mulai Tes</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="featured-test-card">
+                <div>
+                    <span class="pill-unggulan">Tes Unggulan</span>
+                    <h2>Tes Kecemasan dan Depresi (DASS-21)</h2>
+                    <p>Alat skrining yang dirancang untuk mengukur tingkat depresi, kecemasan, dan stres. Tes ini dapat
+                        membantu Anda mengidentifikasi gejala dan menentukan langkah selanjutnya dalam perawatan
+                        kesehatan mental.</p>
+                    <div class="card-meta">
+                        <span class="meta-item"><svg>...</svg>10 menit</span>
+                        <span class="meta-item"><svg>...</svg>21 pertanyaan</span>
+                        <span class="meta-item"><svg>...</svg>5.2k+ telah mengambil</span>
+                    </div>
+                    <a href="#" class="btn-start-featured">Mulai Tes Sekarang</a>
+                </div>
+                <div class="featured-image-container">
+                    <img src="https://images.unsplash.com/photo-1547847053-fde6125a40a8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3"
+                        class="featured-image" alt="Colorful hands art">
+                </div>
+            </section>
+
+            <section class="faq-section">
+                <div class="faq-card">
+                    <h2>Pertanyaan Umum</h2>
+                    <div class="faq-item">
+                        <details>
+                            <summary>Apakah hasil tes psikologi ini akurat?</summary>
+                            <p class="answer">Tes psikologi yang kami sediakan telah melalui validasi ilmiah dan
+                                dirancang oleh para ahli. Namun, hasil tes sebaiknya digunakan sebagai panduan dan bukan
+                                diagnosis definitif. Untuk hasil yang lebih akurat, konsultasikan dengan psikolog
+                                profesional.</p>
+                        </details>
+                    </div>
+                    <div class="faq-item">
+                        <details>
+                            <summary>Berapa lama hasil tes akan tersimpan?</summary>
+                            <p class="answer">Hasil tes Anda akan tersimpan secara permanen di akun Anda dan dapat
+                                diakses kapan saja. Anda juga dapat mengunduh atau membagikan hasil tes sesuai
+                                kebutuhan.</p>
+                        </details>
+                    </div>
+                    <div class="faq-item">
+                        <details>
+                            <summary>Apakah saya bisa mengambil tes yang sama beberapa kali?</summary>
+                            <p class="answer">Ya, Anda dapat mengambil tes yang sama beberapa kali. Sistem kami akan
+                                menyimpan riwayat semua hasil tes Anda sehingga Anda dapat melacak perubahan dari waktu
+                                ke waktu.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ==== SIDEBAR KANAN ==== -->
+        <div class="widget-section">
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3>Kontak Cepat</h3>
+                    <a href="#" class="btn btn-primary"><svg>...</svg>Hubungi Terapis</a>
+                    <a href="#" class="btn btn-secondary"><svg>...</svg>Hubungi Admin</a>
+                    <div class="emergency-box">Jika Anda dalam krisis, hubungi hotline 119</div>
+                </div>
+
+                <div class="widget">
+                    <h3>Tes Populer</h3>
+                    <ul class="popular-list">
+                        <li><a href="#" class="popular-item">
+                                <div class="item-icon"><svg>...</svg></div>
+                                <div class="item-info">
+                                    <div class="title">Myers-Briggs Type Indicator</div>
+                                    <div class="subtitle">5.8k+ peserta</div>
+                                </div>
+                            </a></li>
+                        <li><a href="#" class="popular-item">
+                                <div class="item-icon"><svg>...</svg></div>
+                                <div class="item-info">
+                                    <div class="title">Tes Kecemasan dan Depresi</div>
+                                    <div class="subtitle">4.1k+ peserta</div>
+                                </div>
+                            </a></li>
+                        <li><a href="#" class="popular-item">
+                                <div class="item-icon"><svg>...</svg></div>
+                                <div class="item-info">
+                                    <div class="title">Tes Minat Karir Holland</div>
+                                    <div class="subtitle">3.5k+ peserta</div>
+                                </div>
+                            </a></li>
+                        <li><a href="#" class="popular-item">
+                                <div class="item-icon"><svg>...</svg></div>
+                                <div class="item-info">
+                                    <div class="title">Tes Kecerdasan Emosional</div>
+                                    <div class="subtitle">2.9k+ peserta</div>
+                                </div>
+                            </a></li>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3>Riwayat Tes</h3>
+                    <div class="history-list">
+                        <a href="#" class="history-item">
+                            <div class="item-icon"><svg>...</svg></div>
+                            <div class="item-info">
+                                <div class="title">Big Five Personality</div>
+                                <div class="subtitle">12 Agustus 2023</div>
+                            </div>
+                            <svg class="arrow">...</svg>
+                        </a>
+                        <a href="#" class="history-item">
+                            <div class="item-icon"><svg>...</svg></div>
+                            <div class="item-info">
+                                <div class="title">Tes Gaya Belajar</div>
+                                <div class="subtitle">5 Juli 2023</div>
+                            </div>
+                            <svg class="arrow">...</svg>
+                        </a>
+                    </div>
+                    <a href="#" class="btn-view-all">Lihat Semua Riwayat</a>
+                </div>
+
+                <div class="widget">
+                    <h3>Manfaat Tes Psikologi</h3>
+                    <ul class="benefits-list">
+                        <li class="popular-item">
+                            <div class="item-icon"><svg>...</svg></div>
+                            <div class="item-info">
+                                <div class="title">Pengenalan Diri</div>
+                                <div class="subtitle">Kenali kekuatan dan area pengembangan diri</div>
+                            </div>
+                        </li>
+                        <li class="popular-item">
+                            <div class="item-icon"><svg>...</svg></div>
+                            <div class="item-info">
+                                <div class="title">Pengembangan Karir</div>
+                                <div class="subtitle">Temukan jalur karir yang sesuai</div>
+                            </div>
+                        </li>
+                        <li class="popular-item">
+                            <div class="item-icon"><svg>...</svg></div>
+                            <div class="item-info">
+                                <div class="title">Kesehatan Mental</div>
+                                <div class="subtitle">Identifikasi dini masalah kesehatan mental</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // Hapus 'active' dari semua tab
+                    tabs.forEach(item => item.classList.remove('active'));
+                    // Tambah 'active' ke tab yang diklik
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

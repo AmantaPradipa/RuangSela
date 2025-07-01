@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Dokumen Terapis</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Boxicons for Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        /* CSS Variables for a neater and more accurate theme */
+        :root {
+            /* Accurate Colors */
+            --dark-green: #435E55;
+            --light-green: #E8F0EB;
+            --primary-yellow: #FFC107;
+            --light-yellow: #FFF8E1;
+            --yellow-text: #F57F17;
+            --primary-red: #D32F2F;
+            
+            /* UI Colors */
+            --grey-text: #6c757d;
+            --dark-text: #212529;
+            --border-color: #E9ECEF;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            
+            /* Layout Variables */
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white-color);
+            color: var(--dark-text);
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* --- Main Header --- */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            background-color: var(--white-color);
+            z-index: 10;
+        }
+        .main-header h1 { font-size: 24px; font-weight: 600; }
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .search-bar { position: relative; }
+        .search-bar i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--grey-text); }
+        .search-bar input, .status-filter {
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .search-bar input { padding-left: 40px; width: 280px; }
+        .status-filter { min-width: 150px; }
+
+        /* --- Main Layout Container --- */
+        .verification-container {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden; /* Crucial for internal scrolling */
+        }
+
+        /* --- Left Panel: Therapist List --- */
+        .therapist-list-panel {
+            width: 400px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            background-color: var(--white-color);
+            flex-shrink: 0;
+        }
+        .list-tabs { display: flex; padding: 12px; border-bottom: 1px solid var(--border-color); gap: 8px; }
+        .list-tabs a {
+            flex: 1; text-align: center; padding: 10px;
+            text-decoration: none; color: var(--grey-text);
+            font-weight: 500; font-size: 15px; border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+        }
+        .list-tabs a.active { background-color: var(--light-green); color: var(--dark-green); font-weight: 600;}
+        .therapist-scroll-list {
+            flex-grow: 1; overflow-y: auto; padding: 8px;
+            scrollbar-width: thin; scrollbar-color: var(--border-color) transparent;
+        }
+
+        /* --- Therapist Item in List --- */
+        .therapist-item {
+            display: flex; gap: 16px; align-items: center;
+            padding: 16px; border-radius: var(--border-radius);
+            cursor: pointer; transition: background-color 0.2s; position: relative;
+        }
+        .therapist-item.active {
+            background-color: var(--background-color);
+            box-shadow: inset 3px 0 0 0 var(--dark-green);
+        }
+        .therapist-item:not(.active):hover { background-color: #fdfdfd; }
+
+        .avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .avatar-initials {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background-color: var(--border-color); color: var(--grey-text);
+            font-weight: 600; flex-shrink: 0;
+        }
+        .therapist-info h3 { font-size: 16px; font-weight: 600; line-height: 1.3; }
+        .therapist-info p { font-size: 14px; color: var(--grey-text); }
+        .therapist-progress { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+        .progress-bar { width: 100px; height: 6px; background-color: #e0e0e0; border-radius: 3px; overflow: hidden; }
+        .progress-bar-inner { height: 100%; background-color: var(--dark-green); border-radius: 3px; }
+        .tag-status { padding: 3px 10px; font-size: 12px; border-radius: 12px; font-weight: 500; }
+        .tag-yellow { background-color: var(--light-yellow); color: var(--yellow-text); }
+        .tag-green { background-color: var(--light-green); color: var(--dark-green); }
+        
+        .item-date { position: absolute; top: 20px; right: 16px; font-size: 13px; color: var(--grey-text); display: flex; align-items: center; gap: 4px; }
+        
+        /* --- Right Panel: Verification Detail --- */
+        .verification-panel {
+            flex-grow: 1; overflow-y: auto;
+            background-color: var(--background-color); padding: 32px;
+            scrollbar-width: thin; scrollbar-color: var(--border-color) transparent;
+        }
+        .card { 
+            background-color: var(--white-color); padding: 28px;
+            border-radius: var(--border-radius); box-shadow: var(--card-shadow);
+            margin-bottom: 24px; border: 1px solid var(--border-color);
+        }
+        
+        /* -- Card: Therapist Header -- */
+        .therapist-header-card { display: flex; flex-direction: column; gap: 28px; }
+        .therapist-detail-header { display: flex; gap: 16px; align-items: center; }
+        
+        .document-nav { display: flex; justify-content: space-around; border-top: 1px solid var(--border-color); padding-top: 24px; }
+        .doc-nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--grey-text); gap: 8px; position: relative; }
+        .doc-nav-item i { font-size: 24px; }
+        .doc-nav-item span { font-size: 14px; }
+        .doc-nav-item.active { color: var(--dark-text); font-weight: 600; }
+        .doc-nav-item.active::after { content: ''; position: absolute; bottom: -28px; left: 0; right: 0; height: 3px; background: var(--dark-green); border-radius: 2px; }
+
+        /* -- Card: Document Viewer -- */
+        .document-viewer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .document-viewer-header h2 { font-size: 18px; font-weight: 600; }
+        .document-viewer-header .actions a { text-decoration: none; color: var(--grey-text); font-weight: 500; margin-left: 20px; display: inline-flex; align-items: center; gap: 6px; }
+        .document-viewer-content { min-height: 280px; background: var(--background-color); border: 2px dashed #dcdcdc; border-radius: var(--border-radius); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 20px;}
+        .document-viewer-content i { font-size: 52px; color: var(--grey-text); }
+        .document-viewer-content p { font-weight: 500; }
+        .view-pdf-btn { background: var(--dark-green); color: white; padding: 12px 28px; border-radius: 8px; border: none; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* -- Card: Criteria -- */
+        .criteria-card h2 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .criteria-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;}
+        .criteria-item { display: flex; align-items: center; gap: 12px; font-size: 15px;}
+        .criteria-item input { width: 18px; height: 18px; accent-color: var(--dark-green); flex-shrink: 0; }
+        #notes-label { font-weight: 500; font-size: 14px; color: var(--grey-text); display: block; margin-bottom: 8px;}
+        .verification-notes { width: 100%; min-height: 80px; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; resize: vertical; }
+
+        /* -- Card: Overall Status -- */
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;}
+        .status-box { padding: 16px; border-radius: 10px; border: 1px solid var(--border-color); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+        .status-box p { font-size: 14px; font-weight: 500; }
+        .status-content { display: flex; align-items: center; gap: 6px; }
+        .status-content i { font-size: 16px; }
+
+        /* -- Final Actions -- */
+        .main-action-buttons { display: flex; gap: 16px; }
+        .btn { padding: 14px; font-size: 15px; border-radius: 10px; border: none; font-weight: 600; flex: 1; cursor: pointer; transition: all 0.2s; }
+        .btn-danger { background: var(--white-color); border: 1.5px solid var(--primary-red); color: var(--primary-red); }
+        .btn-success { background: var(--dark-green); color: var(--white-color); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .verification-container { flex-direction: column; }
+            .therapist-list-panel { width: 100%; height: auto; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .verification-panel { padding: 24px; }
+        }
+        @media (max-width: 768px) {
+             .main-header { flex-direction: column; gap: 16px; align-items: stretch; padding: 16px; }
+             .search-bar input { width: 100%; }
+             .verification-panel { padding: 16px; }
+             .therapist-scroll-list, .verification-panel { scrollbar-width: none; } /* Hide scrollbar on mobile */
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <header class="main-header">
+        <h1>Verifikasi Dokumen Terapis</h1>
+        <div class="header-actions">
+            <div class="search-bar">
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Cari terapis...">
+            </div>
+            <select class="status-filter">
+                <option>Semua Status</option>
+                <option>Menunggu</option>
+                <option>Terverifikasi</option>
+                <option>Ditolak</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="verification-container">
+        <!-- Left Panel: Therapist List -->
+        <aside class="therapist-list-panel">
+            <nav class="list-tabs">
+                <a href="#" class="active">Menunggu (8)</a>
+                <a href="#">Terverifikasi (24)</a>
+                <a href="#">Ditolak (3)</a>
+            </nav>
+            <div class="therapist-scroll-list">
+                <!-- Selected Therapist -->
+                <div class="therapist-item active">
+                    <img src="https://i.pravatar.cc/150?u=anita" alt="Avatar" class="avatar">
+                    <div class="therapist-info">
+                        <h3>Dr. Anita Wijaya</h3>
+                        <p>Psikolog Klinis</p>
+                        <div class="therapist-progress">
+                            <span style="font-size:12px; color: var(--grey-text);">1/4</span>
+                            <div class="progress-bar"><div class="progress-bar-inner" style="width: 25%;"></div></div>
+                            <span class="tag-status tag-yellow">Menunggu</span>
+                        </div>
+                    </div>
+                    <span class="item-date"><i class='bx bxs-calendar'></i> 12 Juni 2023</span>
+                </div>
+                <!-- Other Therapists -->
+                <div class="therapist-item">
+                    <div class="avatar-initials">BS</div>
+                    <div class="therapist-info">
+                        <h3>Dr. Budi Santoso</h3>
+                        <p>Psikiater</p>
+                        <div class="therapist-progress">
+                             <span style="font-size:12px; color: var(--grey-text);">2/4</span>
+                            <div class="progress-bar"><div class="progress-bar-inner" style="width: 50%;"></div></div>
+                            <span class="tag-status tag-yellow">Menunggu</span>
+                        </div>
+                    </div>
+                    <span class="item-date"><i class='bx bxs-calendar'></i> 10 Juni 2023</span>
+                </div>
+                 <div class="therapist-item">
+                    <img src="https://i.pravatar.cc/150?u=citra" alt="Avatar" class="avatar">
+                    <div class="therapist-info">
+                        <h3>Dr. Citra Handayani</h3>
+                        <p>Psikolog Anak</p>
+                        <div class="therapist-progress">
+                             <span style="font-size:12px; color: var(--grey-text);">0/4</span>
+                            <div class="progress-bar"><div class="progress-bar-inner" style="width: 0%;"></div></div>
+                            <span class="tag-status tag-yellow">Menunggu</span>
+                        </div>
+                    </div>
+                     <span class="item-date"><i class='bx bxs-calendar'></i> 8 Juni 2023</span>
+                </div>
+                <div class="therapist-item">
+                    <img src="https://i.pravatar.cc/150?u=gita" alt="Avatar" class="avatar">
+                    <div class="therapist-info">
+                        <h3>Dr. Gita Purnama</h3>
+                        <p>Konselor Trauma</p>
+                        <div class="therapist-progress">
+                            <span style="font-size:12px; color: var(--grey-text);">0/4</span>
+                           <div class="progress-bar"><div class="progress-bar-inner" style="width: 0%;"></div></div>
+                           <span class="tag-status tag-yellow">Menunggu</span>
+                       </div>
+                    </div>
+                    <span class="item-date"><i class='bx bxs-calendar'></i> 1 Juni 2023</span>
+                </div>
+                <div class="therapist-item">
+                    <div class="avatar-initials">FN</div>
+                    <div class="therapist-info">
+                        <h3>Dr. Fajar Nugroho</h3>
+                        <p>Psikolog Remaja</p>
+                        <div class="therapist-progress">
+                            <span style="font-size:12px; color: var(--grey-text);">2/4</span>
+                           <div class="progress-bar"><div class="progress-bar-inner" style="width: 50%;"></div></div>
+                           <span class="tag-status tag-yellow">Menunggu</span>
+                       </div>
+                    </div>
+                    <span class="item-date"><i class='bx bxs-calendar'></i> 3 Juni 2023</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Panel: Verification Details -->
+        <section class="verification-panel">
+            <div class="card therapist-header-card">
+                <div class="therapist-detail-header">
+                    <img src="https://i.pravatar.cc/150?u=anita" alt="Avatar" class="avatar" style="width: 60px; height: 60px;">
+                    <div>
+                        <h3 style="font-size: 20px;">Dr. Anita Wijaya</h3>
+                        <p style="font-size: 15px;">Psikolog Klinis</p>
+                    </div>
+                </div>
+                <nav class="document-nav">
+                    <a href="#" class="doc-nav-item active"><i class='bx bxs-file-blank'></i><span>Salinan Lisensi</span></a>
+                    <a href="#" class="doc-nav-item"><i class='bx bxs-id-card'></i><span>Identitas Resmi</span></a>
+                    <a href="#" class="doc-nav-item"><i class='bx bxs-shield-quarter'></i><span>Asuransi Profesional</span></a>
+                    <a href="#" class="doc-nav-item"><i class='bx bxs-camera'></i><span>Foto Profesional</span></a>
+                </nav>
+            </div>
+            
+            <div class="card document-viewer-card">
+                <div class="document-viewer-header">
+                    <h2>Dokumen: Salinan Lisensi Profesional</h2>
+                    <div class="actions">
+                        <a href="#"><i class='bx bx-download'></i> Unduh</a>
+                        <a href="#"><i class='bx bx-link-external'></i> Lihat PDF</a>
+                    </div>
+                </div>
+                <div class="document-viewer-content">
+                    <i class='bx bxs-file-pdf'></i>
+                    <p>Lisensi_Profesional_Anita_Wijaya.pdf</p>
+                    <button class="view-pdf-btn"><i class='bx bx-show'></i>Lihat PDF</button>
+                </div>
+            </div>
+
+            <div class="card criteria-card">
+                <h2>Kriteria Verifikasi</h2>
+                <div class="criteria-list">
+                    <label class="criteria-item"><input type="checkbox"> Dokumen terbaca dengan jelas</label>
+                    <label class="criteria-item"><input type="checkbox"> Tanggal berlaku masih valid</label>
+                    <label class="criteria-item"><input type="checkbox"> Dokumen resmi dan tidak dimanipulasi</label>
+                    <label class="criteria-item"><input type="checkbox"> Memenuhi persyaratan lisensi profesional</label>
+                </div>
+                <label id="notes-label" for="notes">Catatan Verifikasi (opsional)</label>
+                <textarea id="notes" class="verification-notes" placeholder="Tambahkan catatan verifikasi di sini..."></textarea>
+            </div>
+
+            <div class="card overall-status-card">
+                <h2 style="font-size: 18px; font-weight: 600; text-align: left; margin-bottom: 16px;">Status Verifikasi Dokumen</h2>
+                <div class="status-grid">
+                    <div class="status-box">
+                        <p>Salinan Lisensi</p>
+                        <div class="status-content tag-yellow"><i class='bx bx-time-five'></i> <span>Menunggu</span></div>
+                    </div>
+                    <div class="status-box">
+                        <p>Identitas Resmi</p>
+                        <div class="status-content tag-green"><i class='bx bx-check-circle'></i> <span>Terverifikasi</span></div>
+                    </div>
+                    <div class="status-box">
+                        <p>Asuransi Prof.</p>
+                         <div class="status-content tag-yellow"><i class='bx bx-time-five'></i> <span>Menunggu</span></div>
+                    </div>
+                     <div class="status-box">
+                        <p>Foto Profesional</p>
+                        <div class="status-content tag-yellow"><i class='bx bx-time-five'></i> <span>Menunggu</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-action-buttons">
+                <button class="btn btn-danger"><i class='bx bx-x-circle'></i> Tolak Dokumen</button>
+                <button class="btn btn-success"><i class='bx bx-check-circle'></i> Verifikasi Dokumen</button>
+            </div>
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

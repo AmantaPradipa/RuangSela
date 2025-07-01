@@ -1,0 +1,41 @@
+/* public/assets/css/global/variables.css */
+
+:root {
+    /* Warna Utama */
+    --primary-color: #7B997F;
+    --primary-dark: #6a886e;
+    --primary-light: #E6E8E6;
+    --accent-blue: #3E8BFF;
+    --accent-blue-light: rgba(62, 139, 255, 0.1);
+    --accent-orange: #E57A44;
+    --accent-green-confirm: #34A853;
+    --accent-yellow: #FFC700;
+    
+    /* Shadows */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+
+    /* Warna Teks */
+    --dark-text: #2D3748;
+    --light-text: #718096;
+    --white-text: #FFFFFF;
+    
+    /* Warna Latar Belakang */
+    --bg-white: #FFFFFF;
+    --bg-light-gray: #F8F9F8;
+    --bg-dark-gray: #383838;
+    --bg-light-blue: #F8FFFF; /* Untuk section tertentu */
+
+    /* Warna Border dan Aksen */
+    --border-light: #E2E8F0;
+    --star-yellow: #facc15;
+
+    /* Warna Status & Notifikasi */
+    --success-main: #28a745;
+    --success-bg: #e9f7ec;
+    --danger-main: #dc3545;
+    --danger-bg: #fceaea;
+    
+    /* Font */
+    --font-family-sans: 'Poppins', sans-serif;
+}

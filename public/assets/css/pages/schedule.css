@@ -1,0 +1,84 @@
+/* public/assets/css/pages/schedule.css */
+
+.schedule-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.schedule-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.schedule-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+.schedule-header p {
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.calendar-section {
+    margin-bottom: 30px;
+}
+
+.appointments-list-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 20px;
+}
+
+.appointment-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.appointment-item:last-child {
+    border-bottom: none;
+}
+
+.appointment-time {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.appointment-details h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 5px;
+}
+
+.appointment-details p {
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .schedule-container {
+        padding: 0 15px;
+    }
+    .schedule-header h1 {
+        font-size: 28px;
+    }
+    .calendar-section, .appointments-list-section {
+        padding: 20px;
+    }
+    .appointment-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,78 @@
+/* public/assets/css/pages/book_appointment.css */
+
+.page-header h1 {
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    font-size: 0.95rem;
+    color: var(--light-text);
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.content-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.content-sidebar .card {
+    padding: 20px;
+}
+
+.therapist-info-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background-color: var(--bg-light-gray);
+}
+
+.therapist-info-card img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+.therapist-info-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.therapist-info-card p {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin: 0;
+}
+
+.summary-list li {
+    margin-bottom: 10px;
+}
+
+.summary-list li:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+    .content-layout {
+        grid-template-columns: 1fr;
+    }
+    .therapist-info-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .therapist-info-card img {
+        margin-bottom: 10px;
+    }
+}

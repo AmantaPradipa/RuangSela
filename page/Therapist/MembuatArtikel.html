@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tulis Artikel Baru</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-page: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --bg-button-primary: #647970;
+            --bg-tag: #F3F4F6;
+            --bg-icon-hover: #E5E7EB;
+
+            --text-dark: #1F2937;
+            --text-medium: #6B7280;
+            --text-placeholder: #ADB5BD;
+            --text-light: #FFFFFF;
+
+            --border-color: #E5E7EB;
+
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            padding: 24px;
+        }
+
+        .editor-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* === Header === */
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .save-status {
+            color: var(--text-medium);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            background-color: var(--bg-button-primary);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #52655c;
+        }
+
+        /* === Tags Section === */
+        .tags-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-remove-tag {
+            background-color: var(--bg-tag);
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-remove-tag:hover {
+            background-color: #E5E7EB;
+        }
+
+        /* === Main Editor Card === */
+        .editor-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .title-input {
+            border: none;
+            outline: none;
+            font-size: 36px;
+            font-weight: 600;
+            padding-bottom: 16px;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .title-input::placeholder {
+            color: var(--text-placeholder);
+        }
+
+        .content-area {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-add-content {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background-color: transparent;
+            color: var(--text-medium);
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-add-content:hover {
+            background-color: var(--bg-tag);
+        }
+
+        .main-textarea {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-family: var(--font-family);
+            font-size: 16px;
+            color: var(--text-dark);
+            resize: vertical;
+            min-height: 400px;
+            line-height: 1.7;
+        }
+
+        .main-textarea::placeholder {
+            color: var(--text-placeholder);
+        }
+
+        /* === Footer Toolbar === */
+        .editor-footer {
+            margin-top: auto;
+            /* Push footer to the bottom */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .separator {
+            width: 1px;
+            height: 20px;
+            background-color: var(--border-color);
+            margin: 0 8px;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-icon i {
+            font-size: 22px;
+        }
+
+        .btn-icon:hover {
+            background-color: var(--bg-icon-hover);
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="editor-container">
+        <!-- Header -->
+        <header class="editor-header">
+            <span class="save-status">Saved</span>
+            <button class="btn-submit">Submit</button>
+        </header>
+
+        <!-- Tags -->
+        <div class="tags-section">
+            <div class="tag-item">
+                <span>Manajemen Stres</span>
+                <button class="btn-remove-tag">x</button>
+            </div>
+            <div class="tag-item">
+                <span>Kesehatan Mental</span>
+                <button class="btn-remove-tag">x</button>
+            </div>
+            <div class="tag-item">
+                <span>Kesehatan Fisik</span>
+                <button class="btn-remove-tag">x</button>
+            </div>
+            <div class="tag-item">
+                <span>Pengembangan Diri</span>
+                <button class="btn-remove-tag">x</button>
+            </div>
+        </div>
+
+        <!-- Editor Card -->
+        <div class="editor-card">
+            <input type="text" class="title-input" placeholder="Judul">
+
+            <div class="content-area">
+                <button class="btn-add-content">+</button>
+                <textarea class="main-textarea" placeholder="Tuliskan ceritamu..."></textarea>
+            </div>
+
+            <footer class="editor-footer">
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <button class="btn-icon">
+                            <i class="ri-format-clear"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="ri-link"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="ri-attachment-2"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="ri-emotion-happy-line"></i>
+                        </button>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="toolbar-group">
+                        <button class="btn-icon">
+                            <i class="ri-pencil-line"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="ri-calendar-2-line"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="ri-more-line"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="delete-action">
+                    <button class="btn-icon">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const removeButtons = document.querySelectorAll('.btn-remove-tag');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    // Temukan elemen .tag-item terdekat dan hapus
+                    event.currentTarget.closest('.tag-item').remove();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Verifikasi Terapis - Admin</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon for Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for theme consistency */
+        :root {
+            --primary-green: #61AD6F;
+            --dark-green: #53785E;
+            --light-green-bg: #EAF7EC;
+            --primary-orange: #FFA000;
+            --light-orange-bg: #FFF4E6;
+            --primary-red: #D9534F;
+            --light-red-bg: #FEECEF;
+            --grey-text: #6c757d;
+            --dark-text: #343a40;
+            --border-color: #E9ECEF;
+            --background-color: #f8f9fa;
+            --white-color: #FFFFFF;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --border-radius: 8px;
+        }
+
+        /* Basic Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            padding: 24px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Header and Breadcrumbs */
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .breadcrumbs {
+            font-size: 14px;
+            color: var(--grey-text);
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Layout */
+        .content-layout {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .content-main {
+            flex: 2;
+            /* Takes 2/3 of the space */
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .content-sidebar {
+            flex: 1;
+            /* Takes 1/3 of the space */
+            position: sticky;
+            top: 24px;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-header {
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .profile-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border-color);
+        }
+
+        .profile-header .name {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .profile-header .email {
+            font-size: 14px;
+            color: var(--grey-text);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--grey-text);
+            margin-bottom: 4px;
+        }
+
+        .info-item p {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* Document List */
+        .document-list {
+            list-style: none;
+        }
+
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .document-item:last-child {
+            border-bottom: none;
+        }
+
+        .document-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .document-info i {
+            font-size: 24px;
+            color: var(--primary-green);
+        }
+
+        /* Tags & Pills */
+        .tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .tag.orange {
+            background-color: var(--light-orange-bg);
+            color: var(--primary-orange);
+        }
+
+        /* Action Form */
+        .action-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .action-form label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .action-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-success {
+            background-color: var(--dark-green);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--grey-text);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .content-layout {
+                flex-direction: column;
+            }
+
+            .content-sidebar {
+                position: static;
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <header class="page-header">
+            <h1>Detail & Verifikasi Terapis</h1>
+            <div class="breadcrumbs">
+                <a href="#">Admin</a> / <a href="#">Verifikasi Terapis</a> / Dr. Maya Kusuma
+            </div>
+        </header>
+
+        <div class="content-layout">
+
+            <!-- Main Content Area -->
+            <main class="content-main">
+                <!-- Therapist Information Card -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Informasi Terapis</h2>
+                    </div>
+                    <div class="profile-header">
+                        <img src="https://i.pravatar.cc/150?u=maya" alt="Avatar Dr. Maya Kusuma">
+                        <div>
+                            <p class="name">Dr. Maya Kusuma, M.Psi.</p>
+                            <p class="email">maya.kusuma@email.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Spesialisasi</label>
+                            <p>Psikolog Klinis (Dewasa)</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Nomor Telepon</label>
+                            <p>+62 812 3456 7890</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Nomor SIPP (Surat Izin Praktik)</label>
+                            <p>1234/SIPP-PSI/DKI/V/2022</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Afiliasi</p>
+                                <p>HIMPSI Jaya</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Pendidikan Terakhir</label>
+                            <p>S2 Profesi Psikologi, Universitas Indonesia</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Tahun Lulus</label>
+                            <p>2018</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Documents Card -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Dokumen Verifikasi</h2>
+                    </div>
+                    <ul class="document-list">
+                        <li class="document-item">
+                            <div class="document-info">
+                                                                <i class='ri-card-line'></i>
+                                <span>KTP (Kartu Tanda Penduduk)</span>
+                            </div>
+                            <button class="btn btn-outline" style="width: auto; padding: 6px 12px;">Lihat
+                                Dokumen</button>
+                        </li>
+                        <li class="document-item">
+                            <div class="document-info">
+                                                                <i class='ri-file-pdf-line'></i>
+                                <span>Ijazah Pendidikan Terakhir</span>
+                            </div>
+                            <button class="btn btn-outline" style="width: auto; padding: 6px 12px;">Lihat
+                                Dokumen</button>
+                        </li>
+                        <li class="document-item">
+                            <div class="document-info">
+                                <i class='bx bxs-file-pdf'></i>
+                                <span>SIPP (Surat Izin Praktik Psikologi)</span>
+                            </div>
+                            <button class="btn btn-outline" style="width: auto; padding: 6px 12px;">Lihat
+                                Dokumen</button>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+            <!-- Sidebar with Actions -->
+            <aside class="content-sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Ringkasan & Aksi</h2>
+                    </div>
+
+                    <div class="info-item" style="margin-bottom: 20px;">
+                        <label>Status Saat Ini</label>
+                        <span class="tag orange">Menunggu Verifikasi</span>
+                    </div>
+                    <div class="info-item" style="margin-bottom: 24px;">
+                        <label>Tanggal Pendaftaran</label>
+                        <p>12 Mei 2023</p>
+                    </div>
+
+                    <form class="action-form">
+                        <div class="form-group">
+                            <label for="rejection-reason">Alasan (opsional, jika ditolak)</label>
+                            <textarea id="rejection-reason"
+                                placeholder="Contoh: Dokumen SIPP tidak valid atau sudah kedaluwarsa..."></textarea>
+                        </div>
+                        <div class="action-buttons">
+                                                        <button type="button" class="btn btn-danger"><i class='ri-close-circle-line'></i>Tolak
+                                Pengajuan</button>
+                                                        <button type="submit" class="btn btn-success"><i class='ri-check-line'></i>Setujui &
+                                Verifikasi</button>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

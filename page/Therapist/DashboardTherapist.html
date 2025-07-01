@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Terapis - Maya Kusuma</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* === CSS Variables & Global Styles === */
+        :root {
+            --bg-light: #F7F8FA;
+            --card-light: #FFFFFF;
+            --border-color: #EAEBEF;
+            --text-dark: #1C2A39;
+            --text-medium: #5A677D;
+            --text-muted: #9AA5B6;
+            --primary-green: #647970;
+            --primary-green-darker: #4D5C56;
+            --accent-orange: #E57A44;
+            --accent-blue: #3E8BFF;
+            --accent-green-confirm: #34A853;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 24px;
+        }
+
+        /* === Layout === */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* === General Card Styling === */
+        .card {
+            background-color: var(--card-light);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensure card can stretch if in a grid/flex row */
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        /* === Profile Card (Left Column) === */
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .profile-info img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-details h2 { font-size: 20px; font-weight: 600; margin-bottom: 2px; }
+        .profile-details p { font-size: 14px; color: var(--text-medium); }
+        .rating { display: flex; align-items: center; gap: 4px; color: #FFC700; margin-top: 4px; }
+        .rating i { font-size: 18px; line-height: 1; }
+        .rating span { color: var(--text-medium); font-size: 14px; margin-left: 4px; }
+
+        .section-title { font-size: 14px; font-weight: 500; color: var(--text-medium); margin-bottom: 8px; }
+        
+        .status-header { display: flex; justify-content: space-between; align-items: center; }
+        .status-header span { font-size: 14px; font-weight: 500; color: var(--text-dark);}
+
+        .progress-bar { width: 100%; height: 8px; background-color: #EAEBEF; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-bar-inner { height: 100%; width: 50%; background-color: var(--primary-green); border-radius: 4px; }
+
+        .p-description { font-size: 14px; color: var(--text-medium); line-height: 1.5; margin-top: 4px;}
+        .tag-status { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 6px; }
+        .status-diperlukan { color: var(--accent-orange); background-color: rgba(229, 122, 68, 0.1); }
+        
+        .btn-upload-secondary {
+            width: 100%;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            background-color: var(--card-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-upload-secondary:hover { background-color: var(--bg-light); }
+
+        .specialization-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .spec-tag {
+            font-size: 13px;
+            padding: 6px 12px;
+            background-color: #EAF0EE;
+            color: var(--primary-green-darker);
+            border-radius: 16px;
+            font-weight: 500;
+        }
+
+        /* === Stats Cards (Top Right) === */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .stat-card { flex-direction: row; justify-content: space-between; align-items: center; padding: 20px; }
+        .stat-icon { width: 48px; height: 48px; background-color: #EAF0EE; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
+        .stat-icon i { font-size: 24px; color: var(--primary-green); }
+        .stat-content { text-align: left;}
+        .stat-content .label { font-size: 14px; color: var(--text-medium); margin-bottom: 2px;}
+        .stat-content .value { font-size: 28px; font-weight: 700; line-height: 1.2; }
+        .stat-content .change { font-size: 12px; color: var(--accent-green-confirm); display: flex; align-items: center; gap: 4px; font-weight: 500;}
+        .stat-content .change i { font-size: 16px; }
+        
+        /* === Performance Card (Middle Right) === */
+        .dropdown {
+            background-color: var(--card-light);
+            color: var(--text-medium);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: var(--font-family);
+        }
+        #performance-chart-container { height: 250px; position: relative; }
+
+        /* === Bottom Row Layout === */
+        .bottom-row-grid { display: grid; grid-template-columns: 5fr 4fr; gap: 24px; align-items: start; }
+        
+        /* === Schedule Card (Bottom Left) === */
+        .link { color: var(--text-medium); text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s;}
+        .link:hover { color: var(--text-dark); }
+        
+        .date-selector { display: flex; justify-content: space-between; margin-bottom: 24px; }
+        .date-item { text-align: center; cursor: pointer; padding: 8px; border-radius: 8px; flex: 1; }
+        .date-item.active { background-color: var(--primary-green); }
+        .date-item .day { font-size: 12px; color: var(--text-muted); }
+        .date-item.active .day { color: var(--card-light); font-weight: 500; }
+        .date-item .date { font-size: 16px; font-weight: 600; color: var(--text-dark); }
+        .date-item.active .date { color: var(--card-light); }
+        
+        .schedule-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .session-item { background-color: var(--bg-light); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+        .session-time { font-size: 14px; font-weight: 600; width: 50px; }
+        .session-details { flex-grow: 1;}
+        .session-details .patient { font-size: 15px; font-weight: 500; }
+        .session-details .reason { font-size: 13px; color: var(--text-medium); }
+
+        .session-status { font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 16px; white-space: nowrap; }
+        .status-blue { background-color: rgba(62, 139, 255, 0.1); color: var(--accent-blue); }
+        .status-green { background-color: rgba(52, 168, 83, 0.1); color: var(--accent-green-confirm); }
+        .status-grey { background-color: #F0F0F0; color: var(--text-medium); }
+
+        .btn-add-session {
+            width: 100%; margin-top: 24px; background-color: var(--primary-green); color: var(--card-light);
+            border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 500;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;
+            transition: background-color 0.2s;
+        }
+        .btn-add-session:hover { background-color: var(--primary-green-darker); }
+        .btn-add-session svg { width: 18px; height: 18px; }
+
+        /* === Verification Detail Card (Bottom Right) === */
+        .progress-tag {
+            font-size: 12px; font-weight: 500; padding: 4px 10px; background-color: #EAF0EE;
+            color: var(--primary-green-darker); border-radius: 16px;
+        }
+        .step-header { display: flex; justify-content: space-between; align-items: start; }
+        .step-title { font-size: 16px; font-weight: 600; }
+        .step-desc { font-size: 14px; color: var(--text-medium); margin-top: 4px; }
+        .step-content { margin-top: 16px; display: flex; gap: 16px; }
+        
+        .upload-area {
+            flex-grow: 1; border: 2px dashed #D1D5DB; border-radius: 12px; padding: 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; color: var(--text-medium); background-color: var(--bg-light);
+        }
+        .upload-area svg { width: 24px; height: 24px; color: var(--accent-orange); margin-bottom: 8px; }
+        .upload-area span { font-size: 13px; font-weight: 500; }
+        .upload-area .format { font-size: 12px; color: var(--text-muted); margin-top: 2px;}
+
+        .btn-upload-main {
+            padding: 14px 24px; font-size: 14px; font-weight: 500; background-color: var(--primary-green-darker);
+            color: var(--card-light); border: none; border-radius: 12px; cursor: pointer; align-self: stretch;
+            transition: background-color 0.2s; height: 100%;
+        }
+        .btn-upload-main:hover { background-color: #3e4a44; }
+
+        .verification-step-done { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); }
+        .step-header-done { display: flex; align-items: center; gap: 12px; }
+        .step-header-done svg { width: 22px; height: 22px; color: var(--accent-green-confirm); }
+        .step-header-done .step-title { margin-bottom: 0; }
+        .verification-step-done .step-desc { padding-left: 34px; margin-top: 2px; }
+
+    </style>
+</head>
+<body>
+
+    <main class="dashboard-layout">
+        <!-- === KOLOM KIRI === -->
+        <div class="left-column">
+            <div class="card profile-card">
+                <div class="profile-info">
+                    <img src="https://i.imgur.com/rS25Jui.jpeg" alt="Foto Dr. Maya Kusuma">
+                    <div class="profile-details">
+                        <h2>Dr. Maya Kusuma</h2>
+                        <p>Psikolog Klinis</p>
+                        <div class="rating">
+                            <i class="ri-star-fill"></i>
+                            4.9 <span>(120 ulasan)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verification-status">
+                    <div class="status-header">
+                        <h3 class="section-title">Status Verifikasi</h3>
+                        <span>50%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+                </div>
+
+                <div class="certificate-verification">
+                    <div class="step-header">
+                        <h3 class="step-title" style="font-size: 16px;">Sertifikat Validitas Terapis</h3>
+                        <span class="tag-status status-diperlukan">Diperlukan</span>
+                    </div>
+                    <p class="p-description">Unggah lisensi sertifikat atau bukti validitas sebagai terapis</p>
+                    <button class="btn-upload-secondary">Unggah Sertifikat</button>
+                </div>
+                
+                <div class="specialization">
+                    <h3 class="section-title">Spesialisasi</h3>
+                    <div class="specialization-tags">
+                        <span class="spec-tag">Kecemasan</span>
+                        <span class="spec-tag">Depresi</span>
+                        <span class="spec-tag">Trauma</span>
+                        <span class="spec-tag">Manajemen Stres</span>
+                        <span class="spec-tag">Kesehatan Mental Remaja</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === KOLOM KANAN === -->
+        <div class="right-column">
+            <div class="stats-grid">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <p class="label">Total Sesi</p>
+                        <p class="value">1,240</p>
+                        <p class="change">
+                            <i class="ri-arrow-up-line"></i>
+                            12% bulan ini
+                        </p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="ri-group-line"></i>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <p class="label">Klien Baru</p>
+                        <p class="value">8</p>
+                        <p class="change">
+                            <i class="ri-arrow-up-line"></i>
+                            3 bulan ini
+                        </p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="ri-user-add-line"></i>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <p class="label">Pendapatan</p>
+                        <p class="value">Rp 12,8Jt</p>
+                        <p class="change">
+                            <i class="ri-arrow-up-line"></i>
+                            20% bulan ini
+                        </p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="ri-wallet-3-line"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card performance-card">
+                <div class="card-header">
+                    <h2 class="card-title">Performa Mingguan</h2>
+                    <select class="dropdown">
+                        <option>7 Hari Terakhir</option>
+                        <option>30 Hari Terakhir</option>
+                    </select>
+                </div>
+                <div id="performance-chart-container"><canvas id="performanceChart"></canvas></div>
+            </div>
+            
+            <div class="bottom-row-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Jadwal Sesi Mendatang</h2>
+                        <a href="#" class="link">Lihat Kalender<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/></svg></a>
+                    </div>
+                    <div class="date-selector">
+                        <div class="date-item"><span class="day">Min</span><span class="date">10</span></div>
+                        <div class="date-item"><span class="day">Sen</span><span class="date">11</span></div>
+                        <div class="date-item"><span class="day">Sel</span><span class="date">12</span></div>
+                        <div class="date-item active"><span class="day">Rab</span><span class="date">13</span></div>
+                        <div class="date-item"><span class="day">Kam</span><span class="date">14</span></div>
+                        <div class="date-item"><span class="day">Jum</span><span class="date">15</span></div>
+                        <div class="date-item"><span class="day">Sab</span><span class="date">16</span></div>
+                    </div>
+                    <h3 class="section-title" style="margin-bottom: 12px;">Sesi Hari Ini</h3>
+                    <ul class="schedule-list">
+                        <li class="session-item"><span class="session-time">09:00</span><div class="session-details"><p class="patient">Rina Wulandari</p><p class="reason">Kecemasan</p></div><span class="session-status status-blue">Terjadwal</span></li>
+                        <li class="session-item"><span class="session-time">11:30</span><div class="session-details"><p class="patient">Budi Santoso</p><p class="reason">Depresi</p></div><span class="session-status status-green">Konfirmasi</span></li>
+                        <li class="session-item"><span class="session-time">14:00</span><div class="session-details"><p class="patient">Siti Rahma</p><p class="reason">Manajemen Stres</p></div><span class="session-status status-blue">Terjadwal</span></li>
+                        <li class="session-item"><span class="session-time">16:30</span><div class="session-details"><p class="patient">Ahmad Hidayat</p><p class="reason">Trauma</p></div><span class="session-status status-grey">Selesai</span></li>
+                    </ul>
+                    <button class="btn-add-session">
+                        <i class="ri-add-line"></i>
+                        <span>Tambah Jadwal</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Status Verifikasi</h2>
+                        <span class="progress-tag">50% Selesai</span>
+                    </div>
+                    <div class="verification-step">
+                        <div class="step-header">
+                            <h3 class="step-title">Verifikasi Sertifikat Validitas</h3>
+                            <span class="tag-status status-diperlukan">Diperlukan</span>
+                        </div>
+                        <p class="step-desc">Unggah sertifikat atau bukti validitas sebagai terapis</p>
+                        <div class="step-content">
+                            <div class="upload-area">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a2.5 2.5 0 0 1 2.5 2.5V9a.5.5 0 0 1-1 0V4a1.5 1.5 0 0 0-3 0v5a.5.5 0 0 1-1 0V4a2.5 2.5 0 0 1 2.5-2.5z"/><path d="M4.5 10.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm-8 2a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/></svg>
+                                <span>Klik atau seret file sertifikat ke sini</span>
+                                <span class="format">Format: PDF, JPG, PNG (Maks. 5MB)</span>
+                            </div>
+                            <button class="btn-upload-main">Unggah File</button>
+                        </div>
+                    </div>
+                    <div class="verification-step-done">
+                        <div class="step-header-done">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            <h3 class="step-title">Identitas Diri</h3>
+                        </div>
+                        <p class="step-desc">Identitas dan foto diri terverifikasi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        
+        const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+        gradient.addColorStop(0, 'rgba(100, 121, 112, 0.4)');
+        gradient.addColorStop(1, 'rgba(100, 121, 112, 0.05)');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+                datasets: [{
+                    data: [2.5, 3, 4.2, 3.8, 5, 4.5, 4],
+                    borderColor: '#647970',
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    fill: true,
+                    backgroundColor: gradient,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#9AA5B6', stepSize: 2 },
+                        grid: { color: '#F0F2F5', drawBorder: false }
+                    },
+                    x: {
+                        ticks: { color: '#9AA5B6' },
+                        grid: { display: false, drawBorder: false }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>

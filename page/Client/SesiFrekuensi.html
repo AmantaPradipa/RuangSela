@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persiapan Sesi Konsultasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a Calming Light Theme */
+        :root {
+            --bg-color: #F7F9F9;
+            --card-bg: #FFFFFF;
+            --primary-text: #2F3D35;
+            --secondary-text: #7A8580;
+            --accent-green: #7A9B8F;
+            --accent-green-light: #EBF0EE;
+            --border-color: #EAEFEC;
+            --shadow-color: rgba(47, 61, 53, 0.07);
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* General Body Styles */
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 40px;
+        }
+        
+        /* General Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+        
+        /* --- Main Content Styling --- */
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 28px;
+            margin: 0 0 8px 0;
+        }
+        
+        .page-header p {
+            font-size: 16px;
+            color: var(--secondary-text);
+            margin: 0;
+            max-width: 450px;
+        }
+
+        .audio-player {
+            width: 300px;
+            height: 300px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 10px 30px rgba(122, 155, 143, 0.4);
+        }
+
+        #timer {
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        #play-pause-icon {
+            font-size: 40px;
+            font-style: normal;
+            line-height: 1;
+            margin-top: 10px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            max-width: 350px;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            margin: 32px 0 48px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 75%; /* Start with some progress shown */
+            height: 100%;
+            background-color: var(--accent-green);
+            border-radius: 3px;
+            transition: width 1s linear;
+        }
+
+        .section-title {
+            align-self: flex-start;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 32px;
+        }
+        
+        .instruction-card {
+            text-align: center;
+        }
+
+        .instruction-icon {
+            width: 64px;
+            height: 64px;
+            background-color: var(--accent-green-light);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+        }
+        
+        .instruction-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-green);
+        }
+        
+        .instruction-card h3 {
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+        }
+        
+        .instruction-card p {
+            font-size: 14px;
+            color: var(--secondary-text);
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .about-frequency {
+            padding-left: 56px;
+            position: relative;
+        }
+        .about-frequency > svg {
+            position: absolute;
+            left: 24px; top: 24px;
+            width: 24px; height: 24px;
+            color: var(--accent-green);
+        }
+        
+        .about-frequency h2 {
+            margin: 0 0 8px 0; font-size: 18px;
+        }
+        .about-frequency > p {
+            margin: 0 0 20px 0; line-height: 1.7; color: var(--secondary-text);
+        }
+        
+        .benefits-list {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary-text);
+        }
+        .benefit-item svg { width: 20px; height: 20px; color: var(--accent-green); }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-family: var(--font-family);
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            flex-grow: 1;
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            text-align: center;
+        }
+        .btn-primary:hover { background-color: #69897e; }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--secondary-text);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background-color: var(--bg-color); border-color: #d1d4d1; }
+        .btn-secondary svg { vertical-align: middle; margin-right: 6px; }
+        
+        
+        /* --- Sidebar Styling --- */
+
+        .schedule-card {
+            padding: 24px;
+        }
+        .schedule-card h2 {
+            font-size: 20px; margin: 0 0 20px 0;
+        }
+        
+        .schedule-header {
+            display: flex; gap: 16px; align-items: center; margin-bottom: 24px;
+        }
+
+        .schedule-date {
+            background-color: var(--accent-green);
+            color: white; padding: 10px; border-radius: 12px; text-align: center;
+            min-width: 60px;
+        }
+        .schedule-date span { display: block; font-size: 12px; }
+        .schedule-date .date-number { font-size: 28px; font-weight: 700; line-height: 1; }
+        .schedule-summary .day { font-size: 18px; font-weight: 600; }
+        .schedule-summary .time-left { color: var(--secondary-text); }
+        
+        hr {
+            border: none; border-top: 1px solid var(--border-color); margin: 20px 0;
+        }
+
+        .info-section h3 {
+            font-size: 14px;
+            color: var(--secondary-text);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .therapist-info, .session-detail {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .therapist-info img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+        .therapist-info h4, .session-detail p { margin: 0; font-size: 16px; }
+        .therapist-info span { font-size: 14px; color: var(--secondary-text); }
+
+        .session-details {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .session-detail svg { width: 20px; height: 20px; color: var(--accent-green); }
+
+        .consultation-method {
+            background-color: var(--accent-green-light);
+            border: 1px solid var(--border-color);
+            padding: 16px; border-radius: 16px;
+            display: flex; gap: 12px; align-items: center;
+        }
+        .consultation-method svg {
+            color: var(--accent-green);
+            width: 24px; height: 24px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+        }
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            .instructions-grid { grid-template-columns: 1fr; }
+            .benefits-list { flex-direction: column; align-items: flex-start; }
+            .action-buttons { flex-direction: column-reverse; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Persiapan Sesi Konsultasi</h1>
+                <p>Dengarkan frekuensi Pure Tone 432 Hz untuk menenangkan pikiran Anda</p>
+            </header>
+
+            <div class="audio-player" id="audio-player-control">
+                <span id="timer">12:34</span>
+                <i id="play-pause-icon">❙❙</i>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-bar"></div>
+            </div>
+
+            <h2 class="section-title">Petunjuk Persiapan</h2>
+            <section class="instructions-grid">
+                <div class="card instruction-card">
+                    <div class="instruction-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M3 15V9a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-1z"/><path d="M3 19a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1z"/></svg></div>
+                    <h3>Gunakan headphone</h3>
+                    <p>Untuk pengalaman yang optimal, gunakan headphone selama sesi ini.</p>
+                </div>
+                <div class="card instruction-card">
+                    <div class="instruction-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20v-5.04c0-1.2.6-2.31 1.6-2.96L12 11l1.4 1.04c1 .65 1.6 1.76 1.6 2.96V20"/><path d="M12 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 11l-3-2v-2a2 2 0 1 1 4 0v2l-3 2Z"/><path d="M12 11l3-2v-2a2 2 0 1 0-4 0v2l3 2Z"/></svg></div>
+                    <h3>Duduklah dengan nyaman</h3>
+                    <p>Pilih posisi yang nyaman dan rileks selama mendengarkan.</p>
+                </div>
+                 <div class="card instruction-card">
+                    <div class="instruction-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a4 4 0 0 0-4 4v0a4 4 0 0 0 4 4v0a4 4 0 0 0 4-4v0a4 4 0 0 0-4-4Z"/><path d="M12 12a4 4 0 0 1-4 4v0a4 4 0 0 1 4-4v0a4 4 0 0 1 4 4v0a4 4 0 0 1-4-4Z"/></svg></div>
+                    <h3>Fokus pada pernapasan</h3>
+                    <p>Tarik napas perlahan dan fokuskan pikiran Anda pada saat ini.</p>
+                </div>
+            </section>
+
+            <section class="card about-frequency">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <h2>Tentang Frekuensi 432 Hz</h2>
+                <p>Frekuensi 432 Hz diyakini memiliki efek terapeutik yang dapat membantu menenangkan pikiran dan tubuh. Frekuensi ini dikenal dapat:</p>
+                <ul class="benefits-list">
+                    <li class="benefit-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 5H11l5 7-5 7h4.5l5-7z"/><path d="M8.5 5H4l5 7-5 7h4.5l5-7z"/></svg>Meningkatkan kejelasan pikiran</li>
+                    <li class="benefit-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Meredakan kecemasan</li>
+                    <li class="benefit-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Mempersiapkan mental</li>
+                </ul>
+            </section>
+
+            <div class="action-buttons">
+                <a href="#" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg> Lewati Persiapan</a>
+                <a href="#" class="btn btn-primary">Lanjutkan ke Dashboard ></a>
+            </div>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="card schedule-card">
+                <h2>Jadwal Konsultasi</h2>
+                <div class="schedule-header">
+                    <div class="schedule-date">
+                        <span>Agustus</span>
+                        <span class="date-number">15</span>
+                    </div>
+                    <div class="schedule-summary">
+                        <p class="day">Selasa</p>
+                        <p class="time-left">Dalam 15 menit</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="info-section">
+                    <h3>Terapis</h3>
+                    <div class="therapist-info">
+                        <img src="https://i.pravatar.cc/96?u=drmayakusuma" alt="Dr. Maya Kusuma">
+                        <div>
+                            <h4>Dr. Maya Kusuma</h4>
+                            <span>Psikolog Klinis</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="info-section">
+                    <h3>Sesi Konsultasi</h3>
+                    <div class="session-details">
+                        <div class="session-detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <p>10:00 - 11:00</p>
+                        </div>
+                        <div class="session-detail">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <p>Terapi Individu</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+
+                <div class="info-section">
+                    <h3>Metode Konsultasi</h3>
+                    <div class="consultation-method">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M7 11h10v2H7z"/><path d="M7 7h2v2H7z"/><path d="M15 7h2v2h-2z"/></svg>
+                         <div>
+                             <h4>Video Call</h4>
+                             <span>Konsultasi tatap muka virtual</span>
+                         </div>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audio-player-control');
+            const timerDisplay = document.getElementById('timer');
+            const playPauseIcon = document.getElementById('play-pause-icon');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // Set initial time (12 minutes and 34 seconds)
+            const initialMinutes = 12;
+            const initialSeconds = 34;
+            let totalSeconds = (initialMinutes * 60) + initialSeconds;
+            const fullDuration = totalSeconds;
+
+            let timerInterval = null;
+            let isPaused = true;
+
+            function updateDisplay() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                
+                // Pad with a leading zero if needed
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                // Update progress bar
+                const progressPercentage = ((fullDuration - totalSeconds) / fullDuration) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+            }
+
+            function togglePlayPause() {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    clearInterval(timerInterval);
+                    playPauseIcon.textContent = '▶'; // Play icon
+                } else {
+                    playPauseIcon.textContent = '❙❙'; // Pause icon
+                    timerInterval = setInterval(() => {
+                        if (totalSeconds > 0) {
+                            totalSeconds--;
+                            updateDisplay();
+                        } else {
+                            clearInterval(timerInterval);
+                            playPauseIcon.textContent = '✔'; // Done icon
+                        }
+                    }, 1000);
+                }
+            }
+            
+            // Initial setup
+            updateDisplay();
+            playPauseIcon.textContent = '▶'; // Start with play icon
+            // Set initial progress to show something (as in the design)
+            const initialProgress = ((fullDuration - ((12*60)+34)) / fullDuration) * 100;
+            // Let's re-calculate initial progress for 12:34 out of, say, 15:00
+            const fifteenMinutes = 15 * 60;
+            const progressFor1234 = ( (fifteenMinutes - totalSeconds) / fifteenMinutes ) * 100;
+            // The image looks like it's a bit of the way through a 15 min session
+            // For simplicity, let's hardcode the start based on the visual
+             progressBar.style.width = '20%';
+
+            audioPlayer.addEventListener('click', togglePlayPause);
+        });
+    </script>
+</body>
+</html>

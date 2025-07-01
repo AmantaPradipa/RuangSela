@@ -1,0 +1,531 @@
+/* public/assets/css/pages/landing.css */
+
+/* Custom Variables for this page */
+:root {
+    --hero-overlay-color: rgba(56, 56, 56, 0.6);
+    --team-photo-bg-1: #e0f2f1; /* Light teal */
+    --team-photo-bg-2: #ffe0b2; /* Light orange */
+    --team-photo-bg-3: #e1bee7; /* Light purple */
+}
+
+/* HERO SECTION */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white-text);
+    background-image: url('../../images/illustrations/heroSection-beranda.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--bg-dark-gray); /* Fallback color */
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;    
+    width: 100%;
+    height: 100%;
+    background-color: var(--hero-overlay-color); /* Overlay gelap */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px; /* Wider content */
+    padding: 0 25px; /* Adjusted padding */
+}
+
+.hero-content h1 {
+    font-size: 3.8rem; /* Larger font size */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 25px; /* Adjusted margin */
+    color: var(--white-text); /* Using global var */
+}
+
+.hero-content .highlight {
+    color: var(--primary-color); /* Using global var */
+}
+
+.hero-content p {
+    font-size: 1.25rem; /* Larger text */
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    max-width: 750px;
+    margin: 0 auto 50px auto; /* Adjusted margin */
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Increased gap */
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    /* Using .btn from components/buttons.css */
+    padding: 16px 38px; /* Larger padding */
+    font-size: 1.1rem; /* Larger font size */
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px; /* More rounded */
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.hero-btn.primary {
+    background-color: var(--primary-color); /* Using global var */
+    border-color: var(--primary-color); /* Using global var */
+    color: var(--white-text); /* Using global var */
+}
+
+.hero-btn.primary:hover {
+    background-color: var(--primary-dark); /* Using global var */
+    border-color: var(--primary-dark); /* Using global var */
+    transform: translateY(-3px); /* Subtle lift */
+}
+
+.hero-btn.secondary {
+    background-color: transparent;
+    border-color: var(--primary-color); /* Using global var */
+    color: var(--white-text); /* Using global var */
+}
+
+.hero-btn.secondary:hover {
+    background-color: var(--primary-color); /* Using global var */
+    color: var(--white-text); /* Using global var */
+    transform: translateY(-3px); /* Subtle lift */
+}
+
+/* ABOUT SECTION */
+.about-container {
+    max-width: 1200px; /* Wider container */
+    margin: 0 auto;
+    padding: 100px 25px; /* Adjusted padding for consistency */
+    background-color: var(--bg-white); /* Using global var */
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 80px; /* Increased margin */
+}
+
+.about-header h1 {
+    font-size: 3rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.about-header p {
+    font-size: 1.15rem; /* Larger text */
+    max-width: 750px;
+    margin: 0 auto;
+    color: var(--light-text); /* Using global var */
+    line-height: 1.7;
+}
+
+.about-intro {
+    text-align: center;
+    max-width: 900px; /* Wider content */
+    margin: 0 auto 80px auto; /* Increased margin */
+    padding: 40px; /* Added padding */
+    background-color: var(--bg-light-gray); /* Subtle background */
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0 8px 25px var(--shadow-light); /* Using global shadow variable */
+}
+
+.about-intro h2 {
+    font-size: 2.5rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.about-intro p {
+    font-size: 1.1rem; /* Larger text */
+    color: var(--light-text); /* Using global var */
+    line-height: 1.8;
+}
+
+/* SERVICES SECTION */
+.services-section-wrapper {
+    background-color: var(--bg-light-blue); /* Using global var */
+    padding: 100px 0;
+}
+
+.services-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.services-section .intro-p {
+    font-size: 1.15rem;
+    color: var(--light-text); /* Using global var */
+    max-width: 800px;
+    margin: 0 auto 60px auto; /* Increased margin */
+    line-height: 1.7;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible grid */
+    gap: 30px; /* Increased gap */
+    text-align: left;
+}
+
+.service-card {
+    /* Inherits .card styles for background, border, border-radius, box-shadow, and transition */
+    padding: 40px; /* Increased padding */
+}
+
+.service-card:hover {
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 15px 40px var(--shadow-medium); /* Using global shadow variable */
+}
+
+.service-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px; /* Larger icon container */
+    height: 65px;
+    background-color: var(--primary-light); /* Using global var */
+    border-radius: 50%;
+    margin-bottom: 25px; /* Increased margin */
+    color: var(--primary-color); /* Using global var */
+    font-size: 32px; /* Larger icon */
+}
+
+.service-card h3 {
+    font-size: 1.6rem; /* Larger title */
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: var(--light-text); /* Using global var */
+    line-height: 1.7;
+}
+
+/* TEAM SECTION */
+.team-section {
+    padding: 100px 0;
+    background-color: var(--bg-white); /* Using global var */
+}
+
+.team-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+    text-align: center;
+}
+
+.team-header {
+    margin-bottom: 60px;
+}
+
+.team-header h2 {
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.team-header p {
+    font-size: 1.15rem;
+    color: var(--light-text); /* Using global var */
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Flexible grid */
+    gap: 40px; /* Increased gap */
+    text-align: center;
+}
+
+.team-card {
+    /* Inherits .card styles for background, border-radius, box-shadow, and transition */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px var(--shadow-medium); /* Using global shadow variable */
+}
+
+.team-photo-wrapper {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 4px solid var(--primary-color); /* Added border */
+    box-shadow: 0 0 0 8px var(--primary-light); /* Outer ring */
+}
+
+.team-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Specific background colors for team photos */
+.team-photo-wrapper.photo-bg-1 { background-color: var(--team-photo-bg-1); }
+.team-photo-wrapper.photo-bg-2 { background-color: var(--team-photo-bg-2); }
+.team-photo-wrapper.photo-bg-3 { background-color: var(--team-photo-bg-3); }
+
+.team-info h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.team-info .role {
+    font-size: 1rem;
+    color: var(--primary-color); /* Using global var */
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.team-cta {
+    margin-top: 80px; /* Increased margin */
+}
+
+.btn-team {
+    /* Using .btn from components/buttons.css */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-color); /* Using global var */
+    color: var(--white-text); /* Using global var */
+    padding: 16px 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-team:hover {
+    background-color: var(--primary-dark); /* Using global var */
+    transform: translateY(-3px);
+}
+
+/* TESTIMONIALS SECTION */
+.testimonials-section-wrapper {
+    background-color: var(--bg-light-gray); /* Using global var */
+    padding: 100px 25px;
+}
+
+.testimonials-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text); /* Using global var */
+}
+
+.testimonials-section .subtitle {
+    font-size: 1.15rem;
+    color: var(--light-text); /* Using global var */
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+    line-height: 1.7;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px; /* Increased gap */
+}
+
+.testimonial-card {
+    /* Inherits .card styles for background, border, border-radius, box-shadow, and transition */
+    padding: 40px 35px; /* Adjusted padding */
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push content to top/bottom */
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px var(--shadow-medium); /* Using global shadow variable */
+}
+
+.quote-icon {
+    font-family: serif;
+    font-size: 80px; /* Larger icon */
+    color: var(--primary-color); /* Using global var */
+    opacity: 0.2; /* More subtle */
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    line-height: 1;
+}
+
+.testimonial-quote {
+    font-size: 1.05rem; /* Slightly larger */
+    color: var(--dark-text); /* Using global var */
+    line-height: 1.8;
+    margin: 0 0 25px 0; /* Adjusted margin */
+    flex-grow: 1; /* Allow quote to take available space */
+}
+
+.card-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-light); /* Using global var */
+    margin: 25px 0; /* Adjusted margin */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Increased gap */
+}
+
+.user-avatar {
+    width: 56px; /* Larger avatar */
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--primary-light); /* Using global var */
+    color: var(--primary-color); /* Using global var */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.5rem; /* Larger font */
+    flex-shrink: 0;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--dark-text); /* Using global var */
+    margin-bottom: 5px;
+}
+
+.star-rating {
+    color: var(--star-yellow); /* Using global var */
+    font-size: 1.1rem;
+    display: flex;
+    gap: 2px;
+}
+
+.star-rating i {
+    margin-right: 0;
+}
+
+.star-rating i.star-inactive {
+    color: var(--border-light); /* Inactive star color */
+}
+
+.no-testimonials {
+    grid-column: 1 / -1; /* Span full width */
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--light-text); /* Using global var */
+    font-size: 1.1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .hero-content h1 { font-size: 3rem; }
+    .about-header h1 { font-size: 2.5rem; }
+    .about-intro h2 { font-size: 2rem; }
+    .services-section h2, .team-header h2, .testimonials-section h2 { font-size: 2.5rem; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .hero-section, .about-container, .services-section-wrapper, .team-section, .testimonials-section-wrapper {
+        padding: 60px 15px; /* Smaller padding on mobile */
+    }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1rem; }
+    .hero-actions { flex-direction: column; gap: 15px; }
+    .hero-btn { width: 100%; }
+
+    .about-header h1 { font-size: 2rem; }
+    .about-header p { font-size: 1rem; }
+    .about-intro { padding: 30px; }
+    .about-intro h2 { font-size: 1.8rem; }
+    .about-intro p { font-size: 0.95rem; }
+
+    .services-section h2, .team-header h2, .testimonials-section h2 { font-size: 2rem; }
+    .services-section .intro-p, .team-header p, .testimonials-section .subtitle { font-size: 1rem; }
+    .services-grid, .team-grid, .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+    .service-card, .team-card, .testimonial-card {
+        padding: 30px;
+    }
+    .service-icon { width: 56px; height: 56px; font-size: 28px; margin-bottom: 20px; }
+    .service-card h3 { font-size: 1.4rem; }
+    .service-card p { font-size: 0.95rem; }
+
+    .team-photo-wrapper { width: 150px; height: 150px; }
+    .team-info h3 { font-size: 1.2rem; }
+    .team-info .role { font-size: 0.9rem; }
+    .btn-team { width: 100%; }
+
+    .testimonial-quote { font-size: 1rem; }
+    .user-avatar { width: 48px; height: 48px; font-size: 1.2rem; }
+    .user-name { font-size: 1rem; }
+    .star-rating { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 { font-size: 2rem; }
+    .about-header h1 { font-size: 1.8rem; }
+    .about-intro h2 { font-size: 1.6rem; }
+    .services-section h2, .team-header h2, .testimonials-section h2 { font-size: 1.8rem; }
+    .hero-btn { padding: 12px 25px; font-size: 0.95rem; }
+    .about-intro { padding: 25px; }
+    .service-card, .team-card, .testimonial-card { padding: 25px; }
+    .service-icon { width: 48px; height: 48px; font-size: 24px; }
+    .service-card h3 { font-size: 1.2rem; }
+    .team-photo-wrapper { width: 120px; height: 120px; }
+    .user-avatar { width: 40px; height: 40px; font-size: 1rem; }
+}

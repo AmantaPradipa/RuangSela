@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Pengguna - Admin</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon for Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for theme consistency */
+        :root {
+            --dark-green: #53785E;
+            --light-green-bg: #EAF7EC;
+            --primary-red: #F44336;
+            --light-red-bg: #FEECEF;
+            --primary-yellow: #FFC107;
+            --light-yellow-bg: #FFF9E6;
+            --primary-blue: #2196F3;
+            --light-blue-bg: #E3F2FD;
+            --primary-purple: #9C27B0;
+            --light-purple-bg: #F3E5F5;
+
+            --grey-text: #6c757d;
+            --dark-text: #343a40;
+            --border-color: #E9ECEF;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --border-radius: 8px;
+        }
+
+        /* Basic Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            padding: 24px;
+        }
+
+        .page-container {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* General Components */
+        .card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--dark-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background-color: var(--grey-text);
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Tabs Navigation */
+        .content-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: -1px;
+        }
+
+        .content-tabs nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .content-tabs a {
+            padding: 12px 4px;
+            color: var(--grey-text);
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .content-tabs a.active,
+        .content-tabs a:hover {
+            color: var(--dark-green);
+            border-bottom-color: var(--dark-green);
+        }
+
+        /* User List Section */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filters .filter-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .filters .filter-item i {
+            position: absolute;
+            left: 14px;
+            color: var(--grey-text);
+            font-size: 18px;
+        }
+
+        .filters .form-control {
+            padding: 9px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--white-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .filters input.form-control {
+            padding-left: 40px;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table thead th {
+            color: var(--grey-text);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .data-table thead th i {
+            font-size: 14px;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        .table-actions i {
+            font-size: 20px;
+            color: var(--grey-text);
+            margin: 0 6px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .table-actions i:hover {
+            color: var(--dark-green);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .tag-green {
+            background-color: var(--light-green-bg);
+            color: #43A047;
+        }
+
+        .tag-red {
+            background-color: var(--light-red-bg);
+            color: var(--primary-red);
+        }
+
+        .tag-yellow {
+            background-color: var(--light-yellow-bg);
+            color: #FFA000;
+        }
+
+        .tag-outline {
+            background-color: var(--white-color);
+            border-color: var(--border-color);
+            color: var(--dark-text);
+        }
+
+        .tag-blue {
+            background-color: var(--light-blue-bg);
+            color: var(--primary-blue);
+        }
+
+        .tag-purple {
+            background-color: var(--light-purple-bg);
+            color: var(--primary-purple);
+        }
+
+
+        /* Add/Edit Form Section */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group .date-icon {
+            position: absolute;
+            right: 14px;
+            top: 44px;
+            color: var(--grey-text);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Package Management Section */
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .package-card {
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .package-card .price {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .package-card ul {
+            list-style: none;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .package-card li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .package-card li i {
+            color: #43A047;
+            font-size: 20px;
+        }
+
+        .package-card .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .package-card .btn-edit {
+            background-color: var(--dark-green);
+            color: white;
+            flex-grow: 1;
+        }
+
+        .package-card .btn-delete {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .package-card.basic {
+            background-color: #fafafa;
+        }
+
+        .package-card.premium {
+            background-color: var(--light-blue-bg);
+        }
+
+        .package-card.enterprise {
+            background-color: var(--light-purple-bg);
+        }
+
+        #add-package-btn {
+            margin-top: 24px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+            align-items: center;
+        }
+
+        .pagination a {
+            color: var(--grey-text);
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 0 4px;
+            transition: all 0.2s;
+        }
+
+        .pagination a.active {
+            background-color: var(--dark-green);
+            color: white;
+            font-weight: 600;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <header class="page-header">
+            <h1>Manajemen Pengguna</h1>
+            <button class="btn btn-primary"><i class="ri-add-line"></i> Tambah Pengguna Baru</button>
+        </header>
+
+        <div class="content-tabs">
+            <nav>
+                <a href="#" class="active">Semua Pengguna</a>
+                <a href="#">Pengguna Aktif</a>
+                <a href="#">Pengguna Baru</a>
+                <a href="#">Paket Konsultasi</a>
+            </nav>
+        </div>
+
+        <!-- User List Section -->
+        <section class="card">
+            <div class="section-header">
+                <h2>Daftar Pengguna</h2>
+                <button class="btn" style="background-color: var(--grey-text); color:white;"><i class="ri-upload-line"></i> Export</button>
+            </div>
+            <div class="filters">
+                <div class="filter-item" style="flex: 1;">
+                    <i class="ri-search-line"></i>
+                    <input type="text" class="form-control" placeholder="Cari pengguna...">
+                </div>
+                <select class="form-control" style="width: 200px;">
+                    <option>Semua Kategori</option>
+                </select>
+                <select class="form-control" style="width: 180px;">
+                    <option>Semua Status</option>
+                </select>
+                <button class="btn"
+                    style="background: var(--border-color); color: var(--dark-text); font-weight: 500;"><i class="ri-filter-3-line"></i> Filter</button>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Lengkap <i class="ri-arrow-up-s-fill"></i></th>
+                            <th>Email</th>
+                            <th>Tanggal Registrasi <i class="ri-arrow-up-s-fill"></i></th>
+                            <th>Paket Konsultasi <i class="ri-arrow-up-s-fill"></i></th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#USR001</td>
+                            <td>Ahmad Fauzi</td>
+                            <td>ahmad.fauzi@email.com</td>
+                            <td>15 Jun 2023</td>
+                            <td><span class="tag tag-blue">Premium</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td class="table-actions"><i class="ri-eye-fill"></i><i class="ri-pencil-fill"></i><i class="ri-delete-bin-fill"></i></td>
+                        </tr>
+                        <tr>
+                            <td>#USR002</td>
+                            <td>Budi Santoso</td>
+                            <td>budi.santoso@email.com</td>
+                            <td>12 Jun 2023</td>
+                            <td><span class="tag tag-outline">Basic</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td class="table-actions"><i class="ri-eye-fill"></i><i class="ri-pencil-fill"></i><i class="ri-delete-bin-fill"></i></td>
+                        </tr>
+                        <tr>
+                            <td>#USR003</td>
+                            <td>Citra Dewi</td>
+                            <td>citra.dewi@email.com</td>
+                            <td>10 Jun 2023</td>
+                            <td><span class="tag tag-purple">Enterprise</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td class="table-actions"><i class="ri-eye-fill"></i><i class="ri-pencil-fill"></i><i class="ri-delete-bin-fill"></i></td>
+                        </tr>
+                        <tr>
+                            <td>#USR004</td>
+                            <td>Dian Purnama</td>
+                            <td>dian.purnama@email.com</td>
+                            <td>5 Jun 2023</td>
+                            <td><span class="tag tag-outline">Basic</span></td>
+                            <td><span class="tag tag-red">Nonaktif</span></td>
+                            <td class="table-actions"><i class="ri-eye-fill"></i><i class="ri-pencil-fill"></i><i class="ri-delete-bin-fill"></i></td>
+                        </tr>
+                        <tr>
+                            <td>#USR005</td>
+                            <td>Eko Prasetyo</td>
+                            <td>eko.prasetyo@email.com</td>
+                            <td>1 Jun 2023</td>
+                            <td><span class="tag tag-blue">Premium</span></td>
+                            <td><span class="tag tag-yellow">Pending</span></td>
+                            <td class="table-actions"><i class="ri-eye-fill"></i><i class="ri-pencil-fill"></i><i class="ri-delete-bin-fill"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <a href="#"><i class="ri-arrow-left-s-line"></i></a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#"><i class="ri-arrow-right-s-line"></i></a>
+            </div>
+        </section>
+
+        <!-- Add/Edit Form Section -->
+        <section class="card">
+            <div class="section-header">
+                <h2>Tambah/Edit Pengguna</h2>
+            </div>
+            <form>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="full-name">Nama Lengkap</label>
+                        <input type="text" id="full-name" class="form-control" placeholder="Masukkan nama lengkap">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Masukkan email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor Telepon</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Masukkan nomor telepon">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-date">Tanggal Registrasi</label>
+                        <input type="text" id="reg-date" class="form-control" placeholder="yyyy / mm / dd">
+                        <i class="ri-calendar-2-fill date-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="package">Paket Konsultasi</label>
+                        <select id="package" class="form-control">
+                            <option>Pilih paket konsultasi</option>
+                            <option>Basic</option>
+                            <option>Premium</option>
+                            <option>Enterprise</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" class="form-control">
+                            <option>Aktif</option>
+                            <option>Nonaktif</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Alamat</label>
+                    <textarea id="address" class="form-control" placeholder="Masukkan alamat lengkap"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Pengguna</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Package Management Section -->
+        <section>
+            <div class="section-header" style="margin-bottom:24px;">
+                <h2>Manajemen Paket Konsultasi</h2>
+            </div>
+            <div class="package-grid">
+                <div class="package-card basic">
+                    <h3>Paket Basic</h3>
+                    <p class="price">Rp 100.000</p>
+                    <ul>
+                        <li><i class="ri-checkbox-circle-line"></i> Konsultasi 1 jam</li>
+                        <li><i class="ri-checkbox-circle-line"></i> 1x Revisi</li>
+                        <li><i class="ri-checkbox-circle-line"></i> Dokumen digital</li>
+                        <li><i class="ri-checkbox-circle-line"></i> Berlaku 30 hari</li>
+                    </ul>
+                    <div class="actions">
+                        <button class="btn btn-edit"><i class="ri-edit-2-line"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="ri-delete-bin-2-line"></i></button>
+                    </div>
+                </div>
+                <div class="package-card premium">
+                    <h3>Paket Premium</h3>
+                    <p class="price">Rp 250.000</p>
+                    <ul>
+                        <li><i class='bx bx-check-circle'></i> Konsultasi 3 jam</li>
+                        <li><i class='bx bx-check-circle'></i> 3x Revisi</li>
+                        <li><i class='bx bx-check-circle'></i> Dokumen digital & cetak</li>
+                        <li><i class='bx bx-check-circle'></i> Berlaku 60 hari</li>
+                        <li><i class='bx bx-check-circle'></i> Prioritas dukungan</li>
+                    </ul>
+                    <div class="actions">
+                        <button class="btn btn-edit"><i class="ri-edit-2-line"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="ri-delete-bin-2-line"></i></button>
+                    </div>
+                </div>
+                <div class="package-card enterprise">
+                    <h3>Paket Enterprise</h3>
+                    <p class="price">Rp 500.000</p>
+                    <ul>
+                        <li><i class='bx bx-check-circle'></i> Konsultasi tak terbatas</li>
+                        <li><i class='bx bx-check-circle'></i> Revisi tak terbatas</li>
+                        <li><i class='bx bx-check-circle'></i> Dokumen digital & cetak</li>
+                        <li><i class='bx bx-check-circle'></i> Berlaku 90 hari</li>
+                        <li><i class='bx bx-check-circle'></i> Prioritas dukungan 24/7</li>
+                        <li><i class='bx bx-check-circle'></i> Akses ke semua fitur</li>
+                    </ul>
+                    <div class="actions">
+                        <button class="btn btn-edit"><i class="ri-edit-2-line"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="ri-delete-bin-2-line"></i></button>
+                    </div>
+                </div>
+            </div>
+            <button id="add-package-btn" class="btn btn-primary"><i class="ri-add-circle-line"></i> Tambah Paket Baru</button>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

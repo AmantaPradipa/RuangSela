@@ -1,0 +1,116 @@
+/* public/assets/css/pages/dashboard.css */
+
+/* === Layout Umum Dasbor === */
+.dashboard-main {
+    padding: 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex; /* Use flexbox for main layout */
+    gap: 24px; /* Space between main content and sidebar */
+    align-items: flex-start; /* Align items to the top */
+}
+
+.main-content {
+    flex-grow: 1; /* Allow main content to take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.main-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+/* .card styles are now handled by components/cards.css */
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.card-header h2 { font-size: 20px; font-weight: 600; }
+.card-header .view-all, .link { font-size: 15px; font-weight: 500; color: var(--primary-color); text-decoration: none; transition: color 0.2s; }
+.card-header .view-all:hover, .link:hover { color: var(--dark-text); }
+.grid-span-2 { grid-column: 1 / -1; }
+
+/* === Tombol & Tag === */
+/* .btn styles are now handled by components/buttons.css */
+.tag-status { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 6px; }
+.status-diperlukan { color: var(--accent-orange); background-color: rgba(229, 122, 68, 0.1); }
+
+/* === Komponen Klien === */
+.welcome-banner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; background-color: var(--primary-light); }
+.welcome-text h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+.welcome-text .quote { color: var(--light-text); font-size: 15px; margin-bottom: 16px; }
+.progress-section { display: flex; align-items: center; gap: 12px; }
+.progress-bar { width: 150px; height: 8px; background-color: var(--border-light); border-radius: 4px; overflow: hidden; }
+.progress-bar .progress { height: 100%; background-color: var(--primary-color); border-radius: 4px; }
+.progress-text { font-size: 13px; color: var(--light-text); }
+.therapist-item { display: flex; align-items: center; gap: 16px; }
+.therapist-item img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.therapist-info h3 { font-size: 16px; font-weight: 600; }
+.therapist-info p { font-size: 14px; color: var(--light-text); }
+.mood-input h3 { font-size: 15px; font-weight: 500; text-align: center; margin: 20px 0; }
+.mood-options { display: flex; justify-content: space-around; }
+.mood-option { text-align: center; cursor: pointer; color: var(--light-text); transition: transform 0.2s; }
+.mood-option i { font-size: 36px; }
+.mood-option:hover { transform: scale(1.1); }
+.mood-option.active { color: var(--primary-color); }
+.task-box { background-color: var(--primary-light); border-radius: 12px; padding: 16px; border-left: 4px solid var(--primary-color); margin-bottom: 20px; }
+.task-box p { font-size: 15px; font-weight: 500; }
+.task-box span { font-size: 13px; color: var(--light-text); }
+.appointment-item { display: flex; gap: 16px; }
+.appointment-item:not(:last-child) { margin-bottom: 20px; }
+.timeline { width: 4px; background-color: var(--primary-color); border-radius: 2px; }
+.appointment-details h4 { font-size: 15px; font-weight: 600; }
+.appointment-details p { font-size: 13px; color: var(--light-text); }
+.appointment-details .therapist-name { color: var(--dark-text); font-weight:500; }
+
+/* === Komponen Terapis === */
+.profile-card { gap: 28px; }
+.profile-info { display: flex; align-items: center; gap: 16px; }
+.profile-info img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+.profile-details h2 { font-size: 20px; font-weight: 600; margin-bottom: 2px; }
+.profile-details p { font-size: 14px; color: var(--light-text); }
+.rating { display: flex; align-items: center; gap: 4px; color: var(--star-yellow); margin-top: 4px; }
+.rating i { font-size: 18px; }
+.rating span { color: var(--light-text); font-size: 14px; margin-left: 4px; }
+.section-title { font-size: 14px; font-weight: 500; color: var(--light-text); margin-bottom: 8px; }
+.status-header { display: flex; justify-content: space-between; align-items: center; }
+.status-header span { font-size: 14px; font-weight: 500; }
+.progress-bar-inner { height: 100%; width: 50%; background-color: var(--primary-color); border-radius: 4px; }
+.p-description { font-size: 14px; color: var(--light-text); line-height: 1.5; margin-top: 4px;}
+.btn-upload-secondary { width: 100%; padding: 12px; margin-top: 16px; font-size: 14px; font-weight: 500; color: var(--dark-text); background-color: var(--bg-white); border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+.btn-upload-secondary:hover { background-color: var(--bg-light-gray); }
+.step-header-done { display: flex; align-items: center; gap: 12px; }
+.step-header-done i { color: var(--accent-green-confirm); font-size: 22px; }
+.step-header-done .step-title { margin-bottom: 0; }
+.verification-step-done .step-desc { padding-left: 34px; margin-top: 2px; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.stat-card { flex-direction: row; justify-content: space-between; align-items: center; padding: 20px; }
+.stat-icon { width: 48px; height: 48px; background-color: var(--primary-light); border-radius: 12px; display: flex; justify-content: center; align-items: center; }
+.stat-icon i { font-size: 24px; color: var(--primary-color); }
+.stat-content .label { font-size: 14px; color: var(--light-text); margin-bottom: 2px;}
+.stat-content .value { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.stat-content .change { font-size: 12px; color: var(--accent-green-confirm); display: flex; align-items: center; gap: 4px; font-weight: 500;}
+.stat-content .change i { font-size: 16px; }
+#performance-chart-container { height: 250px; position: relative; }
+.schedule-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.session-item { background-color: var(--bg-light-gray); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+.session-time { font-size: 14px; font-weight: 600; width: 50px; }
+.session-details .patient { font-size: 15px; font-weight: 500; }
+.session-details .reason { font-size: 13px; color: var(--light-text); }
+.session-status { font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 16px; white-space: nowrap; }
+.status-blue { background-color: var(--accent-blue-light); color: var(--accent-blue); }
+.status-green { background-color: rgba(52, 168, 83, 0.1); color: var(--accent-green-confirm); }
+
+/* Sidebar Klien */
+/* Sidebar styles are now handled by components/sidebar.css */
+
+/* === Responsive === */
+@media (max-width: 1200px) {
+    .dashboard-main {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: stretch; /* Stretch items to fill width */
+    }
+    .sidebar {
+        width: 100%; /* Sidebar takes full width */
+    }
+}
+@media (max-width: 768px) {
+    .dashboard-main { padding: 16px; }
+    .main-grid, .stats-grid { grid-template-columns: 1fr; }
+    .welcome-banner { grid-template-columns: 1fr; gap: 16px; }
+}

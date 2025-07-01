@@ -1,0 +1,91 @@
+/* public/assets/css/pages/audio_prepare.css */
+
+.audio-prepare-card {
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.audio-prepare-card h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.audio-prepare-card p {
+    font-size: 1rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.audio-player-container {
+    background-color: var(--bg-light-gray);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.audio-player-container audio {
+    width: 100%;
+    display: none; /* Hide default audio controls */
+}
+
+.audio-player-container .controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.audio-player-container #play-pause-btn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.audio-player-container #play-pause-btn:hover {
+    color: var(--primary-dark);
+}
+
+.audio-player-container .progress-bar-wrapper {
+    flex-grow: 1;
+    height: 8px;
+    background-color: var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.audio-player-container #progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.audio-player-container #time-display {
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+.audio-description {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-top: 15px;
+}
+
+.countdown-timer {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-top: 20px;
+}
+
+.countdown-timer span {
+    color: var(--danger-main);
+}
+
+.btn-lg {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+}

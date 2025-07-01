@@ -1,0 +1,269 @@
+/* public/assets/css/pages/payment.css */
+
+.main-title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stepper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--border-light);
+    color: var(--light-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.step.active {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+}
+
+.step.done {
+    background-color: var(--success-main);
+    color: var(--white-text);
+}
+
+.step-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--border-light);
+    margin: 0 10px;
+}
+
+.step-line.done {
+    background-color: var(--success-main);
+}
+
+.payment-section {
+    margin-bottom: 40px;
+}
+
+.payment-section .card-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-section .card-header h2 i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border-light);
+    font-size: 15px;
+}
+
+.summary-row:last-of-type {
+    border-bottom: none;
+}
+
+.summary-total {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--dark-text);
+    border-top: 1px solid var(--border-light);
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+.payment-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.payment-option:hover {
+    border-color: var(--primary-color);
+}
+
+.payment-option.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.payment-option img {
+    height: 30px;
+    width: 80px; /* Give a fixed width to ensure consistency */
+    object-fit: contain; /* Ensure image is not distorted */
+    padding: 5px; /* Add some padding around the logo */
+}
+
+.payment-option .rekening {
+    flex-grow: 1;
+    font-weight: 500;
+    color: var(--dark-text);
+    text-align: left; /* Align text to the left */
+}
+
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-option .check-icon {
+    font-size: 24px;
+    color: var(--primary-color);
+    display: none;
+}
+
+.payment-option.selected .check-icon {
+    display: block;
+}
+
+.ewallet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.ewallet-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.ewallet-option:hover {
+    border-color: var(--primary-color);
+}
+
+.ewallet-option.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.ewallet-option img {
+    height: 40px;
+    width: 80px; /* Give a fixed width for consistency */
+    object-fit: contain; /* Ensure image is not distorted */
+    margin-bottom: 5px; /* Reduce margin slightly */
+    padding: 5px; /* Add some padding around the logo */
+}
+
+.ewallet-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ewallet-option .check-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: var(--primary-color);
+    display: none;
+}
+
+.ewallet-option.selected .check-icon {
+    display: block;
+}
+
+.file-upload-group {
+    margin-top: 20px;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 20px;
+    border: 2px dashed var(--border-light);
+    border-radius: 8px;
+    background-color: var(--bg-light-gray);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--dark-text);
+    transition: all 0.2s ease;
+}
+
+.file-upload-label:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.file-upload-label i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.file-upload-group input[type="file"] {
+    display: none;
+}
+
+.file-name {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--light-text);
+    text-align: center;
+}
+
+.btn-action {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-back {
+    background-color: var(--bg-light-gray);
+    color: var(--dark-text);
+    border: 1px solid var(--border-light);
+}
+
+.btn-back:hover {
+    background-color: var(--border-light);
+}
+
+.btn-confirm {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border: none;
+}
+
+.btn-confirm:hover {
+    background-color: var(--primary-dark);
+}

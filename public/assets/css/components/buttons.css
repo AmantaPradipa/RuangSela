@@ -1,0 +1,163 @@
+/* public/assets/css/components/buttons.css */
+
+.btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-text);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: var(--bg-light-gray);
+    border-color: var(--border-light);
+    color: var(--dark-text);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-light);
+    border-color: var(--light-text);
+    transform: translateY(-1px);
+}
+
+/* Danger Button */
+.btn-danger {
+    background-color: var(--danger-main);
+    border-color: var(--danger-main);
+    color: var(--white-text);
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-1px);
+}
+
+/* Outline Button */
+.btn-outline {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    transform: translateY(-1px);
+}
+
+/* Icon Button (for table actions, etc.) */
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--light-text);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+/* Small Button */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Block Button */
+.btn-block {
+    width: 100%;
+    display: flex;
+}
+
+/* Specific styles for header/hero buttons (keep them for now) */
+.btn-login {
+    background-color: transparent;
+    border-color: var(--white-text);
+    color: var(--white-text);
+}
+
+.btn-login:hover {
+    background-color: var(--white-text);
+    color: var(--dark-text);
+}
+
+.btn-register {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-text);
+}
+
+.btn-register:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.hero-btn {
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.hero-btn.primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+.hero-btn.primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.hero-btn.secondary {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: #f0f0f0;
+}
+.hero-btn.secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-team {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-team:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}

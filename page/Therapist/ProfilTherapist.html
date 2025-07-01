@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Akun - Terapis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        /* === MASTER STYLE BLOCK (Identik untuk kedua file) === */
+        :root {
+            --bg-light: #fdfdfd;
+            --card-bg: #FFFFFF;
+            --text-primary: #2F3D35;
+            --text-secondary: #7A8580;
+            --accent-green: #4D645B;
+            --light-green: #e9efec;
+            --border-color: #EAEFEC;
+            --input-bg: #F8F9FA;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* General Body Styles */
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Main Header */
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 0 30px 0;
+            color: var(--text-primary);
+        }
+
+        /* Navigation Tabs */
+        .account-nav {
+            display: flex;
+            gap: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            padding-bottom: 16px;
+            border-bottom: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            color: var(--accent-green);
+        }
+
+        .nav-item.active {
+            border-bottom-color: var(--accent-green);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-pic-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 4px 12px rgba(47, 61, 53, 0.1);
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--card-bg);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .camera-icon i { font-size: 18px; color: var(--card-bg); }
+        .upload-caption { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px;}
+        .profile-meta h2 { font-size: 20px; font-weight: 600; margin:0 0 4px 0; }
+        .profile-meta-details { display: flex; justify-content: center; align-items: center; gap: 16px; color: var(--text-secondary); }
+        .rating { display: flex; align-items: center; gap: 5px; font-weight: 500;}
+        .rating .stars { color: #fbc02d; }
+        
+        /* Form Card Styling */
+        .form-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-card > h2 { font-size: 20px; margin: 0 0 24px 0; font-weight: 600; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .form-grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;}
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500; }
+
+        .input-field, .select-field, .textarea-field {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 16px;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus, .select-field:focus, .textarea-field:focus { outline: none; border-color: var(--accent-green); box-shadow: 0 0 0 3px rgba(77, 100, 91, 0.1); }
+        .textarea-field { resize: vertical; min-height: 120px; }
+        
+        .select-wrapper { position: relative; }
+        .select-field { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 40px; }
+        .select-wrapper::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 24px; color: var(--text-secondary); pointer-events: none; }
+        
+        /* Bidang Keahlian Specifics */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+        .skill-tag { background-color: var(--light-green); color: var(--accent-green); padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .skill-tag button { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 0; font-size: 16px; line-height: 1; }
+        .add-skill-wrapper { display: flex; gap: 10px; }
+        .add-btn { background-color: var(--accent-green); color: white; padding: 0 24px; border:none; border-radius: 8px; font-weight: 500; flex-shrink: 0;}
+        
+        /* Action Buttons */
+        .btn { padding: 12px 28px; border-radius: 8px; border: 1px solid; font-family: var(--font-family); font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .btn-primary { background-color: var(--accent-green); color: white; border-color: var(--accent-green); }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { background-color: var(--card-bg); color: var(--text-secondary); border-color: #d8dde1; }
+        .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+        .action-buttons { display: flex; justify-content: flex-end; gap: 16px; margin-top: 24px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 20px 15px; }
+            h1 { font-size: 24px; }
+            .form-grid, .form-grid-3-col { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column-reverse; gap: 12px; }
+            .btn { width: 100%; box-sizing: border-box;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pengaturan Akun</h1>
+
+        <!-- Navigation -->
+        <nav class="account-nav">
+            <a href="#" class="nav-item active"><i class="ri-user-line"></i> <span>Profil</span></a>
+            <a href="#" class="nav-item"><i class="ri-lock-line"></i> <span>Keamanan</span></a>
+            <a href="#" class="nav-item"><i class="ri-notification-3-line"></i> <span>Notifikasi</span></a>
+            <a href="#" class="nav-item"><i class="ri-shield-line"></i> <span>Privasi</span></a>
+            <a href="#" class="nav-item"><i class="ri-wallet-3-line"></i> <span>Payroll</span></a>
+            <a href="#" class="nav-item"><i class="ri-question-line"></i> <span>Bantuan</span></a>
+        </nav>
+
+        <!-- Profile Picture & Info -->
+        <header class="profile-header">
+            <div class="profile-pic-wrapper">
+                <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Foto Profil Dr. Maya Kusuma" class="profile-pic">
+                <div class="camera-icon" onclick="document.getElementById('profile-pic-input').click();">
+                    <i class="ri-camera-line"></i>
+                </div>
+                <input type="file" id="profile-pic-input" style="display: none;" accept="image/jpeg, image/png">
+            </div>
+             <p class="upload-caption">Ukuran maksimal file: 1MB (Format: JPG, PNG)</p>
+            <div class="profile-meta">
+                <h2>Psikolog Klinis</h2>
+                <div class="profile-meta-details">
+                    <span class="rating"><span class="stars">★★★★★</span> 4.9/5.0</span><span>•</span><span>Pengalaman 5 tahun</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Form Sections -->
+        <form onsubmit="event.preventDefault(); alert('Perubahan disimpan!');">
+            <section class="form-card">
+                <h2>Informasi Pribadi</h2>
+                <div class="form-grid">
+                    <div class="form-group"><label for="full-name">Nama Lengkap</label><input type="text" id="full-name" class="input-field" value="Dr. Maya Kusuma"></div>
+                    <div class="form-group"><label for="username">Nama Pengguna</label><input type="text" id="username" class="input-field" value="dr.mayak"></div>
+                    <div class="form-group"><label for="birth-date">Tanggal Lahir</label><input type="date" id="birth-date" class="input-field" value="1988-04-15"></div>
+                    <div class="form-group"><label for="gender">Jenis Kelamin</label><div class="select-wrapper"><select id="gender" class="select-field"><option value="female" selected>Perempuan</option><option value="male">Laki-laki</option></select></div></div>
+                    <div class="form-group"><label for="education">Pendidikan Terakhir</label><input type="text" id="education" class="input-field" value="S3 Psikologi Klinis"></div>
+                    <div class="form-group"><label for="license">Nomor Izin Praktik</label><input type="text" id="license" class="input-field" value="PSI/JKT/2018/1234"></div>
+                </div>
+            </section>
+            
+            <section class="form-card">
+                <h2>Bidang Keahlian</h2>
+                <div class="skills-container">
+                    <span class="skill-tag">Kecemasan <button type="button">×</button></span>
+                    <span class="skill-tag">Depresi <button type="button">×</button></span>
+                    <span class="skill-tag">Trauma <button type="button">×</button></span>
+                </div>
+                <div class="form-group full-width"><label for="new-skill">Tambah Keahlian</label><div class="add-skill-wrapper"><input type="text" id="new-skill" class="input-field" placeholder="Masukan bidang keahlian"><button type="button" class="add-btn">Tambah</button></div></div>
+            </section>
+            
+            <section class="form-card">
+                 <h2>Tentang Saya</h2>
+                 <div class="form-group full-width"><textarea id="about-me" class="textarea-field">Saya adalah seorang psikolog klinis dengan pengalaman lebih dari 5 tahun...</textarea></div>
+            </section>
+            
+            <section class="form-card">
+                <h2>Informasi Kontak & Payroll</h2>
+                <div class="form-grid">
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" class="input-field" value="maya.k@ruangsela.com"></div>
+                    <div class="form-group"><label for="phone">Nomor Telepon</label><input type="tel" id="phone" class="input-field" value="+6281234567890"></div>
+                    <div class="form-group"><label for="bank">Bank</label><div class="select-wrapper"><select id="bank" class="select-field"><option value="mandiri" selected>Bank Mandiri</option><option>Bank Lainnya</option></select></div></div>
+                    <div class="form-group"><label for="account-number">Nomor Rekening</label><input type="text" id="account-number" class="input-field" value="1370005123456"></div>
+                </div>
+            </section>
+
+             <section class="form-card">
+                 <h2>Tarif Konsultasi</h2>
+                 <div class="form-grid-3-col">
+                    <div class="form-group"><label for="unpaid-payroll">Payroll belum ditarik</label><input type="text" id="unpaid-payroll" class="input-field" value="Rp 3.500.000" disabled></div>
+                    <div class="form-group"><label for="chat-rate">Konsultasi Chat (per jam)</label><input type="text" id="chat-rate" class="input-field" value="Rp 150.000"></div>
+                    <div class="form-group"><label for="video-rate">Konsultasi Video (per jam)</label><input type="text" id="video-rate" class="input-field" value="Rp 200.000"></div>
+                 </div>
+            </section>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

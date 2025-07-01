@@ -1,0 +1,149 @@
+/* public/assets/css/pages/test_process.css */
+
+.test-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.test-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.test-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.test-header p {
+    font-size: 16px;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.progress-bar-container {
+    background-color: var(--border-light);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#main-progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease-in-out;
+}
+
+.question-card {
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+#question-counter {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-bottom: 15px;
+}
+
+#question-text {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 25px;
+}
+
+.options-container label {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light-gray);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.options-container label:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.options-container input[type="radio"] {
+    margin-right: 15px;
+    accent-color: var(--primary-color);
+    width: 20px;
+    height: 20px;
+}
+
+.options-container label.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.navigation-buttons .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.pagination-grid .page-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-grid .page-number:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.pagination-grid .page-number.active {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border-color: var(--primary-color);
+}
+
+.save-progress {
+    text-align: center;
+    font-size: 14px;
+    color: var(--light-text);
+}
+
+.save-progress a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.save-progress a:hover {
+    text-decoration: underline;
+}

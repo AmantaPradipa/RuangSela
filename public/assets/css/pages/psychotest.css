@@ -1,0 +1,157 @@
+/* public/assets/css/pages/psychotest.css */
+
+.psychotest-hero-section {
+    background-color: var(--primary-color);
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--white-text);
+}
+
+.psychotest-hero-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.psychotest-hero-section .highlight-text {
+    color: var(--dark-text);
+}
+
+.psychotest-hero-section p {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.test-selection-section {
+    padding: 80px 20px;
+}
+
+.test-selection-section h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.test-selection-section .subtitle {
+    font-size: 16px;
+    color: var(--light-text);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+}
+
+.test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+
+.test-card {
+    padding: 30px;
+    text-align: center;
+}
+
+.test-card .icon-wrapper {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.test-card .card-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.test-card .card-description {
+    font-size: 15px;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.test-card .cta-button {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.test-card .cta-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.no-tests-card {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+}
+
+.no-tests-card .icon-wrapper {
+    font-size: 64px;
+    color: var(--light-text);
+    margin-bottom: 20px;
+}
+
+.no-tests-card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.no-tests-card p {
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.why-us-section {
+    background-color: var(--bg-light-gray);
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.why-us-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.why-us-section p {
+    font-size: 16px;
+    color: var(--light-text);
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    padding: 30px;
+    text-align: center;
+}
+
+.feature-card .feature-icon {
+    font-size: 48px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: var(--light-text);
+}

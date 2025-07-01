@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Notifikasi</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-green: #708d7a;
+            --bg-light: #ffffff;
+            --bg-subtle: #f4f5f7;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --unread-red: #ef4444;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e5e5e5; display: grid; place-items: center; height: 100vh;
+        }
+        .notification-popup {
+            width: 380px; background-color: var(--bg-light); border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        
+        /* UPDATED: Header Styles */
+        .popup-header {
+            background-color: var(--primary-green);
+            color: white; padding: 16px 20px; display: flex; align-items: center;
+        }
+        .header-title {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 18px; font-weight: 600;
+            flex-grow: 1; /* Makes the title take up available space */
+        }
+        .notification-badge {
+            background-color: var(--unread-red); color: white;
+            font-size: 12px; font-weight: 600;
+            width: 22px; height: 22px; border-radius: 50%;
+            display: grid; place-items: center;
+            margin-right: 20px; /* Space between badge and buttons */
+        }
+        /* ADDED: Header control buttons */
+        .header-right { display: flex; gap: 15px; }
+        .header-right button {
+            background: none; border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 18px; cursor: pointer; padding: 0; line-height: 1;
+        }
+
+        .popup-body { max-height: 400px; overflow-y: auto; }
+        .notification-list { list-style: none; padding: 0; margin: 0; }
+        .notification-item {
+            display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color); cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .notification-item:hover { background-color: var(--bg-subtle); }
+        .icon-wrapper {
+            position: relative; background-color: var(--bg-subtle); width: 40px; height: 40px;
+            border-radius: 50%; display: grid; place-items: center;
+            font-size: 18px; color: var(--text-dark); flex-shrink: 0;
+        }
+        .notification-item.unread .unread-dot {
+            position: absolute; top: 0; right: 0;
+            width: 10px; height: 10px; background-color: var(--unread-red);
+            border-radius: 50%; border: 2px solid var(--bg-light);
+        }
+        .text-wrapper .title { font-weight: 500; color: var(--text-dark); line-height: 1.4; margin: 0 0 4px 0; font-size: 15px; }
+        .text-wrapper .time { font-size: 13px; color: var(--text-light); }
+        
+        .popup-footer { padding: 16px; text-align: center; }
+        .footer-link { text-decoration: none; color: var(--text-light); font-weight: 600; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="notification-popup" id="notification-popup">
+    <header class="popup-header">
+        <div class="header-title"><i class="fa-regular fa-bell"></i> Notifikasi</div>
+        <div class="notification-badge">2</div>
+        <!-- ADDED: Buttons -->
+        <div class="header-right">
+            <button title="Minimize"><i class="fa-solid fa-minus"></i></button>
+            <button title="Close" onclick="document.getElementById('notification-popup').style.display='none'"><i class="fa-solid fa-times"></i></button>
+        </div>
+    </header>
+    <main class="popup-body">
+        <ul class="notification-list">
+            <li class="notification-item unread"><div class="icon-wrapper"><i class="fa-regular fa-calendar-days"></i><span class="unread-dot"></span></div><div class="text-wrapper"><p class="title">Jadwal konsultasi dengan Dr. Sarah hari ini pukul 14:00 WIB</p><span class="time">10 menit yang lalu</span></div></li>
+            <li class="notification-item unread"><div class="icon-wrapper"><i class="fa-regular fa-circle-check"></i><span class="unread-dot"></span></div><div class="text-wrapper"><p class="title">Pembayaran paket konsultasi Anda telah berhasil</p><span class="time">1 jam yang lalu</span></div></li>
+            <li class="notification-item"><div class="icon-wrapper"><i class="fa-regular fa-comments"></i></div><div class="text-wrapper"><p class="title">Ada 3 balasan baru di diskusi Anda</p><span class="time">2 jam yang lalu</span></div></li>
+            <li class="notification-item"><div class="icon-wrapper"><i class="fa-regular fa-file-lines"></i></div><div class="text-wrapper"><p class="title">Hasil psikotes Anda telah tersedia</p><span class="time">3 jam yang lalu</span></div></li>
+        </ul>
+    </main>
+    <footer class="popup-footer">
+        <a href="#" class="footer-link">Lihat Semua Notifikasi</a>
+    </footer>
+</div>
+
+</body>
+</html>

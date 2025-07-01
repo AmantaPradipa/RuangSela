@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Sistem - RuangSela</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Boxicons for Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        /* CSS Variables for a consistent theme */
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #53785E;
+            --light-green-bg: #EAF7EC;
+            --primary-red: #F44336;
+            --light-red-bg: #FEECEF;
+            --primary-yellow: #FFC107;
+            --light-yellow-bg: #FFF9E6;
+            --primary-blue: #2196F3;
+            --light-blue-bg: #E3F2FD;
+            --primary-purple: #9C27B0;
+            --light-purple-bg: #F3E5F5;
+
+            --grey-text: #6c757d;
+            --dark-text: #343a40;
+            --border-color: #E9ECEF;
+            --background-color: #F8F9FA;
+            --white-color: #FFFFFF;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --border-radius: 8px;
+        }
+
+        /* Basic Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            padding: 24px;
+        }
+
+        .page-container {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* General Components */
+        .card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--dark-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--grey-text);
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .page-header .subtitle {
+            font-size: 16px;
+            color: var(--grey-text);
+        }
+
+        /* Tabs Navigation */
+        .content-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: -1px;
+        }
+
+        .content-tabs nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .content-tabs a {
+            padding: 12px 4px;
+            color: var(--grey-text);
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .content-tabs a.active,
+        .content-tabs a:hover {
+            color: var(--dark-green);
+            border-bottom-color: var(--dark-green);
+        }
+
+        /* Section: Daftar Pengaturan */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filters .filter-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .filters .filter-item i {
+            position: absolute;
+            left: 14px;
+            color: var(--grey-text);
+            font-size: 18px;
+        }
+
+        .filters .form-control {
+            padding: 9px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--white-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .filters input.form-control {
+            padding-left: 40px;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table thead th {
+            color: var(--grey-text);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .data-table thead th i {
+            font-size: 14px;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        .table-actions i {
+            font-size: 20px;
+            color: var(--grey-text);
+            margin: 0 6px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .table-actions i:hover {
+            color: var(--dark-green);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-green {
+            background-color: var(--light-green-bg);
+            color: var(--primary-green);
+        }
+
+        .tag-red {
+            background-color: var(--light-red-bg);
+            color: var(--primary-red);
+        }
+
+        .tag-blue {
+            background-color: var(--light-blue-bg);
+            color: var(--primary-blue);
+        }
+
+        .tag-purple {
+            background-color: var(--light-purple-bg);
+            color: var(--primary-purple);
+        }
+
+        .tag-yellow {
+            background-color: var(--light-yellow-bg);
+            color: var(--primary-yellow);
+        }
+
+        /* Section: Add/Edit Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--dark-green);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Section: Rules & Policies */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .rule-card {
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: var(--white-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .rule-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .rule-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .rule-card-header .tag {
+            margin-top: 2px;
+        }
+
+        .rule-card .rule-id {
+            font-size: 13px;
+            color: var(--grey-text);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .rule-card p {
+            color: var(--grey-text);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .rule-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rule-card-footer .date {
+            font-size: 13px;
+            color: var(--grey-text);
+        }
+
+        .rule-card-footer .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        #add-rule-btn {
+            margin-top: 24px;
+        }
+
+        /* Section: System Info */
+        .system-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .info-panel {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .info-panel i {
+            font-size: 28px;
+            padding: 12px;
+            border-radius: 50%;
+        }
+
+        .info-panel h3 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .info-panel p {
+            font-size: 14px;
+            color: var(--grey-text);
+        }
+
+        .info-panel-blue {
+            background-color: var(--light-blue-bg);
+        }
+
+        .info-panel-blue i {
+            background-color: #bbdefb;
+            color: var(--primary-blue);
+        }
+
+        .info-panel-green {
+            background-color: var(--light-green-bg);
+        }
+
+        .info-panel-green i {
+            background-color: #c8e6c9;
+            color: var(--primary-green);
+        }
+
+        .info-panel-yellow {
+            background-color: var(--light-yellow-bg);
+        }
+
+        .info-panel-yellow i {
+            background-color: #ffecb3;
+            color: var(--primary-yellow);
+        }
+
+        .changelog {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .changelog h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .changelog-list .item {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .changelog-list .item:last-child {
+            border-bottom: none;
+        }
+
+        .changelog-list .date {
+            flex-basis: 120px;
+            color: var(--grey-text);
+            font-size: 14px;
+        }
+
+        .changelog-list .version {
+            flex-basis: 80px;
+            font-weight: 600;
+        }
+
+        .changelog-list .desc {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+            align-items: center;
+        }
+
+        .pagination a {
+            color: var(--grey-text);
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 0 4px;
+            transition: all 0.2s;
+        }
+
+        .pagination a.active {
+            background-color: var(--dark-green);
+            color: white;
+            font-weight: 600;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <header class="page-header">
+            <h1>Pengaturan Sistem</h1>
+            <p class="subtitle">Kelola semua pengaturan platform RuangSela</p>
+        </header>
+
+        <div class="content-tabs">
+            <nav>
+                <a href="#" class="active">Umum</a>
+                <a href="#">Konten</a>
+                <a href="#">Rules</a>
+                <a href="#">Notifikasi</a>
+                <a href="#">Keamanan</a>
+            </nav>
+        </div>
+
+        <!-- Section: Daftar Pengaturan -->
+        <section class="card">
+            <div class="card-header">
+                <h2>Daftar Pengaturan</h2>
+                <button class="btn btn-primary"><i class='bx bx-plus'></i> Tambah Pengaturan</button>
+            </div>
+            <div class="filters">
+                <div class="filter-item" style="flex: 1;">
+                    <i class='bx bx-search'></i>
+                    <input type="text" class="form-control" placeholder="Cari pengaturan...">
+                </div>
+                <select class="form-control" style="width: 200px;">
+                    <option>Semua Kategori</option>
+                </select>
+                <select class="form-control" style="width: 180px;">
+                    <option>Semua Status</option>
+                </select>
+                <button class="btn" style="background: var(--border-color);"><i class='bx bx-filter'></i>
+                    Filter</button>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Pengaturan</th>
+                            <th>Nama Pengaturan <i class='bx bxs-up-arrow'></i></th>
+                            <th>Kategori</th>
+                            <th>Status <i class='bx bxs-up-arrow'></i></th>
+                            <th>Terakhir Diperbarui <i class='bx bxs-up-arrow'></i></th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SET001</td>
+                            <td>Batas Waktu Sesi</td>
+                            <td><span class="tag tag-blue">Umum</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>15 Jun 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET002</td>
+                            <td>Jumlah Maksimum Pengguna</td>
+                            <td><span class="tag tag-blue">Umum</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>12 Jun 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET003</td>
+                            <td>Kebijakan Privasi</td>
+                            <td><span class="tag tag-purple">Rules</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>10 Jun 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET004</td>
+                            <td>Syarat dan Ketentuan</td>
+                            <td><span class="tag tag-purple">Rules</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>5 Jun 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET005</td>
+                            <td>Template Email Notifikasi</td>
+                            <td><span class="tag tag-yellow">Notifikasi</span></td>
+                            <td><span class="tag tag-red">Nonaktif</span></td>
+                            <td>1 Jun 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET006</td>
+                            <td>Pengaturan Keamanan Login</td>
+                            <td><span class="tag tag-red"
+                                    style="background-color:#ffebee; color:#d32f2f;">Keamanan</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>28 Mei 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                        <tr>
+                            <td>SET007</td>
+                            <td>Pengaturan Konten Beranda</td>
+                            <td><span class="tag tag-green">Konten</span></td>
+                            <td><span class="tag tag-green">Aktif</span></td>
+                            <td>25 Mei 2023</td>
+                            <td class="table-actions"><i class='bx bxs-edit'></i><i class='bx bxs-trash'></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <a href="#"><i class='bx bx-chevron-left'></i></a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#"><i class='bx bx-chevron-right'></i></a>
+            </div>
+        </section>
+
+        <!-- Section: Tambah/Edit Pengaturan -->
+        <section class="card">
+            <div class="card-header">
+                <h2>Tambah/Edit Pengaturan</h2>
+            </div>
+            <form>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="setting-name">Nama Pengaturan</label>
+                        <input type="text" id="setting-name" class="form-control"
+                            placeholder="Masukkan nama pengaturan">
+                    </div>
+                    <div class="form-group">
+                        <label for="setting-category">Kategori</label>
+                        <select id="setting-category" class="form-control">
+                            <option>Pilih kategori</option>
+                            <option>Umum</option>
+                            <option>Rules</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="setting-description">Deskripsi</label>
+                    <textarea id="setting-description" class="form-control"
+                        placeholder="Masukkan deskripsi pengaturan"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="setting-value">Nilai</label>
+                    <textarea id="setting-value" class="form-control"
+                        placeholder="Masukkan nilai pengaturan"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <div class="toggle-switch">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span>Aktif</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Section: Manajemen Rules -->
+        <section>
+            <div class="card-header"
+                style="background: white; padding: 24px; border: 1px solid var(--border-color); border-top-left-radius: var(--border-radius); border-top-right-radius: var(--border-radius); box-shadow: var(--card-shadow); margin-bottom: 0;">
+                <h2>Manajemen Rules & Kebijakan</h2>
+            </div>
+            <div class="rules-grid card"
+                style="border-top-left-radius: 0; border-top-right-radius: 0; box-shadow: var(--card-shadow); border-top:none;">
+                <div class="rule-card">
+                    <div class="rule-card-header">
+                        <h3>Kebijakan Privasi</h3>
+                        <span class="tag tag-green">Aktif</span>
+                    </div>
+                    <p class="rule-id">RULE001</p>
+                    <p>Kebijakan mengenai privasi pengguna platform RuangSela</p>
+                    <div class="rule-card-footer">
+                        <span class="date">Diperbarui: 10 Jun 2023</span>
+                        <div class="actions">
+                            <button class="btn"
+                                style="background-color: var(--light-green-bg); color: var(--dark-green); padding: 6px 16px;">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 16px;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-card-header">
+                        <h3>Syarat dan Ketentuan</h3>
+                        <span class="tag tag-green">Aktif</span>
+                    </div>
+                    <p class="rule-id">RULE002</p>
+                    <p>Syarat dan ketentuan penggunaan platform RuangSela</p>
+                    <div class="rule-card-footer">
+                        <span class="date">Diperbarui: 5 Jun 2023</span>
+                        <div class="actions">
+                            <button class="btn"
+                                style="background-color: var(--light-green-bg); color: var(--dark-green); padding: 6px 16px;">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 16px;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-card-header">
+                        <h3>Pedoman Komunitas</h3>
+                        <span class="tag tag-green">Aktif</span>
+                    </div>
+                    <p class="rule-id">RULE003</p>
+                    <p>Pedoman untuk interaksi dalam komunitas RuangSela</p>
+                    <div class="rule-card-footer">
+                        <span class="date">Diperbarui: 1 Jun 2023</span>
+                        <div class="actions">
+                            <button class="btn"
+                                style="background-color: var(--light-green-bg); color: var(--dark-green); padding: 6px 16px;">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 16px;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-card-header">
+                        <h3>Kebijakan Konten</h3>
+                        <span class="tag tag-green">Aktif</span>
+                    </div>
+                    <p class="rule-id">RULE004</p>
+                    <p>Kebijakan mengenai konten yang diperbolehkan di RuangSela</p>
+                    <div class="rule-card-footer">
+                        <span class="date">Diperbarui: 28 Mei 2023</span>
+                        <div class="actions">
+                            <button class="btn"
+                                style="background-color: var(--light-green-bg); color: var(--dark-green); padding: 6px 16px;">Edit</button>
+                            <button class="btn btn-danger" style="padding: 6px 16px;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="add-rule-btn" class="btn btn-primary" style="width:100%; margin-top: 24px;"><i
+                    class='bx bx-plus'></i> Tambah Rule Baru</button>
+        </section>
+
+        <!-- Section: Informasi Sistem -->
+        <section class="card">
+            <div class="card-header">
+                <h2>Informasi Sistem</h2>
+            </div>
+            <div class="system-info-grid">
+                <div class="info-panel info-panel-blue">
+                    <i class='bx bxs-cog'></i>
+                    <div>
+                        <h3>Versi Sistem</h3>
+                        <p style="font-size: 24px; font-weight: 700; color: var(--dark-text);">v2.5.3</p>
+                        <p>Diperbarui pada 15 Juni 2023</p>
+                    </div>
+                </div>
+                <div class="info-panel info-panel-green">
+                    <i class='bx bxs-check-shield'></i>
+                    <div>
+                        <h3>Status Sistem</h3>
+                        <p style="font-size: 24px; font-weight: 700; color: var(--dark-text);">Aktif</p>
+                        <p>Semua layanan berjalan normal</p>
+                    </div>
+                </div>
+                <div class="info-panel info-panel-yellow">
+                    <i class='bx bxs-time-five'></i>
+                    <div>
+                        <h3>Pemeliharaan</h3>
+                        <p style="font-size: 16px; font-weight: 700; color: var(--dark-text);">20 Juni 2023, 01:00 -
+                            03:00 WIB</p>
+                        <p>Pemeliharaan rutin terjadwal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="changelog">
+                <h3>Log Perubahan Terbaru</h3>
+                <div class="changelog-list">
+                    <div class="item">
+                        <span class="date">15 Juni 2023</span>
+                        <span class="version">v2.5.3</span>
+                        <span class="desc">Perbaikan bug pada modul notifikasi dan peningkatan performa sistem</span>
+                    </div>
+                    <div class="item">
+                        <span class="date">1 Juni 2023</span>
+                        <span class="version">v2.5.2</span>
+                        <span class="desc">Penambahan fitur filter pada manajemen pengguna</span>
+                    </div>
+                    <div class="item">
+                        <span class="date">15 Mei 2023</span>
+                        <span class="version">v2.5.1</span>
+                        <span class="desc">Perbaikan keamanan dan optimasi database</span>
+                    </div>
+                    <div class="item">
+                        <span class="date">1 Mei 2023</span>
+                        <span class="version">v2.5.0</span>
+                        <span class="desc">Peluncuran modul pengaturan baru dan antarmuka yang diperbarui</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - RuangSela</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* CSS Variabel & Reset */
+        :root {
+            --primary-green: #5A7D6C;
+            --light-green-1: #6C897B;
+            --light-green-2: #739082;
+            --light-green-3: #89A296;
+            --bg-light: #FBFFF9;
+            --text-dark: #333;
+            --text-light: #fff;
+            --text-grey: #777;
+            --border-color: #e8e8e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header / Navbar */
+        .main-header {
+            padding: 20px 40px;
+            background-color: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .back-button:hover {
+            background-color: var(--light-green-1);
+        }
+
+        /* Main Container Layout */
+        .main-content {
+            display: flex;
+            flex-grow: 1; /* Makes content fill remaining height */
+        }
+
+        /* Left Pane Styling */
+        .left-pane {
+            flex-basis: 45%;
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Faint leaf background patterns */
+        .left-pane::before, .left-pane::after {
+            content: '';
+            position: absolute;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' fill='%23FFFFFF'%3E%3Cpath d='M544 0c-17.7 0-32 14.3-32 32s14.3 32 32 32c77.9 0 141.2 60.1 144 136h-32c-17.7 0-32 14.3-32 32s14.3 32 32 32h32v32c0 17.7 14.3 32 32 32s32-14.3 32-32V264h32c17.7 0 32-14.3 32-32s-14.3-32-32-32h-32C562.8 84.1 513.9 32 448 32c-17.7 0-32-14.3-32-32s14.3-32 32-32H544zM80 224c-17.7 0-32 14.3-32 32s14.3 32 32 32h32v32c0 17.7 14.3 32 32 32s32-14.3 32-32V288h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H144v-32c0-17.7-14.3-32-32-32s-32 14.3-32 32v32H80zM288 32c-17.7 0-32 14.3-32 32s14.3 32 32 32c52.2 0 97 32.2 113.8 77.9c13.3-11.7 30.5-18.7 49-21.2C437.1 98.7 400.9 64 352 64c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c79.5 0 144 64.5 144 144c0 21.2-4.6 41.2-12.8 59.1c-2.4 5.2-1.6 11.3 2 15.8c3.6 4.5 9.7 6.4 15.6 4.7c29-8.4 50.2-35.3 50.2-66.6c0-79.5-64.5-144-144-144H288zM240 480c17.7 0 32-14.3 32-32s-14.3-32-32-32H208V384c0-17.7-14.3-32-32-32s-32 14.3-32 32v32h-32c-17.7 0-32 14.3-32 32s14.3 32 32 32h32v32c0 17.7 14.3 32 32 32s32-14.3 32-32v-32h32zM32 416c-17.7 0-32 14.3-32 32s14.3 32 32 32h32c79.5 0 144-64.5 144-144c0-17.7-14.3-32-32-32s-32 14.3-32 32c0 44.2-35.8 80-80 80H32z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: 0;
+            background-size: contain;
+        }
+
+        .left-pane::before {
+            width: 350px;
+            height: 350px;
+            top: 60px;
+            right: -100px;
+            transform: rotate(25deg);
+        }
+
+        .left-pane::after {
+            width: 250px;
+            height: 250px;
+            bottom: 250px;
+            left: -80px;
+            transform: rotate(-15deg);
+        }
+
+        .left-pane > * {
+            z-index: 1; 
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-section h1 {
+            font-size: 36px;
+            font-weight: 600;
+        }
+
+        .left-pane .description {
+            font-size: 16px;
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            background-color: var(--light-green-2);
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .stat-box .label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-green-1);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: auto; /* Pushes to the bottom */
+            position: relative;
+        }
+        
+        .testimonial-card .stars {
+            color: #FFD700;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-card .quote {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            background-color: var(--light-green-3);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .author-info .name {
+            font-weight: 600;
+        }
+
+        .author-info .details {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .testimonial-dots {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            margin: 0 4px;
+        }
+        
+        .dot.active {
+            background-color: var(--text-light);
+        }
+
+        /* Right Pane Styling */
+        .right-pane {
+            flex-basis: 55%;
+            padding: 40px 6%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-nav a {
+            text-decoration: none;
+            color: var(--text-grey);
+            font-weight: 500;
+            font-size: 16px;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .form-nav a.active {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        .form-container {
+            min-height: 540px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .form-container h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-container .subtitle {
+            font-size: 16px;
+            color: var(--text-grey);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 2px rgba(90, 125, 108, 0.2);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-grey);
+        }
+        
+        .remember-me label {
+             margin-bottom: 0;
+             cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-green);
+            cursor: pointer;
+        }
+        
+        .forgot-password {
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: auto;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--light-green-1);
+        }
+        
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #ccc;
+            margin: 25px 0;
+        }
+        
+        .separator::before, .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+        
+        .separator:not(:empty)::after {
+            margin-left: .5em;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .social-btn:hover {
+            background-color: #f7f7f7;
+        }
+        
+        .social-btn i {
+            font-size: 20px;
+        }
+        .fa-google { color: #DB4437; }
+        .fa-facebook { color: #4267B2; }
+        .fa-apple { color: #000; }
+        
+        .register-link, .ssl-notice {
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .register-link {
+            margin-bottom: 15px;
+        }
+
+        .register-link a {
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .ssl-notice {
+            color: var(--text-grey);
+        }
+        .ssl-notice i {
+            margin-right: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .left-pane, .right-pane {
+                flex-basis: auto;
+            }
+            .left-pane {
+                min-height: 500px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 15px 20px;
+            }
+            .right-pane {
+                padding: 40px 20px;
+            }
+            .form-nav {
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+            .social-login {
+                flex-direction: column;
+            }
+            .left-pane {
+                padding: 30px 20px;
+            }
+            .stats-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <header class="main-header">
+        <button class="back-button">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </header>
+
+    <!-- BODY KONTEN -->
+    <main class="main-content">
+        <!-- Left Pane -->
+        <div class="left-pane">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h1>RuangSela</h1>
+            </div>
+
+            <p class="description">
+                Platform kesehatan mental yang menyediakan akses mudah ke layanan konsultasi dan sumber daya untuk mendukung kesejahteraan mental Anda.
+            </p>
+
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="number">1000+</div>
+                    <div class="label">Psikolog profesional</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">50.000+</div>
+                    <div class="label">Pengguna terpuaskan</div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">
+                    “RuangSela membantu saya menemukan ketenangan dan solusi untuk masalah yang saya hadapi. Konsultasi dengan psikolog profesional sangat membantu perjalanan kesehatan mental saya.”
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AS</div>
+                    <div class="author-info">
+                        <div class="name">Anita S.</div>
+                        <div class="details">Pengguna sejak 2022</div>
+                    </div>
+                </div>
+                <div class="testimonial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Pane -->
+        <div class="right-pane">
+            <nav class="form-nav">
+                <a href="#" class="active">Masuk</a>
+                <a href="#">Daftar</a>
+            </nav>
+
+            <div class="form-container">
+                <h2>Selamat Datang Kembali</h2>
+                <p class="subtitle">Masuk untuk melanjutkan perjalanan kesehatan mental Anda bersama kami</p>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                             <i class="fas fa-envelope"></i>
+                             <input type="email" id="email" placeholder="Masukkan email Anda">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Kata Sandi</label>
+                        <div class="input-wrapper">
+                             <i class="fas fa-lock"></i>
+                             <input type="password" id="password" placeholder="Masukkan kata sandi Anda">
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                             <input type="checkbox" id="remember-me">
+                             <label for="remember-me">Ingat saya</label>
+                        </div>
+                        <a href="#" class="forgot-password">Lupa kata sandi?</a>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Masuk</button>
+                </form>
+
+                <div class="separator">atau masuk dengan</div>
+
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-apple"></i> Apple
+                    </button>
+                </div>
+
+                <p class="register-link">
+                    Belum memiliki akun? <a href="#">Daftar sekarang</a>
+                </p>
+
+                <p class="ssl-notice">
+                    <i class="fas fa-lock"></i> Dijamin aman dengan enkripsi SSL
+                </p>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Javascript sederhana untuk mencegah form submit default
+        const form = document.getElementById('login-form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah halaman reload saat tombol 'Masuk' diklik
+            alert('Form login dikirim! (Fungsi ini hanya simulasi)');
+        });
+    </script>
+</body>
+</html>

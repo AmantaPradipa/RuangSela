@@ -1,0 +1,81 @@
+/* public/assets/css/components/cards.css */
+
+.card {
+    background-color: var(--bg-white);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 8px 25px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 24px; /* Added for spacing between cards */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px var(--shadow-medium);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-header h2,
+.card-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin: 0;
+}
+
+.card-header .view-all {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.card-header .view-all:hover {
+    color: var(--primary-dark);
+}
+
+.card-body {
+    font-size: 15px;
+    color: var(--light-text);
+    line-height: 1.7;
+}
+
+.card-footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Specific card variations if needed */
+.card-flat {
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    .card-header h2,
+    .card-header h3 {
+        font-size: 18px;
+    }
+    .card-body {
+        font-size: 14px;
+    }
+}

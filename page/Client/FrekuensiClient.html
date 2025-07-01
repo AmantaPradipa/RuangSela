@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terapi Frekuensi Audio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #F8F9F8;
+            --card-bg: #FFFFFF;
+            --primary-green: #6A8A7C;
+            --primary-text: #2F3D35;
+            --secondary-text: #7A8580;
+            --border-color: #EAEFEC;
+            --progress-track: #EAEAEA;
+            --emergency-bg: #FEF7D8;
+            --emergency-border: #FBE6A0;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* General Body Styles */
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+        }
+
+        /* Main Page Layout (Content + Sidebar) */
+        .page-container {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 24px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* Card & Widget Base Styles */
+        .card, .widget {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        
+        .hero-section {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            box-shadow: none;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--primary-text);
+        }
+        
+        .section-header a, .see-more-link {
+            text-decoration: none;
+            color: var(--primary-green);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section h1 {
+            font-size: 28px;
+            margin: 0 0 8px 0;
+            color: var(--primary-text);
+        }
+
+        .hero-section p {
+            margin: 0 0 24px 0;
+            color: var(--secondary-text);
+            font-size: 16px;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .progress-bar-container {
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-label {
+            color: var(--secondary-text);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--progress-track);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 45%;
+            height: 100%;
+            background-color: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-family: var(--font-family);
+        }
+        
+        .btn i {
+            font-size: 18px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #557266;
+        }
+        
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--primary-green);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background-color: #f7f7f7;
+        }
+        
+        /* --- Frequency Selection Section --- */
+        .frequency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .frequency-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .frequency-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .frequency-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .frequency-icon {
+            background-color: var(--bg-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .frequency-icon i {
+            font-size: 20px;
+            color: var(--primary-green);
+        }
+        
+        .frequency-title h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .frequency-title span {
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+        
+        .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .play-btn i {
+            font-size: 40px;
+            color: var(--primary-green);
+            transition: transform 0.2s;
+        }
+        .play-btn:hover i {
+            transform: scale(1.1);
+        }
+        
+        .frequency-card .description {
+            font-size: 14px;
+            color: var(--secondary-text);
+            margin: 0 0 16px 0;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .duration-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .duration-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .duration-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--secondary-text);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .duration-btn:hover {
+            background-color: #e8eae8;
+            border-color: #d1d4d1;
+        }
+
+        .duration-btn.active {
+            background-color: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+        
+        /* --- About Section --- */
+        .about-section h2 {
+            font-size: 20px;
+            margin: 0 0 20px 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .about-left h3, .about-right h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .about-left p {
+            line-height: 1.7;
+            color: var(--secondary-text);
+        }
+
+        .how-to-list, .benefits-list {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .how-to-list li {
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            counter-increment: how-to-counter;
+            line-height: 1.6;
+        }
+        
+        .how-to-list li::before {
+            content: counter(how-to-counter);
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .benefits-list li {
+            margin-bottom: 12px;
+            padding-left: 32px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .benefits-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #E6F0EC;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z' fill='%236A8A7C'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12px 12px;
+        }
+
+        /* --- History Section --- */
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+        }
+
+        .history-item .frequency-icon {
+            background-color: white;
+            margin-right: 16px;
+        }
+
+        .history-info {
+            flex-grow: 1;
+        }
+
+        .history-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .history-info .timestamp {
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+
+        .history-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--secondary-text);
+            font-size: 14px;
+        }
+        
+        .history-duration {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .history-meta i {
+            font-size: 16px;
+        }
+        
+        .history-arrow i {
+            color: var(--secondary-text);
+            font-size: 24px;
+        }
+
+        /* --- Sidebar --- */
+        .widget h3 {
+            margin: 0 0 16px 0;
+            font-size: 18px;
+        }
+
+        /* Quick Contact Widget */
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .contact-buttons .btn {
+            width: 100%;
+        }
+
+        /* Emergency Widget */
+        .emergency-help {
+            background-color: var(--emergency-bg);
+            border: 1px solid var(--emergency-border);
+            padding: 16px;
+            border-radius: 12px;
+        }
+        
+        .emergency-help h3 {
+            font-size: 16px;
+            color: var(--primary-text);
+        }
+        
+        .emergency-help p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--secondary-text);
+            line-height: 1.5;
+        }
+
+        /* Schedule Widget */
+        .schedule-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .schedule-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .schedule-date {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        .schedule-date span {
+            display: block;
+            font-size: 12px;
+        }
+        .schedule-date .date-number {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .schedule-summary .day {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .schedule-summary .count {
+            color: var(--secondary-text);
+            font-size: 14px;
+        }
+        
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .schedule-item {
+            display: flex;
+            gap: 12px;
+        }
+
+        .schedule-timeline {
+            width: 2px;
+            background-color: var(--primary-green);
+            opacity: 0.5;
+        }
+
+        .schedule-details h4 {
+            margin: 0 0 2px 0;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .schedule-details p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+
+        .btn-fullwidth {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        /* Community Widget */
+        .community-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .community-post {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .post-header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .post-author h4 { margin: 0; font-size: 16px; font-weight: 600;}
+        .post-author span { font-size: 13px; color: var(--secondary-text); }
+        .post-author .category { color: var(--primary-green); }
+
+        .post-body p {
+            margin: 0 0 12px 0;
+            line-height: 1.6;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+
+        .reply-btn {
+            color: var(--primary-text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .reply-btn i { font-size: 16px; }
+
+        .widget > .see-more-link {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                margin-top: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .page-container {
+                gap: 16px;
+            }
+            .card, .widget, .schedule-card, .community-post {
+                padding: 16px;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+             .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container for the entire page -->
+    <div class="page-container">
+        
+        <!-- Main Content Area (Left Side) -->
+        <main class="main-content">
+
+            <!-- Hero Section -->
+            <section class="card hero-section">
+                <h1>Terapi Frekuensi Audio</h1>
+                <p>"Dengarkan frekuensi yang tepat untuk keseimbangan pikiran dan tubuh"</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                    <p class="progress-bar-label" style="margin-top: 8px;">Program terapi Anda 45% selesai</p>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">
+                        <i class="ri-play-line"></i>
+                        Lanjutkan Terakhir
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="ri-search-line"></i>
+                        Cari Frekuensi
+                    </button>
+                </div>
+            </section>
+
+            <!-- Frequency Selection Section -->
+            <section class="frequency-grid-section">
+                <div class="section-header">
+                    <!-- The image doesn't have a title for this section, so it's commented out -->
+                    <!-- <h2>Pilih Frekuensi</h2> -->
+                    <h2></h2>
+                    <a href="#">Lihat Semua ></a>
+                </div>
+                <div class="frequency-grid">
+                    <!-- Frequency Card: 432 Hz -->
+                    <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon">
+                                    <i class="ri-customer-service-2-line"></i>
+                                </div>
+                                <div class="frequency-title">
+                                    <h3>432 Hz</h3>
+                                    <span>Frekuensi Harmoni</span>
+                                </div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Dikenal sebagai frekuensi alam yang menenangkan dan menyeimbangkan energi.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn active">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+
+                    <!-- Add other frequency cards similarly -->
+                     <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon"><i class="ri-customer-service-2-line"></i></div>
+                                <div class="frequency-title"><h3>528 Hz</h3><span>Frekuensi Penyembuhan</span></div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Dikenal sebagai frekuensi cinta yang membantu perbaikan DNA dan keseimbangan.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+
+                     <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon"><i class="ri-customer-service-2-line"></i></div>
+                                <div class="frequency-title"><h3>639 Hz</h3><span>Frekuensi Hubungan</span></div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Membantu menyeimbangkan emosi dan meningkatkan koneksi interpersonal.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+                     <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon"><i class="ri-customer-service-2-line"></i></div>
+                                <div class="frequency-title"><h3>852 Hz</h3><span>Frekuensi Intuisi</span></div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Membantu membuka intuisi dan meningkatkan kesadaran spiritual.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+                     <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon"><i class="ri-customer-service-2-line"></i></div>
+                                <div class="frequency-title"><h3>396 Hz</h3><span>Frekuensi Pelepasan</span></div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Membantu melepaskan ketakutan dan trauma.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+                     <div class="frequency-card">
+                        <div class="frequency-card-header">
+                            <div class="frequency-info">
+                                <div class="frequency-icon"><i class="ri-customer-service-2-line"></i></div>
+                                <div class="frequency-title"><h3>417 Hz</h3><span>Frekuensi Perubahan</span></div>
+                            </div>
+                            <button class="play-btn"><i class="ri-play-circle-fill"></i></button>
+                        </div>
+                        <p class="description">Memfasilitasi perubahan dan membantu melepaskan situasi masa lalu.</p>
+                        <p class="duration-label">Pilih Durasi:</p>
+                        <div class="duration-options">
+                            <button class="duration-btn">5 menit</button>
+                            <button class="duration-btn">10 menit</button>
+                            <button class="duration-btn">15 menit</button>
+                            <button class="duration-btn">Bebas</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- About Section -->
+            <section class="card about-section">
+                <h2>Tentang Terapi Frekuensi</h2>
+                <div class="about-content">
+                    <div class="about-left">
+                        <h3>Apa itu Terapi Frekuensi?</h3>
+                        <p>Terapi frekuensi adalah metode penyembuhan yang menggunakan gelombang suara dengan frekuensi tertentu untuk memengaruhi kesehatan fisik dan mental. Setiap frekuensi memiliki manfaat spesifik untuk tubuh dan pikiran.</p>
+                        <h3>Cara Menggunakan</h3>
+                        <ol class="how-to-list">
+                            <li>Pilih frekuensi yang sesuai dengan kebutuhan Anda</li>
+                            <li>Tentukan durasi yang diinginkan (5, 10, 15 menit atau bebas)</li>
+                            <li>Gunakan headphone untuk hasil yang optimal</li>
+                            <li>Duduk atau berbaring dengan nyaman di tempat yang tenang</li>
+                        </ol>
+                    </div>
+                    <div class="about-right">
+                        <h3>Manfaat Terapi Frekuensi</h3>
+                        <ul class="benefits-list">
+                            <li>Membantu meredakan stres dan kecemasan</li>
+                            <li>Meningkatkan kualitas tidur dan relaksasi</li>
+                            <li>Meningkatkan fokus dan konsentrasi</li>
+                            <li>Menyeimbangkan energi dalam tubuh</li>
+                            <li>Membantu proses penyembuhan dan regenerasi sel</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- History Section -->
+            <section class="card history-section">
+                <div class="section-header">
+                    <h2>Riwayat Frekuensi</h2>
+                    <a href="#">Lihat Semua ></a>
+                </div>
+                <ul class="history-list">
+                    <li class="history-item">
+                        <div class="frequency-icon">
+                           <i class="ri-customer-service-2-line"></i>
+                        </div>
+                        <div class="history-info">
+                            <h4>432 Hz - Frekuensi Harmoni</h4>
+                            <span class="timestamp">Hari ini, 10:30</span>
+                        </div>
+                        <div class="history-meta">
+                            <div class="history-duration">
+                                <i class="ri-time-line"></i>
+                                <span>15 menit</span>
+                            </div>
+                            <a href="#" class="history-arrow">
+                               <i class="ri-arrow-right-s-line"></i>
+                            </a>
+                        </div>
+                    </li>
+                     <li class="history-item">
+                        <div class="frequency-icon">
+                           <i class="ri-customer-service-2-line"></i>
+                        </div>
+                        <div class="history-info">
+                            <h4>528 Hz - Frekuensi Penyembuhan</h4>
+                            <span class="timestamp">Kemarin, 19:45</span>
+                        </div>
+                        <div class="history-meta">
+                            <div class="history-duration">
+                                <i class="ri-time-line"></i>
+                                <span>10 menit</span>
+                            </div>
+                            <a href="#" class="history-arrow">
+                               <i class="ri-arrow-right-s-line"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="history-item">
+                        <div class="frequency-icon">
+                           <i class="ri-customer-service-2-line"></i>
+                        </div>
+                        <div class="history-info">
+                            <h4>639 Hz - Frekuensi Hubungan</h4>
+                            <span class="timestamp">3 hari lalu, 08:15</span>
+                        </div>
+                        <div class="history-meta">
+                            <div class="history-duration">
+                                <i class="ri-time-line"></i>
+                                <span>5 menit</span>
+                            </div>
+                            <a href="#" class="history-arrow">
+                               <i class="ri-arrow-right-s-line"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        
+        <!-- Sidebar (Right Side) -->
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>Kontak Cepat</h3>
+                <div class="contact-buttons">
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Hubungi Terapis
+                    </button>
+                    <button class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Hubungi Admin
+                    </button>
+                </div>
+            </div>
+            
+            <div class="emergency-help">
+                <h3>Bantuan Darurat</h3>
+                <p>Jika Anda dalam krisis, hubungi hotline 119</p>
+            </div>
+            
+            <div class="widget">
+                <h3>Jadwal Hari Ini</h3>
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="schedule-date">
+                            <span>Agustus</span>
+                            <span class="date-number">15</span>
+                        </div>
+                        <div class="schedule-summary">
+                            <p class="day">Selasa</p>
+                            <p class="count">2 sesi terjadwal</p>
+                        </div>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <div class="schedule-timeline"></div>
+                            <div class="schedule-details">
+                                <h4>Terapi Individu</h4>
+                                <p>10:00 - 11:00</p>
+                                <p>Dr. Maya Kusuma</p>
+                            </div>
+                        </div>
+                         <div class="schedule-item">
+                            <div class="schedule-timeline"></div>
+                            <div class="schedule-details">
+                                <h4>Grup Dukungan</h4>
+                                <p>15:00 - 16:00</p>
+                                <p>Mengatasi Anxiety</p>
+                            </div>
+                        </div>
+                    </div>
+                     <button class="btn btn-secondary btn-fullwidth">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                         Lihat Kalender Lengkap
+                    </button>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Aktivitas Komunitas</h3>
+                <div class="community-feed">
+                    <div class="community-post">
+                        <div class="post-header">
+                            <img src="https://i.pravatar.cc/80?u=budi" alt="Avatar Budi">
+                            <div class="post-author">
+                                <h4>Budi Santoso</h4>
+                                <span><span class="category">Mengatasi Anxiety</span> · 15 menit lalu</span>
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <p>Bagikan teknik yang membantu Anda mengatasi serangan panik?</p>
+                        </div>
+                        <div class="post-footer">
+                            <span>3 balasan</span>
+                            <a href="#" class="reply-btn">
+                                <i class="ri-reply-line"></i>
+                                Balas
+                            </a>
+                        </div>
+                    </div>
+                     <div class="community-post">
+                        <div class="post-header">
+                            <img src="https://i.pravatar.cc/80?u=siti" alt="Avatar Siti">
+                            <div class="post-author">
+                                <h4>Siti Rahma</h4>
+                                <span><span class="category">Mindfulness Harian</span> · 2 jam lalu</span>
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <p>Saya baru saja menyelesaikan meditasi 30 hari berturut-turut!</p>
+                        </div>
+                        <div class="post-footer">
+                            <span>8 balasan</span>
+                             <a href="#" class="reply-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                Balas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <a href="#" class="see-more-link">Lihat Lebih Banyak ></a>
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <script>
+        // JavaScript for Duration Button interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all frequency cards
+            const frequencyCards = document.querySelectorAll('.frequency-card');
+
+            // Loop through each card
+            frequencyCards.forEach(card => {
+                // Find all duration buttons within the current card
+                const durationButtons = card.querySelectorAll('.duration-btn');
+
+                // Add a click event listener to each button
+                durationButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // When a button is clicked, first remove 'active' class from all buttons in the same card
+                        durationButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+
+                        // Then, add the 'active' class to the button that was just clicked
+                        button.classList.add('active');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

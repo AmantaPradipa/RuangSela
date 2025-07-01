@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Komunitas</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* === Variabel CSS untuk Tema === */
+        :root {
+            --primary-green: #647970;
+            --light-green: #e9efec;
+            --lighter-green: #f3f6f5;
+            --tag-bg: #e0f2f1;
+            --tag-text: #00796b;
+            --dark-text: #212121;
+            --light-text: #757575;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f8f9fa;
+            --like-red: #e53935;
+        }
+
+        /* === Style Dasar dan Reset === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--dark-text);
+        }
+
+        /* === Tata Letak Utama (3 Kolom) === */
+        .community-page {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        aside, main {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* === Style Kartu Umum === */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .sidebar-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        h2.sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-green);
+        }
+
+        /* === Sidebar Kiri === */
+        .left-sidebar .search-bar {
+            position: relative;
+        }
+        .left-sidebar .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--light-text);
+        }
+        .left-sidebar .search-bar input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            background-color: var(--lighter-green);
+        }
+        .left-sidebar .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark-text);
+            border: 1px solid var(--border-color);
+        }
+        
+        .category-selector {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .sidebar-list { list-style: none; }
+        .sidebar-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        .sidebar-list li a { color: var(--dark-text); text-decoration: none; }
+        .sidebar-list .count { color: var(--light-text); }
+        .view-all {
+            color: var(--primary-green);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        
+        /* === Konten Utama (Feed) === */
+        .create-post-card {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .create-post-card img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+        .create-post-form { flex-grow: 1; }
+        .create-post-form textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            min-height: 60px;
+            background: transparent;
+        }
+        .create-post-form textarea:focus { outline: none; }
+        
+        .create-post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .post-icons i {
+            font-size: 22px;
+            color: var(--light-text);
+            cursor: pointer;
+            margin-right: 16px;
+        }
+        .btn-posting { padding: 8px 24px; }
+        
+        .feed-filters {
+            display: flex;
+            gap: 10px;
+            padding: 6px;
+            background-color: var(--lighter-green);
+            border-radius: 12px;
+            align-self: flex-start;
+        }
+        .feed-filters a {
+            padding: 6px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .feed-filters a.active {
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        /* --- Kartu Postingan --- */
+        .post-card {
+            display: flex;
+            gap: 16px;
+        }
+        .post-card .author-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+        }
+        .post-content { flex-grow: 1; }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .post-author-info { flex-grow: 1; }
+        .post-author-info strong { font-weight: 600; font-size: 16px; }
+        .post-author-info .meta { font-size: 13px; color: var(--light-text); }
+        .meta .topic { color: var(--primary-green); cursor: pointer; }
+        .meta .topic:hover { text-decoration: underline; }
+
+        .tag-terapis {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            margin-left: 8px;
+        }
+        .post-header .more-icon {
+            color: var(--light-text); cursor: pointer;
+        }
+
+        .post-body p {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .post-media img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            object-fit: cover;
+        }
+        
+        .post-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .action-group { display: flex; align-items: center; gap: 24px; }
+        .action-btn {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--light-text); cursor: pointer;
+            font-size: 14px;
+        }
+        .action-btn i { font-size: 20px; }
+        .action-btn:hover, .action-btn.liked { color: var(--like-red); }
+
+        .btn-reply { font-size: 14px; color: var(--light-text); }
+        
+
+        /* === Sidebar Kanan === */
+        .group-card, .webinar-card {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .group-card:not(:last-child) { margin-bottom: 16px; }
+
+        .group-icon-container {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background-color: var(--light-green);
+        }
+        .group-icon-container svg { width: 28px; height: 28px; color: var(--primary-green); }
+
+        .group-info h3 { font-size: 15px; font-weight: 600; }
+        .group-info p { font-size: 13px; color: var(--light-text); line-height: 1.5; margin: 4px 0 8px;}
+        .btn-join {
+            width: 100%; padding: 8px;
+            font-size: 14px; font-weight: 500;
+            background-color: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        .webinar-card .date {
+            background-color: var(--lighter-green);
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .webinar-card .date .month { font-size: 12px; }
+        .webinar-card .date .day { font-size: 24px; color: var(--primary-green); }
+
+        .webinar-info h3 { font-size: 15px; font-weight: 600; }
+        .webinar-info p { font-size: 13px; color: var(--light-text); }
+
+        .quick-links a {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 14px; color: var(--light-text); text-decoration: none;
+            padding: 8px 0;
+        }
+        .quick-links img { width: 16px; height: 16px; border-radius: 2px;}
+
+        /* === Responsive === */
+        @media (max-width: 1200px) {
+            .community-page {
+                grid-template-columns: 2fr 1fr;
+            }
+            .left-sidebar { display: none; } /* Hide left sidebar on tablets */
+        }
+        @media (max-width: 900px) {
+            .community-page {
+                grid-template-columns: 1fr;
+            }
+            .right-sidebar { grid-row: 1; } /* Move right sidebar to top on mobile */
+        }
+         @media (max-width: 500px) {
+             .community-page { padding: 12px; }
+             .card, .sidebar-card { padding: 16px; }
+             .create-post-card { display: none; } /* Hide for simplicity on small mobile */
+             .post-card { gap: 12px; }
+             .post-card .author-avatar { width: 40px; height: 40px;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="community-page">
+        <!-- ==== SIDEBAR KIRI ==== -->
+        <aside class="left-sidebar">
+            <div class="search-bar">
+                <i class="ri-search-line"></i>
+                <input type="text" placeholder="Cari di komunitas...">
+            </div>
+            <a href="#" class="btn btn-primary">
+                <i class="ri-add-line"></i>
+                Buat Postingan Baru
+            </a>
+            <div class="sidebar-section">
+                <h2 class="sidebar-title" style="margin-bottom:8px;">Kategori</h2>
+                <div class="category-selector">Semua Postingan</div>
+            </div>
+             <div class="sidebar-section">
+                <h2 class="sidebar-title">Komunitas Saya</h2>
+                <ul class="sidebar-list">
+                    <li><a href="#">Mengatasi Anxiety</a> <span class="count">128 anggota</span></li>
+                    <li><a href="#">Dukungan Depresi</a> <span class="count">94 anggota</span></li>
+                    <li><a href="#">Mindfulness Harian</a> <span class="count">156 anggota</span></li>
+                </ul>
+                <a href="#" class="view-all">Lihat Semua ›</a>
+            </div>
+            <div class="sidebar-section">
+                <h2 class="sidebar-title">Topik Populer</h2>
+                <ul class="sidebar-list">
+                    <li><a href="#">#kesehatanmental</a> <span class="count">128 post</span></li>
+                    <li><a href="#">#selfcare</a> <span class="count">86 post</span></li>
+                    <li><a href="#">#parenting</a> <span class="count">64 post</span></li>
+                    <li><a href="#">#burnout</a> <span class="count">52 post</span></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- ==== KONTEN UTAMA (FEED) ==== -->
+        <main class="feed">
+            <div class="card create-post-card">
+                <img src="https://i.imgur.com/rS25Jui.jpeg" alt="Avatar Rino Wulandari">
+                <div class="create-post-form">
+                    <textarea placeholder="Bagikan pemikiran Anda..."></textarea>
+                    <div class="create-post-actions">
+                        <div class="post-icons">
+                            <i class="ri-image-add-line"></i>
+                            <i class="ri-map-pin-line"></i>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-posting">Posting</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feed-filters">
+                <a href="#" class="tab-link active">Terbaru</a>
+                <a href="#" class="tab-link">Populer</a>
+                <a href="#" class="tab-link">Diikuti</a>
+            </div>
+
+            <!-- POST 1 -->
+            <article class="card post-card">
+                <img src="https://i.imgur.com/k2B85f6.jpeg" alt="Avatar Budi Santoso" class="author-avatar">
+                <div class="post-content">
+                    <div class="post-header">
+                        <div class="post-author-info">
+                            <strong>Budi Santoso</strong>
+                            <div class="meta">15 menit lalu • <span class="topic">Mengatasi Anxiety</span></div>
+                        </div>
+                        <i class="ri-more-fill more-icon"></i>
+                    </div>
+                    <div class="post-body">
+                        <p>Bagikan teknik yang membantu Anda mengatasi serangan panik? Saya sudah mencoba teknik pernapasan 4-7-8 dan cukup membantu, tapi masih kesulitan saat serangan datang tiba-tiba di tempat umum.</p>
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <span class="action-btn"><i class="ri-heart-line"></i>24</span>
+                            <span class="action-btn"><i class="ri-message-2-line"></i>8</span>
+                             <span class="action-btn"><i class="ri-share-forward-line"></i></span>
+                        </div>
+                        <a href="#" class="btn-reply">Balas</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- POST 2 WITH IMAGE -->
+            <article class="card post-card">
+                <img src="https://i.imgur.com/qdiTjYn.jpeg" alt="Avatar Siti Rahma" class="author-avatar">
+                <div class="post-content">
+                    <div class="post-header">
+                        <div class="post-author-info">
+                            <strong>Siti Rahma</strong>
+                            <div class="meta">2 jam lalu • <span class="topic">Mindfulness Harian</span></div>
+                        </div>
+                        <i class="ri-more-fill more-icon"></i>
+                    </div>
+                    <div class="post-body">
+                        <p>Saya baru saja menyelesaikan meditasi 30 hari berturut-turut! Rasanya luar biasa, pikiran lebih jernih dan kecemasan berkurang signifikan.</p>
+                        <div class="post-media">
+                            <img src="https://images.unsplash.com/photo-1506126613408-4e61f36d50da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Meditasi">
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-group">
+                             <span class="action-btn liked"><i class="ri-heart-fill"></i>42</span>
+                            <span class="action-btn"><i class="ri-message-2-line"></i>12</span>
+                             <span class="action-btn"><i class="ri-share-forward-line"></i></span>
+                        </div>
+                        <a href="#" class="btn-reply">Balas</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- POST 3 -->
+            <article class="card post-card">
+                <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar Dr. Maya Kusuma" class="author-avatar">
+                <div class="post-content">
+                    <div class="post-header">
+                        <div class="post-author-info">
+                            <strong>Dr. Maya Kusuma</strong><span class="tag-terapis">Terapis</span>
+                            <div class="meta">3 jam lalu • <span class="topic">Teknik Relaksasi</span></div>
+                        </div>
+                        <i class="ri-more-fill more-icon"></i>
+                    </div>
+                    <div class="post-body">
+                        <p>Tips hari ini: Cobalah teknik 'grounding' saat merasa cemas. Identifikasi 5 hal yang bisa Anda lihat, 4 hal yang bisa Anda sentuh, 3 hal yang bisa Anda dengar, 2 hal yang bisa Anda cium, dan 1 hal yang bisa Anda rasakan.</p>
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>56</span>
+                            <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>18</span>
+                            <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path></svg></span>
+                        </div>
+                        <a href="#" class="btn-reply">Balas</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- POST 4 -->
+            <article class="card post-card">
+                <img src="https://i.imgur.com/2sR9WFA.jpeg" alt="Avatar Ahmad Fauzi" class="author-avatar">
+                <div class="post-content">
+                    <div class="post-header">
+                        <div class="post-author-info">
+                            <strong>Ahmad Fauzi</strong>
+                            <div class="meta">5 jam lalu • <span class="topic">Dukungan Depresi</span></div>
+                        </div>
+                        <svg class="more-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                    </div>
+                    <div class="post-body">
+                        <p>Hari ini adalah hari pertama saya kembali bekerja setelah cuti sakit karena depresi. Terima kasih untuk semua dukungan dari grup ini yang membuat saya merasa tidak sendirian dalam perjalanan pemulihan.</p>
+                    </div>
+                     <div class="post-actions">
+                        <div class="action-group">
+                            <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>38</span>
+                            <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>15</span>
+                             <span class="action-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path></svg></span>
+                        </div>
+                        <a href="#" class="btn-reply">Balas</a>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+        
+        <!-- ==== SIDEBAR KANAN ==== -->
+        <aside class="right-sidebar">
+            <div class="sidebar-card">
+                 <div class="group-card">
+                    <div class="group-icon-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg></div>
+                    <div class="group-info">
+                        <h3>Kesehatan Mental di Tempat Kerja</h3>
+                        <p>87 anggota</p>
+                    </div>
+                 </div>
+                 <p style="font-size:14px; color: var(--light-text); line-height:1.6; margin-bottom:12px;">Diskusi tentang menjaga kesehatan mental di lingkungan kerja.</p>
+                 <a href="#" class="btn btn-primary" style="background:var(--primary-green);">Gabung Grup</a>
+            </div>
+             <div class="sidebar-card">
+                 <div class="group-card">
+                    <div class="group-icon-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg></div>
+                    <div class="group-info">
+                        <h3>Teknik Tidur Berkualitas</h3>
+                        <p>112 anggota</p>
+                    </div>
+                 </div>
+                  <p style="font-size:14px; color: var(--light-text); line-height:1.6; margin-bottom:12px;">Berbagi tips dan trik untuk tidur lebih nyenyak.</p>
+                 <a href="#" class="btn btn-primary" style="background:var(--primary-green);">Gabung Grup</a>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="webinar-card">
+                    <div class="date">
+                        <div class="month">Agu</div>
+                        <div class="day">15</div>
+                    </div>
+                    <div class="webinar-info">
+                        <h3>Webinar: Mengelola Kecemasan</h3>
+                        <p>Bersama Dr. Maya Kusuma<br>19:00 - 20:30 WIB</p>
+                    </div>
+                </div>
+                 <a href="#" class="btn btn-secondary" style="margin-top: 16px;">Daftar</a>
+            </div>
+
+             <div class="sidebar-card quick-links">
+                <a href="#"><img src="https://i.imgur.com/Bf1o0Gg.png" alt="icon"><span>Jurnal Kesehatan Mental</span></a>
+                <a href="#"><img src="https://i.imgur.com/Bf1o0Gg.png" alt="icon"><span>MindWell Blog</span></a>
+                <a href="#"><img src="https://i.imgur.com/Bf1o0Gg.png" alt="icon"><span>Psikologi Praktis</span></a>
+                <a href="#" class="view-all" style="margin-left: 28px;">Lihat Semua ›</a>
+            </div>
+        </aside>
+
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterLinks = document.querySelectorAll('.feed-filters .tab-link');
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Hapus kelas 'active' dari semua link
+                filterLinks.forEach(l => l.classList.remove('active'));
+                // Tambahkan kelas 'active' ke link yang di-klik
+                e.currentTarget.classList.add('active');
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

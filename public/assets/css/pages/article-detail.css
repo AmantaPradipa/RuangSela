@@ -1,0 +1,134 @@
+/* public/assets/css/pages/article-detail.css */
+
+.article-page-content {
+    padding-top: 120px; /* Sesuaikan dengan tinggi header setelah scroll */
+}
+
+.article-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    align-items: flex-start;
+}
+
+.article-header h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 0.9em;
+    color: var(--light-text);
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 15px;
+}
+
+.author-info,
+.publish-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.article-meta i {
+    font-size: 1.1em;
+    color: var(--primary-color);
+}
+
+.featured-image {
+    margin: 25px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-body {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: var(--dark-text);
+}
+
+.article-body p {
+    margin-bottom: 1em;
+}
+
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+    color: var(--primary-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-weight: 600;
+}
+
+.article-body ul,
+.article-body ol {
+    margin-bottom: 1em;
+    padding-left: 25px;
+}
+
+.article-body li {
+    margin-bottom: 0.5em;
+}
+
+.sidebar-widget h3 {
+    font-size: 1.4em;
+    color: var(--dark-text);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.related-articles p {
+    color: var(--light-text);
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .article-container {
+        flex-direction: column;
+        margin: 20px auto;
+    }
+
+    .article-content,
+    .sidebar {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-header h1 {
+        font-size: 2em;
+    }
+
+    .article-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .article-content,
+    .sidebar {
+        padding: 20px;
+    }
+
+    .article-body {
+        font-size: 1em;
+    }
+}

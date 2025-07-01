@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Terapis Profesional</title>
+
+    <!-- Impor Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #6a8a7a;
+            --primary-green-dark: #587366;
+            --light-gray-bg: #f8f9fa;
+            --light-green-gray-bg: #eef1f0;
+            --card-bg: #ffffff;
+            --dark-text: #212529;
+            --medium-text: #6c757d;
+            --tag-bg: #e9ecef;
+            --border-color: #dee2e6;
+            --star-yellow: #ffc107;
+            --card-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        /* --- CSS Reset dan Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+        }
+
+        /* --- STYLES UNTUK CTA SECTION (Temukan Terapis) --- */
+        .therapist-cta-section {
+            background-color: var(--light-green-gray-bg);
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .therapist-cta-section h2 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+        }
+
+        .therapist-cta-section .highlight-green {
+            color: var(--primary-green);
+        }
+
+        .therapist-cta-section p {
+            font-size: 1.1rem;
+            color: var(--medium-text);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* --- STYLES UNTUK MAIN LIST SECTION (Daftar Terapis) --- */
+        .therapist-list-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* --- Filter Box --- */
+        .filter-box {
+            background-color: var(--light-gray-bg);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 50px;
+        }
+
+        .filter-form {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--medium-text);
+        }
+
+        .input-wrapper,
+        .select-wrapper {
+            position: relative;
+        }
+
+        .filter-form input,
+        .filter-form select {
+            width: 100%;
+            padding: 12px 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .filter-form select {
+            padding-right: 40px;
+        }
+
+        .input-wrapper .icon,
+        .select-wrapper .icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--medium-text);
+            width: 20px;
+            height: 20px;
+        }
+
+        .filter-button {
+            width: 100%;
+            padding: 12px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--primary-green);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-button:hover {
+            background-color: var(--primary-green-dark);
+        }
+
+        /* --- Therapist Grid --- */
+        .therapist-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* --- Therapist Card --- */
+        .therapist-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid #f0f0f0;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .therapist-info h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .therapist-info p {
+            font-size: 0.9rem;
+            color: var(--medium-text);
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-tags span {
+            background-color: var(--tag-bg);
+            color: var(--medium-text);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .rating-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .rating-info svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--star-yellow);
+        }
+
+        .rating-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+        .experience-text {
+            font-size: 0.95rem;
+            color: var(--medium-text);
+            margin-bottom: 25px;
+        }
+
+        .profile-button {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-button:hover {
+            background-color: var(--primary-green-dark);
+        }
+
+        /* --- Pagination --- */
+        .pagination-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--medium-text);
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            min-width: 40px;
+            height: 40px;
+            font-weight: 500;
+            padding: 0 15px;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .page-link.active {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+            font-weight: 600;
+        }
+
+        .page-link .icon {
+            margin-left: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .filter-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filter-form .button-group {
+                grid-column: 1 / -1;
+            }
+
+            .therapist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .therapist-cta-section {
+                padding: 60px 15px;
+            }
+
+            .therapist-cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .therapist-cta-section p {
+                font-size: 1rem;
+            }
+
+            .filter-form {
+                grid-template-columns: 1fr;
+            }
+
+            .therapist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <!-- Section "Temukan Terapis" -->
+    <section class="therapist-cta-section">
+        <h2>
+            Temukan Terapis <span class="highlight-green">Profesional Kami</span>
+        </h2>
+        <p>
+            Jelajahi daftar terapis berlisensi dan berpengalaman kami. Pilih yang paling sesuai dengan kebutuhan dan
+            preferensi Anda.
+        </p>
+    </section>
+
+    <!-- Section "Daftar Terapis" -->
+    <section class="therapist-list-section">
+        <!-- Filter Box -->
+        <div class="filter-box">
+            <form class="filter-form">
+                <div class="form-group">
+                    <label for="search-name">Cari Nama Terapis</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="search-name" placeholder="Masukkan nama terapis...">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M10,18a8,8,0,1,1,8-8,8.009,8.009,0,0,1-8,8Zm0-14a6,6,0,1,0,6,6,6.007,6.007,0,0,0-6-6Z">
+                            </path>
+                            <path
+                                d="M20.707,20.707a1,1,0,0,1-1.414,0l-4.243-4.243a1,1,0,0,1,1.414-1.414l4.243,4.243A1,1,0,0,1,20.707,20.707Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="specialization">Spesialisasi</label>
+                    <div class="select-wrapper">
+                        <select id="specialization">
+                            <option selected>Semua Spesialisasi</option>
+                            <option>Depresi</option>
+                            <option>Kecemasan</option>
+                            <option>Hubungan</option>
+                        </select>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.29,12.71a1,1,0,0,0,1.42,0l3-3A1,1,0,0,0,14,8H10a1,1,0,0,0-.71,1.71Z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating Minimal</label>
+                    <div class="select-wrapper">
+                        <select id="rating">
+                            <option selected>Semua Rating</option>
+                            <option>★★★★★ (5)</option>
+                            <option>★★★★☆ (4+)</option>
+                            <option>★★★☆☆ (3+)</option>
+                        </select>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.29,12.71a1,1,0,0,0,1.42,0l3-3A1,1,0,0,0,14,8H10a1,1,0,0,0-.71,1.71Z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="form-group button-group">
+                    <button type="submit" class="filter-button">Terapkan Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Therapist Grid -->
+        <div class="therapist-grid">
+            <!-- Terapis 1 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Dr. Anisa Rahma" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Dr. Anisa Rahma, M.Psi.</h3>
+                        <p>Psikolog Klinis</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>Kecemasan</span><span>Depresi</span><span>Trauma</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.8 (250 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 6 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+
+            <!-- Terapis 2 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Budi Santoso" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Budi Santoso, S.Psi., CHt.</h3>
+                        <p>Konselor & Hipnoterapis</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>Stres</span><span>Pengembangan Diri</span><span>Fobia</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.9 (180 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 5 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+
+            <!-- Terapis 3 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Citra Lestari" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Citra Lestari, M.A.</h3>
+                        <p>Terapis Pernikahan & Keluarga</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>Hubungan</span><span>Konflik Keluarga</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.7 (210 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 6 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+
+            <!-- Terapis 4 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Rendra Wijaya" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Rendra Wijaya, M.Psi.</h3>
+                        <p>Psikolog Klinis Anak & Remaja</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>ADHD</span><span>Gangguan Belajar</span><span>Bullying</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.9 (190 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 7 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+
+            <!-- Terapis 5 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Dewi Anggraini" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Dewi Anggraini, S.Psi.</h3>
+                        <p>Konselor Mindfulness</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>Mindfulness</span><span>Relaksasi</span><span>Manajemen Emosi</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.7 (150 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 4 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+
+            <!-- Terapis 6 -->
+            <div class="therapist-card">
+                <div class="card-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&q=80"
+                        alt="Farhan Aziz" class="profile-pic">
+                    <div class="therapist-info">
+                        <h3>Farhan Aziz, M.Psi.</h3>
+                        <p>Psikolog Klinis Dewasa</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-tags">
+                        <span>Gangguan Mood</span><span>Kecemasan</span><span>OCD</span>
+                    </div>
+                    <div class="rating-info">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12,17.27l-5.18,3.22l1.39-6.08l-4.71-4.1l6.19-.53L12,4.27l2.31,5.51l6.19,.53l-4.71,4.1l1.39,6.08L12,17.27z">
+                            </path>
+                        </svg>
+                        <span class="rating-text">4.8 (220 sesi)</span>
+                    </div>
+                    <p class="experience-text">Pengalaman: 9 Tahun</p>
+                </div>
+                <button class="profile-button">Lihat Profil Lengkap</button>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="pagination-nav">
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">
+                Berikutnya
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M11.293,16.707a1,1,0,0,0,1.414,0l4-4a1,1,0,0,0,0-1.414l-4-4a1,1,0,0,0-1.414,1.414L14.586,12l-3.293,3.293A1,1,0,0,0,11.293,16.707Z">
+                    </path>
+                </svg>
+            </a>
+        </nav>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Fungsi untuk memuat komponen HTML ke dalam placeholder
+            const loadComponent = (url, placeholderId, callback = null) => {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Gagal memuat ${url}: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(placeholderId).innerHTML = data;
+                        if (callback) {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error memuat komponen:", error);
+                        document.getElementById(placeholderId).innerHTML = `<p style="text-align:center; color:red;">Gagal memuat konten.</p>`;
+                    });
+            };
+
+            // Fungsi untuk mengatur kelas 'active' pada menu navigasi
+            const setActiveMenuItem = () => {
+                const currentPath = window.location.pathname.split('/').pop(); // Mengambil nama file dari URL
+                const navLinks = document.querySelectorAll('.header-nav ul li a');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkPath = link.getAttribute('href').split('/').pop();
+                    if (currentPath === linkPath) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            loadComponent('Header.html', 'header-placeholder', setActiveMenuItem);
+            loadComponent('Footer.html', 'footer-placeholder');
+        });
+    </script>
+</body>
+
+</html>

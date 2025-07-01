@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes Kesehatan Mental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #6A8A7C;
+            --light-green: #A3B9B1;
+            --background-start: #F4F6F5;
+            --background-end: #E9EDEC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2F3D35;
+            --text-secondary: #7A8580;
+            --border-color: #EAEFEC;
+            --progress-track: #E1E6E4;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(180deg, var(--background-start) 0%, var(--background-end) 100%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .test-container {
+            width: 100%;
+            max-width: 750px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header and Progress Bar */
+        .test-header {
+            text-align: center;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
+        .test-header h1 {
+            font-size: 32px;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+        }
+
+        .test-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0 0 24px 0;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--progress-track);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #main-progress-bar {
+            width: 3.33%; /* 1/30 */
+            height: 100%;
+            background-color: var(--primary-green);
+            border-radius: 4px;
+            transition: width 0.4s ease-in-out;
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        #question-counter {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        #question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 24px 0;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .option-label input[type="radio"] {
+            display: none;
+        }
+
+        .option-label .radio-custom {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light-green);
+            margin-right: 16px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .option-label .radio-custom::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-green);
+            transform: scale(0);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .option-label.selected {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+        }
+        
+        .option-label.selected .radio-custom {
+            background-color: white;
+            border-color: white;
+        }
+        
+        .option-label.selected .radio-custom::after {
+            transform: scale(1);
+        }
+
+        .option-label:not(.selected):hover {
+            background-color: #F8F9F8;
+            border-color: #d1d4d1;
+        }
+        
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 24px 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-family: var(--font-family);
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .btn svg { width: 20px; height: 20px; }
+        
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        .btn-primary:hover { background-color: #5a7a6c; }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background-color: #E9EDEC; border-color: var(--light-green); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Pagination Grid */
+        .pagination-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 600px;
+            margin: 24px 0;
+        }
+        
+        .page-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .page-number.answered {
+            background-color: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+
+        .page-number.current {
+             border-color: var(--primary-green);
+             color: var(--primary-green);
+             font-weight: 600;
+        }
+
+        /* Save Progress and Floating Help */
+        .save-progress {
+            margin: 24px 0;
+            color: var(--text-secondary);
+        }
+        .save-progress a {
+            color: var(--text-primary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .save-progress a:hover {
+            color: var(--primary-green);
+        }
+        
+        .floating-help {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+        .btn-help {
+            background-color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-chat {
+            background-color: var(--primary-green);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .btn-chat svg { color: white; width: 28px; height: 28px; }
+
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <header class="test-header">
+            <h1>Tes Kesehatan Mental</h1>
+            <p>Evaluasi kondisi kesehatan mental Anda melalui pertanyaan berikut</p>
+            <div class="progress-bar-container">
+                <div id="main-progress-bar"></div>
+            </div>
+        </header>
+
+        <section class="question-card">
+            <p id="question-counter">Soal 1 dari 30</p>
+            <h2 id="question-text">Seberapa sering Anda merasa cemas dalam seminggu terakhir?</h2>
+            <div class="options-container" id="options">
+                <label class="option-label">
+                    <input type="radio" name="anxiety_level" value="1">
+                    <span class="radio-custom"></span>
+                    <span>Tidak pernah merasa cemas</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="anxiety_level" value="2">
+                    <span class="radio-custom"></span>
+                    <span>Jarang merasa cemas (1-2 kali)</span>
+                </label>
+                 <label class="option-label">
+                    <input type="radio" name="anxiety_level" value="3">
+                    <span class="radio-custom"></span>
+                    <span>Cukup sering merasa cemas (3-4 kali)</span>
+                </label>
+                 <label class="option-label">
+                    <input type="radio" name="anxiety_level" value="4">
+                    <span class="radio-custom"></span>
+                    <span>Sangat sering merasa cemas (5+ kali)</span>
+                </label>
+            </div>
+        </section>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                Sebelumnya
+            </button>
+            <button class="btn btn-primary" id="next-btn">
+                Selanjutnya
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+
+        <div class="pagination-grid" id="pagination-grid">
+            <!-- Numbers will be generated by JS -->
+        </div>
+        
+        <p class="save-progress">Anda dapat menyimpan progress dan melanjutkan nanti. <a>Simpan Progress</a></p>
+    </div>
+
+    <div class="floating-help">
+        <button class="btn btn-help">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
+             Butuh bantuan?
+        </button>
+        <button class="btn btn-chat" aria-label="Buka obrolan bantuan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dummy questions data
+            const questions = [
+                { id: 1, text: "Seberapa sering Anda merasa cemas dalam seminggu terakhir?", options: ["Tidak pernah", "Jarang (1-2 kali)", "Cukup sering (3-4 kali)", "Sangat sering (5+ kali)"] },
+                { id: 2, text: "Seberapa sering Anda merasa sulit untuk bersantai?", options: ["Tidak sama sekali", "Kadang-kadang", "Sering", "Hampir selalu"] },
+                { id: 3, text: "Seberapa sering Anda merasa begitu gelisah sehingga sulit untuk duduk diam?", options: ["Tidak sama sekali", "Kadang-kadang", "Sering", "Hampir selalu"] },
+                // ... add all 30 questions here for a full implementation
+            ];
+            for (let i=4; i <= 30; i++) {
+                questions.push({ id: i, text: `Ini adalah pertanyaan nomor ${i}.`, options: ["Pilihan A", "Pilihan B", "Pilihan C", "Pilihan D"] });
+            }
+
+            const totalQuestions = 30;
+            let currentQuestionIndex = 0; // Start at question 1 (index 0)
+            const answers = new Array(totalQuestions).fill(null);
+
+            // DOM elements
+            const questionCounter = document.getElementById('question-counter');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options');
+            const progressBar = document.getElementById('main-progress-bar');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const paginationGrid = document.getElementById('pagination-grid');
+            
+            function renderQuestion() {
+                // Update question text and options
+                const questionData = questions[currentQuestionIndex];
+                questionCounter.textContent = `Soal ${questionData.id} dari ${totalQuestions}`;
+                questionText.textContent = questionData.text;
+
+                optionsContainer.innerHTML = '';
+                questionData.options.forEach((option, index) => {
+                    const optionId = `q${questionData.id}_opt${index}`;
+                    const isSelected = answers[currentQuestionIndex] === index;
+                    
+                    const label = document.createElement('label');
+                    label.className = `option-label ${isSelected ? 'selected' : ''}`;
+                    label.innerHTML = `
+                        <input type="radio" name="question_${questionData.id}" value="${index}" ${isSelected ? 'checked' : ''}>
+                        <span class="radio-custom"></span>
+                        <span>${option}</span>
+                    `;
+                    label.addEventListener('click', () => handleOptionSelect(index));
+                    optionsContainer.appendChild(label);
+                });
+
+                updateUI();
+            }
+            
+            function handleOptionSelect(optionIndex) {
+                // Remove 'selected' from all options
+                document.querySelectorAll('.option-label').forEach(label => label.classList.remove('selected'));
+                // Add 'selected' to the clicked one
+                optionsContainer.children[optionIndex].classList.add('selected');
+                answers[currentQuestionIndex] = optionIndex;
+            }
+
+            function updateUI() {
+                // Update progress bar
+                progressBar.style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+                
+                // Update pagination
+                const pageNumbers = document.querySelectorAll('.page-number');
+                pageNumbers.forEach((btn, index) => {
+                    btn.classList.remove('current', 'answered');
+                    if (answers[index] !== null) {
+                        btn.classList.add('answered');
+                    }
+                    if (index === currentQuestionIndex) {
+                        btn.classList.add('current');
+                    }
+                });
+                
+                // Update nav buttons state
+                prevBtn.disabled = currentQuestionIndex === 0;
+                nextBtn.disabled = currentQuestionIndex === totalQuestions - 1;
+            }
+
+            // Navigation handlers
+            prevBtn.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    renderQuestion();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                }
+            });
+
+            // Initial setup
+            function initialize() {
+                // Create pagination numbers
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const pageNum = document.createElement('div');
+                    pageNum.className = 'page-number';
+                    pageNum.textContent = i;
+                    pageNum.addEventListener('click', () => {
+                        currentQuestionIndex = i - 1;
+                        renderQuestion();
+                    });
+                    paginationGrid.appendChild(pageNum);
+                }
+
+                // Initial render
+                renderQuestion();
+                
+                // Select first option as per image design
+                handleOptionSelect(0);
+            }
+
+            initialize();
+        });
+    </script>
+</body>
+</html>

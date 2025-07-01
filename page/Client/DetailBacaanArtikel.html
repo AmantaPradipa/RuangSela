@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengelola Kecemasan di Tempat Kerja - Detail Artikel</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <style>
+        /* === Variabel CSS untuk Tema Terang === */
+        :root {
+            --primary-green: #4D645B;
+            --light-green: #e9efec;
+            --tag-blue-bg: #e3f2fd;
+            --tag-blue-text: #1565c0;
+            --tag-green-bg: #e8f5e9;
+            --tag-green-text: #2e7d32;
+            --tag-yellow-bg: #fffde7;
+            --tag-yellow-text: #fbc02d;
+            --dark-text: #212121;
+            --light-text: #757575;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f8f9fa;
+        }
+
+        /* === Style Dasar & Reset === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--dark-text);
+        }
+        
+        /* === Tata Letak Utama (2 Kolom) === */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        main.content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* === (Bagian ini sama dengan halaman sebelumnya untuk konsistensi) === */
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 16px; border: 1px solid var(--border-color);
+            overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .article-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); }
+        .article-card .card-image { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-meta { display: flex; gap: 16px; align-items: center; margin-bottom: 12px; font-size: 13px; }
+        .card-meta .category-tag { padding: 4px 10px; border-radius: 6px; font-weight: 500; }
+        .tag-biru { background-color: var(--tag-blue-bg); color: var(--tag-blue-text); }
+        .read-time { display: flex; align-items: center; gap: 6px; color: var(--light-text); }
+        .read-time i { font-size: 16px; line-height: 1; }
+        .card-content h2 { font-size: 18px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+        .card-footer { margin-top: auto; }
+        .card-footer a { font-size: 14px; font-weight: 600; color: var(--primary-green); text-decoration: none; }
+
+
+        /* === STYLE BARU UNTUK HALAMAN DETAIL ARTIKEL === */
+        .breadcrumb-nav {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 16px;
+        }
+        .breadcrumb-nav a { text-decoration: none; color: var(--primary-green); }
+        .article-header h1 { font-size: 32px; font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
+        .article-meta { display: flex; gap: 24px; color: var(--light-text); font-size: 14px; align-items: center; }
+        .article-meta span { display: flex; align-items: center; gap: 8px; }
+        .article-hero-image { width: 100%; border-radius: 16px; margin: 16px 0; object-fit: cover; }
+        
+        .article-body { line-height: 1.8; font-size: 16px; }
+        .article-body p { margin-bottom: 1.5em; }
+        .article-body h3 { font-size: 22px; margin: 2em 0 1em 0; }
+        .article-body ul { list-style-position: inside; padding-left: 20px; margin-bottom: 1.5em; }
+        .article-body blockquote {
+            border-left: 4px solid var(--primary-green);
+            padding-left: 24px;
+            margin: 2em 0;
+            font-style: italic;
+            color: var(--light-text);
+        }
+
+        .article-footer {
+            margin-top: 24px; border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .tags-list, .share-links { display: flex; align-items: center; gap: 12px; }
+        .tags-list a { padding: 6px 14px; border-radius: 50px; background-color: var(--light-green); text-decoration: none; color: var(--primary-green); font-size: 13px; }
+        .share-links a { color: var(--light-text); font-size: 20px; text-decoration: none; }
+
+        .section-divider {
+            margin: 32px 0; border: none; height: 1px;
+            background-color: var(--border-color);
+        }
+        
+        .section-title { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
+
+        .author-bio-box {
+            display: flex; gap: 20px; background-color: var(--card-bg); padding: 24px;
+            border-radius: 16px; border: 1px solid var(--border-color); align-items: flex-start;
+        }
+        .author-bio-box img { width: 80px; height: 80px; border-radius: 50%; }
+        .author-bio-box h4 { font-size: 18px; margin-bottom: 4px; }
+        .author-bio-box .author-title { color: var(--primary-green); font-weight: 500; margin-bottom: 8px; }
+        .author-bio-box p { font-size: 14px; line-height: 1.6; color: var(--light-text); }
+        
+        .related-articles .article-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        
+        .comments-section .comment-item { display: flex; gap: 16px; margin-bottom: 24px; }
+        .comments-section .comment-item img { width: 48px; height: 48px; border-radius: 50%; }
+        .comment-body { flex-grow: 1; }
+        .comment-header { font-weight: 600; margin-bottom: 4px; }
+        .comment-header span { color: var(--light-text); font-weight: 400; font-size: 13px; margin-left: 8px; }
+        .comment-reply { border-left: 2px solid var(--border-color); padding-left: 16px; margin-top: 16px; }
+
+        .comment-form textarea {
+            width: 100%; border-radius: 12px; border: 1px solid var(--border-color); padding: 12px; font-family: 'Poppins', sans-serif; resize: vertical; min-height: 120px;
+        }
+        .comment-form button {
+            margin-top: 16px; padding: 12px 24px; background-color: var(--primary-green);
+            color: white; border-radius: 10px; border: none; font-weight: 600; cursor: pointer;
+        }
+
+
+        /* === Sidebar (SAMA SEPERTI HALAMAN SEBELUMNYA) === */
+        aside.sidebar { display: flex; flex-direction: column; gap: 24px; }
+        .sidebar-widget { background-color: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .sidebar-widget h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+        .trending-articles { display: flex; flex-direction: column; gap: 16px; }
+        .trending-articles a { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--dark-text); }
+        .trending-articles img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; }
+        .category-list, .specialist-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .category-list li, .specialist-list li { display: flex; align-items: center; justify-content: space-between; }
+        .count-badge { background-color: var(--light-green); color: var(--primary-green); font-weight: 600; font-size: 12px; border-radius: 50px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+        .specialist-list .info { display: flex; align-items: center; gap: 12px; }
+        .specialist-list img { width: 40px; height: 40px; border-radius: 50%; }
+        
+        /* === Responsive === */
+        @media (max-width: 1024px) {
+            .page-container { grid-template-columns: 1fr; }
+            aside.sidebar { grid-row: 1; flex-direction: row; flex-wrap: wrap; }
+            .sidebar-widget { flex-basis: calc(50% - 12px); }
+        }
+        @media (max-width: 768px) {
+            main.content { gap: 16px; }
+            aside.sidebar { flex-direction: column; }
+            .sidebar-widget { flex-basis: 100%; }
+            .article-header h1 { font-size: 24px; }
+            .related-articles .article-grid { grid-template-columns: 1fr; }
+            .author-bio-box { flex-direction: column; align-items: center; text-align: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- ==== KONTEN UTAMA - DETAIL ARTIKEL ==== -->
+        <main class="content">
+            <header class="article-header">
+                <nav class="breadcrumb-nav">
+                    <a href="#">Beranda</a> / <a href="#">Artikel</a> / <span>Mengelola Kecemasan...</span>
+                </nav>
+                <span class="category-tag tag-biru">Kesehatan Mental</span>
+                <h1>Mengelola Kecemasan di Tempat Kerja: Panduan Praktis</h1>
+                <div class="article-meta">
+                    <span><i class="ri-user-line"></i> Dr. Maya Kusuma</span>
+                    <span><i class="ri-calendar-line"></i> 12 Agustus 2023</span>
+                    <span><i class="ri-time-line"></i> 5 menit baca</span>
+                </div>
+            </header>
+            
+            <img src="https://images.unsplash.com/photo-1598348332490-23910b379361?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Wanita bekerja di kantor dengan fokus" class="article-hero-image">
+            
+            <article class="article-body">
+                <p>Kecemasan di tempat kerja adalah tantangan yang umum dihadapi banyak profesional. Tekanan deadline, ekspektasi tinggi, dan interaksi sosial yang kompleks dapat memicu perasaan cemas yang mengganggu produktivitas dan kesejahteraan. Namun, dengan strategi yang tepat, Anda bisa mengelolanya secara efektif.</p>
+
+                <h3>1. Kenali Pemicu Anda</h3>
+                <p>Langkah pertama adalah mengidentifikasi apa yang secara spesifik membuat Anda cemas. Apakah itu presentasi di depan umum, feedback dari atasan, atau beban kerja yang menumpuk? Mencatatnya dalam sebuah jurnal bisa membantu Anda melihat pola dan mempersiapkan diri dengan lebih baik.</p>
+                
+                <blockquote>Kunci dari manajemen kecemasan bukanlah menghilangkannya sama sekali, melainkan belajar untuk meresponsnya dengan cara yang lebih sehat dan konstruktif.</blockquote>
+
+                <h3>2. Praktikkan Teknik Relaksasi Cepat</h3>
+                <p>Ketika perasaan cemas datang tiba-tiba, ada beberapa teknik yang bisa Anda lakukan langsung di meja kerja Anda:</p>
+                <ul>
+                    <li><strong>Teknik Pernapasan 4-7-8:</strong> Tarik napas melalui hidung selama 4 detik, tahan selama 7 detik, dan hembuskan perlahan melalui mulut selama 8 detik. Ulangi 3-4 kali.</li>
+                    <li><strong>Grounding 5-4-3-2-1:</strong> Sebutkan 5 hal yang bisa Anda lihat, 4 hal yang bisa Anda sentuh, 3 hal yang bisa Anda dengar, 2 hal yang bisa Anda cium, dan 1 hal yang bisa Anda rasakan.</li>
+                    <li><strong>Pereganggan Ringan:</strong> Regangkan leher, bahu, dan punggung untuk melepaskan ketegangan fisik.</li>
+                </ul>
+
+                <p>Dengan menerapkan strategi ini secara konsisten, Anda dapat membangun ketahanan mental yang lebih kuat dan menjadikan tempat kerja sebagai lingkungan yang lebih mendukung bagi kesejahteraan Anda.</p>
+            </article>
+
+            <footer class="article-footer">
+                <div class="tags-list">
+                    <strong>Tags:</strong>
+                    <a href="#">Kecemasan</a> <a href="#">Stres Kerja</a> <a href="#">Produktifitas</a>
+                </div>
+                 <div class="share-links">
+                    <strong>Bagikan:</strong>
+                    <a href="#" title="Bagikan ke Facebook"><i class="ri-facebook-fill"></i></a>
+                    <a href="#" title="Bagikan ke Twitter"><i class="ri-twitter-fill"></i></a>
+                    <a href="#" title="Bagikan ke LinkedIn"><i class="ri-linkedin-fill"></i></a>
+                    <a href="#" title="Salin Tautan"><i class="ri-link"></i></a>
+                </div>
+            </footer>
+
+            <hr class="section-divider">
+            
+            <section class="author-bio-box">
+                <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar Dr. Maya Kusuma">
+                <div class="author-details">
+                    <h4>Dr. Maya Kusuma, M.Psi., Psikolog</h4>
+                    <p class="author-title">Psikolog Klinis Spesialis Kecemasan & Stres</p>
+                    <p>Dr. Maya memiliki pengalaman lebih dari 10 tahun dalam membantu individu mengatasi tantangan kesehatan mental di lingkungan profesional. Ia percaya bahwa setiap orang berhak merasa aman dan berdaya di tempat kerja.</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <section class="related-articles">
+                <h3 class="section-title">Anda Mungkin Juga Suka</h3>
+                <div class="article-grid">
+                    <article class="article-card">
+                         <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1220&q=80" alt="Meditasi" class="card-image">
+                         <div class="card-content">
+                            <div class="card-meta"><span class="category-tag tag-biru">Teknik Relaksasi</span></div>
+                            <h2>5 Teknik Pernapasan untuk Meredakan Stres</h2>
+                            <footer class="card-footer"><a href="#">Baca Selengkapnya</a></footer>
+                         </div>
+                    </article>
+                    <article class="article-card">
+                        <img src="https://images.unsplash.com/photo-1574158622682-e40e6984100d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" alt="Kucing tidur" class="card-image">
+                        <div class="card-content">
+                            <div class="card-meta"><span class="category-tag tag-biru">Kesehatan Fisik</span></div>
+                            <h2>Pentingnya Tidur untuk Kesehatan Mental</h2>
+                            <footer class="card-footer"><a href="#">Baca Selengkapnya</a></footer>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+             <hr class="section-divider">
+            
+            <section class="comments-section">
+                <h3 class="section-title">2 Komentar</h3>
+                <div class="comment-list">
+                    <div class="comment-item">
+                        <img src="https://i.imgur.com/k2B85f6.jpeg" alt="Avatar">
+                        <div class="comment-body">
+                            <p class="comment-header">Budi Santoso <span>2 hari yang lalu</span></p>
+                            <p>Terima kasih artikelnya, sangat membantu! Teknik pernapasan 4-7-8 benar-benar bekerja untuk saya saat merasa panik sebelum meeting.</p>
+                            
+                            <div class="comment-reply">
+                                 <div class="comment-item">
+                                    <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar">
+                                    <div class="comment-body">
+                                        <p class="comment-header">Dr. Maya Kusuma <span>1 hari yang lalu</span></p>
+                                        <p>Senang mendengarnya, Bpk. Budi! Konsistensi adalah kuncinya. Semangat terus, ya!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-form">
+                     <h3 class="section-title">Tinggalkan Komentar</h3>
+                     <form>
+                         <textarea placeholder="Tulis komentar Anda di sini..."></textarea>
+                         <button type="submit">Kirim Komentar</button>
+                     </form>
+                </div>
+            </section>
+        </main>
+        
+        <!-- ==== SIDEBAR KANAN (SAMA PERSIS) ==== -->
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3>Artikel Populer</h3>
+                <div class="trending-articles">
+                    <a href="#"><img src="https://i.imgur.com/K1oHFRw.jpeg" alt="thumbnail"></a>
+                    <a href="#"><img src="https://i.imgur.com/Jp0tIZo.jpeg" alt="thumbnail"></a>
+                    <a href="#"><img src="https://i.imgur.com/uPcbjM6.jpeg" alt="thumbnail"></a>
+                    <a href="#"><img src="https://i.imgur.com/dK78gfg.jpeg" alt="thumbnail"></a>
+                    <a href="#"><img src="https://i.imgur.com/jV7vEa2.jpeg" alt="thumbnail"></a>
+                </div>
+            </div>
+            <div class="sidebar-widget">
+                <h3>Kategori</h3>
+                <ul class="category-list">
+                    <li><span>Kesehatan Mental</span><span class="count-badge">24</span></li>
+                    <li><span>Manajemen Stres</span><span class="count-badge">18</span></li>
+                    <li><span>Teknik Relaksasi</span><span class="count-badge">15</span></li>
+                    <li><span>Mindfulness</span><span class="count-badge">12</span></li>
+                    <li><span>Kesehatan Fisik</span><span class="count-badge">10</span></li>
+                    <li><span>Hubungan Sosial</span><span class="count-badge">8</span></li>
+                    <li><span>Pengembangan Diri</span><span class="count-badge">7</span></li>
+                </ul>
+            </div>
+            <div class="sidebar-widget">
+                <h3>Spesialis Kami</h3>
+                <ul class="specialist-list">
+                    <li><div class="info"><img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar"><span>Psikolog Klinis</span></div></li>
+                    <li><div class="info"><img src="https://i.imgur.com/J3lf7lX.jpeg" alt="Avatar"><span>Psikiater</span></div></li>
+                    <li><div class="info"><img src="https://i.imgur.com/mJ5Svp9.jpeg" alt="Avatar"><span>Mindfulness Coach</span></div></li>
+                    <li><div class="info"><img src="https://i.imgur.com/kP8nHYJ.jpeg" alt="Avatar"><span>Ahli Nutrisi</span></div></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+</body>
+</html>

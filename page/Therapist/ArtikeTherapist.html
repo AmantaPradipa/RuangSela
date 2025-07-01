@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumpulan Artikel Kesehatan</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Remixicon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* === Variabel CSS untuk Tema Terang === */
+        :root {
+            --primary-green: #4D645B;
+            --light-green: #e9efec;
+            --tag-blue-bg: #e3f2fd;
+            --tag-blue-text: #1565c0;
+            --tag-green-bg: #e8f5e9;
+            --tag-green-text: #2e7d32;
+            --tag-yellow-bg: #fffde7;
+            --tag-yellow-text: #fbc02d;
+            --dark-text: #212121;
+            --light-text: #757575;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f8f9fa;
+        }
+
+        /* === Style Dasar & Reset === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--dark-text);
+        }
+        
+        /* === Tata Letak Utama (2 Kolom) === */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        main.content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* === Konten Utama === */
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            position: relative;
+            flex-grow: 1;
+            min-width: 250px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--light-text);
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            font-size: 14px;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 8px 18px;
+            border-radius: 50px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-tag:hover {
+            background-color: var(--light-green);
+        }
+
+        .filter-tag.active {
+            background-color: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+
+        /* === [BARU] Tombol Tulis Artikel di Header === */
+        .write-article-btn {
+            margin-left: auto;
+            padding: 12px 20px;
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+        .write-article-btn:hover {
+            opacity: 0.9;
+        }
+        .write-article-btn i {
+            font-size: 20px;
+        }
+        
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* --- Kartu Artikel --- */
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .article-card .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        .card-meta .category-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .tag-biru { background-color: var(--tag-blue-bg); color: var(--tag-blue-text); }
+        .tag-hijau { background-color: var(--tag-green-bg); color: var(--tag-green-text); }
+        .tag-kuning { background-color: var(--tag-yellow-bg); color: var(--tag-yellow-text); }
+        
+        .read-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--light-text);
+        }
+        .read-time i {
+            font-size: 18px;
+            margin-right: 6px;
+            color: var(--light-text);
+            vertical-align: middle; /* Menyelaraskan ikon */
+        }
+
+        .card-content h2 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .card-content .excerpt {
+            font-size: 14px;
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .author img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        .author .author-info { font-size: 13px; color: var(--light-text); }
+
+        .card-footer a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .pagination { display: flex; gap: 8px; }
+        .pagination a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .pagination a.active, .pagination a:hover {
+            background-color: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+        
+        .load-more-btn {
+            padding: 10px 24px;
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* === Sidebar === */
+        aside.sidebar { display: flex; flex-direction: column; gap: 24px; }
+        .sidebar-widget {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar-widget h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        /* === [BARU] Panel Penulis di Sidebar === */
+        .writer-panel {
+            background-color: var(--light-green);
+            border: 1px solid var(--primary-green);
+        }
+        .writer-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .writer-profile img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .writer-profile strong {
+            display: block;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+        .writer-profile span {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+        .writer-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .writer-action-btn {
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .writer-action-btn.primary-action {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        .writer-action-btn.primary-action i {
+            font-size: 22px;
+            color: var(--primary-green);
+            margin-right: 12px;
+        }
+        .writer-action-btn.primary-action:hover {
+            opacity: 0.9;
+        }
+        .writer-action-btn.secondary-action {
+            background-color: #fff;
+            color: var(--primary-green);
+            border: 1px solid var(--border-color);
+        }
+        .writer-action-btn.secondary-action:hover {
+            background-color: #f7f7f7;
+            border-color: var(--primary-green);
+        }
+
+        .trending-articles { display: flex; flex-direction: column; gap: 16px; }
+        .trending-articles a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark-text);
+        }
+        .trending-articles img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .category-list, .specialist-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .category-list li, .specialist-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .count-badge {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 12px;
+            border-radius: 50px;
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .specialist-list .info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .specialist-list img { width: 40px; height: 40px; border-radius: 50%; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                grid-row: 1;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .sidebar-widget {
+                flex-basis: calc(50% - 12px);
+            }
+        }
+        @media (max-width: 768px) {
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            /* [BARU] Atur ulang tombol Tulis Artikel di mobile */
+            .write-article-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+                order: -1; /* Pindahkan ke paling atas dalam container flex */
+            }
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+             .sidebar {
+                flex-direction: column;
+            }
+            .sidebar-widget {
+                flex-basis: 100%;
+            }
+             .pagination-controls {
+                 flex-direction: column;
+                 gap: 16px;
+             }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- ==== KONTEN UTAMA ==== -->
+        <main class="content">
+            <header class="page-header">
+                <h1>Kumpulan artikel dan panduan untuk kesehatan mental yang lebih baik</h1>
+                <div class="filter-controls">
+                    <div class="search-bar">
+            <i class="ri-search-line"></i>
+            <input type="text" placeholder="Cari artikel, penulis, atau topik...">
+        </div>
+                    <div class="filter-tags">
+                        <a href="#" class="filter-tag active">Kesehatan Mental</a>
+                        <a href="#" class="filter-tag">Manajemen Stres</a>
+                        <a href="#" class="filter-tag">Teknik Relaksasi</a>
+                        <a href="#" class="filter-tag">Mindfulness</a>
+                    </div>
+                    <!-- === [BARU] TOMBOL UNTUK MENULIS ARTIKEL === -->
+                    <!-- Tombol ini akan mengarahkan ke halaman form pembuatan artikel -->
+                    <a href="#" class="write-article-btn">
+                        <i class="ri-add-line"></i>
+                        <span>Tulis Artikel</span>
+                    </a>
+                </div>
+            </header>
+
+            <section class="article-grid">
+                <!-- Artikel 1 -->
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1598348332490-23910b379361?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Wanita bekerja di kantor" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag tag-biru">Kesehatan Mental</span>
+                            <span class="read-time"><i class="ri-time-line"></i>5 menit baca</span>
+                        </div>
+                        <h2>Mengelola Kecemasan di Tempat Kerja: Panduan Praktis</h2>
+                        <p class="excerpt">Teknik-teknik efektif untuk mengelola kecemasan saat berada di lingkungan kerja.</p>
+                        <footer class="card-footer">
+                            <div class="author">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Author">
+                                <div class="author-info">
+                                    <strong>Dr. Anya Sharma</strong>
+                                    <span><i class="ri-calendar-2-line"></i> 12 Mei 2024</span>
+                                </div>
+                            </div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Artikel 2 s.d. 6 tetap sama ... -->
+                 <!-- Artikel 2 -->
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1220&q=80" alt="Meditasi" class="card-image">
+                    <div class="card-content">
+                         <div class="card-meta">
+                            <span class="category-tag tag-hijau">Teknik Relaksasi</span>
+                            <span class="read-time"><i class="ri-time-line"></i>4 menit baca</span>
+                        </div>
+                        <h2>5 Teknik Pernapasan untuk Meredakan Stres dalam Sekejap</h2>
+                        <p class="excerpt">Pelajari teknik pernapasan sederhana yang dapat membantu menenangkan pikiran.</p>
+                         <footer class="card-footer">
+                            <div class="author"><img src="https://i.imgur.com/k2B85f6.jpeg" alt="Avatar"> <div class="author-info"><strong>Budi Santoso</strong><br>8 Agustus 2023</div></div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Artikel 3 -->
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1574158622682-e40e6984100d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" alt="Kucing tidur" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag tag-biru">Kesehatan Fisik</span>
+                            <span class="read-time"><i class="ri-time-line"></i>6 menit baca</span>
+                        </div>
+                        <h2>Memahami Hubungan Antara Pola Tidur dan Kesehatan Mental</h2>
+                        <p class="excerpt">Bagaimana kualitas tidur memengaruhi kesehatan mental dan tips untuk memperbaikinya.</p>
+                        <footer class="card-footer">
+                            <div class="author"><img src="https://i.imgur.com/J3lf7lX.jpeg" alt="Avatar"> <div class="author-info"><strong>Dr. Hendra Wijaya</strong><br>5 Agustus 2023</div></div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Artikel 4 -->
+                 <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1593184687056-27a0553d101a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Praktek Mindfulness" class="card-image">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="category-tag tag-kuning">Mindfulness</span>
+                            <span class="read-time"><i class="ri-time-line"></i>7 menit baca</span>
+                        </div>
+                        <h2>Praktik Mindfulness Harian untuk Pemula</h2>
+                        <p class="excerpt">Panduan langkah demi langkah untuk memulai praktik mindfulness dalam kehidupan sehari-hari.</p>
+                         <footer class="card-footer">
+                            <div class="author"><img src="https://i.imgur.com/qdiTjYn.jpeg" alt="Avatar"> <div class="author-info"><strong>Siti Rahma</strong><br>1 Agustus 2023</div></div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Artikel 5 -->
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1519412666096-9f1d43c6e0c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Pria berpikir" class="card-image">
+                    <div class="card-content">
+                         <div class="card-meta">
+                            <span class="category-tag tag-biru">Kesehatan Mental</span>
+                            <span class="read-time"><i class="ri-time-line"></i>8 menit baca</span>
+                        </div>
+                        <h2>Mengenali Tanda-tanda Depresi dan Kapan Harus Mencari Bantuan</h2>
+                        <p class="excerpt">Informasi penting tentang gejala depresi dan langkah-langkah yang perlu diambil.</p>
+                         <footer class="card-footer">
+                            <div class="author"><img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar"> <div class="author-info"><strong>Dr. Maya Kusuma</strong><br>28 Juli 2023</div></div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+                
+                 <!-- Artikel 6 -->
+                 <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Makanan sehat" class="card-image">
+                    <div class="card-content">
+                         <div class="card-meta">
+                            <span class="category-tag tag-biru">Kesehatan Fisik</span>
+                            <span class="read-time"><i class="ri-time-line"></i>5 menit baca</span>
+                        </div>
+                        <h2>Nutrisi untuk Otak: Makanan yang Meningkatkan Kesehatan Kognitif</h2>
+                        <p class="excerpt">Panduan tentang makanan yang dapat membantu meningkatkan fungsi otak dan daya ingat.</p>
+                         <footer class="card-footer">
+                            <div class="author"><img src="https://i.imgur.com/kP8nHYJ.jpeg" alt="Avatar"> <div class="author-info"><strong>Ahmad Fauzi</strong><br>25 Juli 2023</div></div>
+                            <a href="#">Baca Selengkapnya</a>
+                        </footer>
+                    </div>
+                </article>
+
+            </section>
+            
+            <footer class="pagination-controls">
+                <div class="pagination">
+                    <a href="#" class="arrow">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#" class="arrow">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </a>
+                </div>
+                <a href="#" class="load-more-btn">Muat Lebih Banyak</a>
+            </footer>
+        </main>
+        
+        <!-- ==== SIDEBAR KANAN ==== -->
+        <aside class="sidebar">
+            <!-- === [BARU] PANEL KHUSUS UNTUK PENULIS/TERAPIS === -->
+            <!-- Widget ini mensimulasikan tampilan jika terapis (Dr. Maya) sedang login -->
+            <div class="sidebar-widget writer-panel">
+                <div class="writer-profile">
+                    <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar Dr. Maya">
+                    <div>
+                        <strong>Selamat Datang, Dr. Maya!</strong>
+                        <span>Kelola tulisan & profil Anda.</span>
+                    </div>
+                </div>
+                <div class="writer-actions">
+                    <a href="#" class="writer-action-btn primary-action">
+                        <i class="ri-add-circle-line"></i>
+                        <span>Tulis Artikel Baru</span>
+                    </a>
+                    <a href="#" class="writer-action-btn secondary-action">
+                        <i class="ri-draft-line"></i>
+                        <span>Kelola Draf</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3>Artikel Populer</h3>
+                <div class="trending-articles">
+                     <!-- Konten Artikel Populer tetap sama ... -->
+                    <a href="#"><img src="https://i.imgur.com/K1oHFRw.jpeg" alt="thumbnail"> <div>Cara simpel atasi burnout</div></a>
+                    <a href="#"><img src="https://i.imgur.com/Jp0tIZo.jpeg" alt="thumbnail"> <div>Membangun resiliensi mental</div></a>
+                    <a href="#"><img src="https://i.imgur.com/uPcbjM6.jpeg" alt="thumbnail"> <div>Hubungan sosial dan dampaknya</div></a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                 <!-- Konten Kategori tetap sama ... -->
+                <h3>Kategori</h3>
+                <ul class="category-list">
+                    <li><span>Kesehatan Mental</span><span class="count-badge">24</span></li>
+                    <li><span>Manajemen Stres</span><span class="count-badge">18</span></li>
+                    <li><span>Teknik Relaksasi</span><span class="count-badge">15</span></li>
+                    <li><span>Mindfulness</span><span class="count-badge">12</span></li>
+                    <li><span>Kesehatan Fisik</span><span class="count-badge">10</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                 <!-- Konten Spesialis Kami tetap sama ... -->
+                <h3>Spesialis Kami</h3>
+                <ul class="specialist-list">
+                    <li><div class="info"><img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Avatar"> <span>Psikolog Klinis</span></div></li>
+                    <li><div class="info"><img src="https://i.imgur.com/J3lf7lX.jpeg" alt="Avatar"> <span>Psikiater</span></div></li>
+                    <li><div class="info"><img src="https://i.imgur.com/mJ5Svp9.jpeg" alt="Avatar"> <span>Mindfulness Coach</span></div></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+    
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Fungsi untuk handle klik pada filter/pagination
+    function handleActiveClass(selector, e) {
+        e.preventDefault();
+        const items = document.querySelectorAll(selector);
+        items.forEach(item => item.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+    }
+
+    // Event listener untuk filter tag
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+        tag.addEventListener('click', (e) => handleActiveClass('.filter-tag', e));
+    });
+
+    // Event listener untuk pagination
+    document.querySelectorAll('.pagination a').forEach(pageLink => {
+        // Hanya tambahkan event jika bukan panah prev/next
+        if (!pageLink.innerHTML.includes('&')) {
+            pageLink.addEventListener('click', (e) => handleActiveClass('.pagination a', e));
+        }
+    });
+});
+</script>
+
+</body>
+</html>

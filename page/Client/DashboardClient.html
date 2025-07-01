@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Terapi</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <style>
+        /* === CSS Variables for Theming === */
+        :root {
+            --primary-green: #647970;
+            --light-green: #e9efec;
+            --lighter-green: #f3f6f5;
+            --progress-green: #7BA092;
+            --dark-text: #2c2c2c;
+            --light-text: #757575;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --body-bg: #f7f8f7;
+            --yellow-accent: #ffd54f;
+        }
+
+        /* === General & Reset Styles === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--dark-text);
+        }
+
+        /* === Layout === */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* === General Card Style === */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid #eef0ef;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card-header .view-all {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .card-header .view-all:hover {
+            color: var(--dark-text);
+        }
+
+        /* === Specific Component Styles === */
+
+        /* 1. Welcome Banner */
+        .welcome-banner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 20px;
+            background-color: var(--lighter-green);
+            padding: 28px;
+        }
+
+        .welcome-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .welcome-text .quote {
+            color: var(--light-text);
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .progress-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 150px;
+            height: 8px;
+            background-color: #e0e5e3;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar .progress {
+            height: 100%;
+            background-color: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        .progress-section .progress-text {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .welcome-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4D5C56;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark-text);
+            border: 1px solid #dcdede;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* 2. Terapis Saya */
+        .therapist-list .therapist-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .therapist-list .therapist-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .therapist-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .therapist-info {
+            flex-grow: 1;
+        }
+
+        .therapist-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .therapist-info p {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .therapist-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .therapist-details {
+            display: flex;
+            gap: 16px;
+        }
+
+        .pill-tag {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        .session-time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .session-time i {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 3. Program Terapi */
+        .grid-span-2 {
+            grid-column: 1 / -1;
+        }
+
+        .program-list {
+            margin-bottom: 24px;
+        }
+
+        .program-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .program-item-info {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .program-item-info h3 {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .program-item-info span {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .program-item .progress-bar {
+            width: 100%;
+        }
+
+        .divider {
+            border-top: 1px solid var(--border-color);
+            margin: 24px 0;
+        }
+
+        .latest-task h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .task-box {
+            background-color: var(--lighter-green);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .task-box p {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .task-box span {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .btn-large {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            justify-content: center;
+        }
+
+        /* 4. Jurnal Mood */
+        .mood-chart {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .mood-chart svg {
+            width: 100%;
+        }
+
+        .mood-labels {
+            display: flex;
+            justify-content: space-around;
+            font-size: 13px;
+            color: var(--light-text);
+            margin-top: -10px;
+            padding: 0 5%;
+        }
+
+        .mood-input h3 {
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .mood-options {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mood-option {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .mood-option svg {
+            width: 36px;
+            height: 36px;
+            fill: #c8d0cd;
+            transition: transform 0.2s, fill 0.2s;
+        }
+
+        .mood-option:hover svg {
+            transform: scale(1.1);
+        }
+
+        .mood-option.active .icon-very-good {
+            fill: #4CAF50;
+        }
+
+        .mood-option.active .icon-good {
+            fill: #8BC34A;
+        }
+
+        .mood-option.active .icon-neutral {
+            fill: #FFC107;
+        }
+
+        .mood-option.active .icon-bad {
+            fill: #FF9800;
+        }
+
+        .mood-option.active .icon-very-bad {
+            fill: #F44336;
+        }
+
+        .mood-option span {
+            display: block;
+            font-size: 13px;
+            color: var(--light-text);
+            margin-top: 4px;
+        }
+
+        .mood-trend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #388E3C;
+        }
+
+        .mood-trend i {
+            fill: #4CAF50;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* 5. Diskusi Komunitas */
+        .community-tabs {
+            display: flex;
+            gap: 8px;
+            border-radius: 12px;
+            background-color: var(--lighter-green);
+            padding: 4px;
+            align-self: flex-start;
+        }
+
+        .community-tabs .tab-link {
+            padding: 6px 16px;
+            border-radius: 8px;
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .community-tabs .tab-link.active,
+        .community-tabs .tab-link:hover {
+            background-color: white;
+            color: var(--dark-text);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .community-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .content-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .content-section h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--light-text);
+        }
+
+        .discussion-group-card {
+            background-color: var(--body-bg);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .discussion-group-card.recommendation {
+            padding: 20px;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .group-header h4 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .group-header .time {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .discussion-group-card p {
+            font-size: 13px;
+            color: var(--light-text);
+            margin: 4px 0 16px;
+        }
+
+        .group-footer a {
+            font-size: 14px;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .group-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-group {
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .btn-group:hover {
+            background-color: #4D5C56;
+        }
+
+        .btn-group svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .create-group-card {
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .create-group-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .create-group-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 4px 0 16px;
+        }
+
+        .create-group-card .btn {
+            background-color: white;
+            color: var(--dark-text);
+        }
+
+        /* 6. Aktivitas Terbaru */
+        .activity-list .activity-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .activity-list .activity-item:not(:last-child) {
+            margin-bottom: 24px;
+        }
+
+        .activity-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--icon-color);
+        }
+
+        .icon-book {
+            background-color: #e6f3ec;
+            --icon-color: #3f905c;
+        }
+
+        .icon-check {
+            background-color: #e3f5e3;
+            --icon-color: #4caf50;
+        }
+
+        .icon-chat {
+            background-color: #f3e5f5;
+            --icon-color: #9c27b0;
+        }
+
+        .icon-calendar {
+            background-color: #fff3e0;
+            --icon-color: #ff9800;
+        }
+
+        .activity-details p {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .activity-details span {
+            font-size: 13px;
+            color: var(--light-text);
+            display: block;
+            line-height: 1.5;
+        }
+
+
+        /* === Sidebar Cards === */
+
+        /* 7. Kontak Cepat */
+        .contact-card .btn {
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .emergency-box {
+            background-color: #fff9c4;
+            border-left: 4px solid var(--yellow-accent);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .emergency-box h3 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .emergency-box p {
+            font-size: 13px;
+            color: #5f4c00;
+        }
+
+        /* 8. Jadwal Hari Ini */
+        .schedule-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .date-box {
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .date-box .month {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .date-box .day {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .schedule-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .schedule-info p {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .appointment-list .appointment-item {
+            display: flex;
+            gap: 16px;
+        }
+
+        .appointment-list .appointment-item:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .timeline {
+            width: 4px;
+            background-color: var(--progress-green);
+            border-radius: 2px;
+        }
+
+        .appointment-details h4 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .appointment-details p {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .sidebar .btn-large {
+            margin-top: 24px;
+        }
+
+        /* 9. Aktivitas Komunitas Sidebar */
+        .post-card {
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .post-card:not(:last-child) {
+            margin-bottom: 16px;
+        }
+
+        .post-author {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .post-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .author-info {
+            flex-grow: 1;
+        }
+
+        .author-info .name {
+            font-weight: 600;
+        }
+
+        .author-info .topic {
+            font-size: 13px;
+            color: var(--progress-green);
+        }
+
+        .post-author .time {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        .post-content {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .post-actions .reply {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .post-actions svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .sidebar .view-more {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--primary-green);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* === Responsive Design === */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                grid-row: 1;
+                /* Pindah sidebar ke atas pada mobile */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 16px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-banner {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .welcome-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .btn {
+                flex-grow: 1;
+                justify-content: center;
+            }
+
+            .community-content {
+                grid-template-columns: 1fr;
+            }
+
+            .mood-options {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <!-- ==== Main Content Area ==== -->
+        <main class="main-content">
+
+            <!-- 1. Welcome Banner Card -->
+            <div class="card welcome-banner">
+                <div class="welcome-text">
+                    <h1>Selamat Datang Kembali, Rina!</h1>
+                    <p class="quote">"Setiap langkah kecil adalah kemajuan besar"</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 45%;"></div>
+                        </div>
+                        <span class="progress-text">Program terapi Anda 45% selesai</span>
+                    </div>
+                </div>
+                <div class="welcome-actions">
+                    <a href="#" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 12h-5v5h-2v-5H5v-2h5V5h2v5h5v2z"></path>
+                        </svg>
+                        Jadwalkan Sesi
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                            </path>
+                        </svg>
+                        Cari Sumber Daya
+                    </a>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                <!-- 2. Terapis Saya Card -->
+                <div class="card therapists-card">
+                    <div class="card-header">
+                        <h2>Terapis Saya</h2>
+                        <a href="#" class="view-all">Lihat Semua</a>
+                    </div>
+                    <div class="therapist-list">
+                        <div class="therapist-item">
+                            <img src="https://i.imgur.com/K1LNb7F.jpeg" alt="Dr. Maya Kusuma">
+                            <div class="therapist-info">
+                                <h3>Dr. Maya Kusuma</h3>
+                                <p>Psikolog Klinis</p>
+                                <div class="therapist-details">
+                                    <a href="#" class="btn btn-primary"
+                                        style="padding: 6px 14px; font-size: 13px;">Kirim Pesan</a>
+                                    <div class="session-time">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Sesi: Rabu, 10:00
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="pill-tag">Terapis Utama</span>
+                        </div>
+                        <div class="therapist-item">
+                            <img src="https://i.imgur.com/J3lf7lX.jpeg" alt="Dr. Hendra Wijaya">
+                            <div class="therapist-info">
+                                <h3>Dr. Hendra Wijaya</h3>
+                                <p>Psikiater</p>
+                                <div class="therapist-details">
+                                    <a href="#" class="btn btn-primary"
+                                        style="padding: 6px 14px; font-size: 13px;">Kirim Pesan</a>
+                                    <div class="session-time">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Sesi: Jumat, 13:30
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="pill-tag">Konsultan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Jurnal Mood Card -->
+                <div class="card mood-journal-card">
+                    <div class="card-header">
+                        <h2>Jurnal Mood</h2>
+                        <a href="#" class="view-all">Riwayat</a>
+                    </div>
+                    <div class="mood-chart">
+                        <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+                            <path d="M0 60 L30 80 L60 50 L90 85 L120 70 L150 70 L180 90 L210 75 L240 85 L270 95 L300 90"
+                                fill="rgba(123, 160, 146, 0.3)" stroke="#7BA092" stroke-width="2.5" />
+                        </svg>
+                    </div>
+                    <div class="mood-labels">
+                        <span>Sel</span><span>Kam</span><span>Sab</span><span>Sen</span><span>Rab</span><span>Jum</span><span>Min</span>
+                    </div>
+                    <div class="mood-input">
+                        <h3>Bagaimana perasaan Anda hari ini?</h3>
+                        <div class="mood-options">
+                            <div class="mood-option">
+                                <svg class="icon-very-bad" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM8.5 8c.83 0 1.5.67 1.5 1.5S9.33 11 8.5 11 7 10.33 7 9.5 7.67 8 8.5 8zM12 18c-2.33 0-4.32-1.45-5.12-3.5h1.67c.69 1.19 1.97 2 3.45 2s2.75-.81 3.45-2h1.67c-.8 2.05-2.79 3.5-5.12 3.5zm7-6.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5 1.5.67 1.5 1.5z">
+                                    </path>
+                                </svg>
+                                <span>Sangat Buruk</span>
+                            </div>
+                            <div class="mood-option">
+                                <svg class="icon-bad" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 14c-1.48 0-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.7 1.19-1.97 2-3.45 2zM8.5 9.5c.83 0 1.5.67 1.5 1.5S9.33 12.5 8.5 12.5 7 11.83 7 11s.67-1.5 1.5-1.5zm7 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z">
+                                    </path>
+                                </svg>
+                                <span>Buruk</span>
+                            </div>
+                            <div class="mood-option">
+                                <svg class="icon-neutral" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM8.5 12.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm3.5 2.5H8.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h7c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5H12zm3.5-2.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5z">
+                                    </path>
+                                </svg>
+                                <span>Biasa</span>
+                            </div>
+                            <div class="mood-option">
+                                <svg class="icon-good" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM8.5 12.5c.83 0 1.5-.67 1.5-1.5S9.33 9.5 8.5 9.5 7 10.17 7 11s.67 1.5 1.5 1.5zm7 0c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-3.03 4.56c-.05-.44-.22-.86-.49-1.22c-.28-.37-.65-.67-1.09-.85l-.3-.13c-.39-.16-.74-.4-1.01-.72c-.14-.16-.27-.34-.37-.53H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.22.61-.63 1.15-1.18 1.56z">
+                                    </path>
+                                </svg>
+                                <span>Baik</span>
+                            </div>
+                            <div class="mood-option active">
+                                <svg class="icon-very-good" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM8.5 9.5c.83 0 1.5.67 1.5 1.5S9.33 12.5 8.5 12.5 7 11.83 7 11s.67-1.5 1.5-1.5zm3.5 9.5c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5zm3.5-6.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5-1.5z">
+                                    </path>
+                                </svg>
+                                <span>Sangat Baik</span>
+                            </div>
+                        </div>
+                        <div class="mood-trend">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                    d="m10 17l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8m-7-6A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z">
+                                </path>
+                            </svg>
+                            Trend mood membaik dalam 7 hari terakhir
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Program Terapi Card -->
+                <div class="card therapy-program-card grid-span-2">
+                    <div class="card-header">
+                        <h2>Program Terapi</h2>
+                        <a href="#" class="view-all">Lihat Detail</a>
+                    </div>
+                    <div class="program-list">
+                        <div class="program-item">
+                            <div style="flex-grow: 1;">
+                                <div class="program-item-info">
+                                    <h3>Mengelola Kecemasan</h3> <span>6/8 selesai</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 75%; background-color: var(--progress-green);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div style="flex-grow: 1;">
+                                <div class="program-item-info">
+                                    <h3>Teknik Relaksasi</h3> <span>3/5 selesai</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 60%; background-color: var(--progress-green);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div style="flex-grow: 1;">
+                                <div class="program-item-info">
+                                    <h3>Pola Pikir Positif</h3> <span>4/10 selesai</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 40%; background-color: var(--progress-green);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div style="flex-grow: 1;">
+                                <div class="program-item-info">
+                                    <h3>Manajemen Stres</h3> <span>1/6 selesai</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 16%; background-color: var(--progress-green);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="latest-task">
+                        <h3>Tugas Terbaru</h3>
+                        <div class="task-box">
+                            <p>Latihan Pernapasan Dalam - 10 menit</p>
+                            <span>Ditugaskan oleh Dr. Maya Kusuma</span>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-large">Lanjutkan Program</a>
+                    </div>
+                </div>
+
+                <!-- 5. Diskusi Komunitas Card -->
+                <div class="card community-discussion-card grid-span-2">
+                    <div class="card-header" style="align-items: flex-start;">
+                        <h2>Diskusi Komunitas</h2>
+                        <div class="community-tabs">
+                            <a href="#grup-saya" class="tab-link active">Grup Saya</a>
+                            <a href="#trending" class="tab-link">Trending</a>
+                            <a href="#semua" class="tab-link">Semua</a>
+                        </div>
+                    </div>
+                    <div class="community-content">
+                        <div class="content-section">
+                            <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.122-1.28-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.122-1.28.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>Grup Aktif</h3>
+                            <div class="discussion-group-card">
+                                <div class="group-header">
+                                    <h4>Mengatasi Anxiety</h4> <span class="time">15 menit lalu</span>
+                                </div>
+                                <p>128 anggota</p>
+                                <div class="group-footer">
+                                    <a href="#">Lihat Diskusi ›</a>
+                                </div>
+                            </div>
+                            <div class="discussion-group-card" style="margin-top: 16px;">
+                                <div class="group-header">
+                                    <h4>Dukungan Depresi</h4> <span class="time">1 jam lalu</span>
+                                </div>
+                                <p>94 anggota</p>
+                                <div class="group-footer">
+                                    <a href="#">Lihat Diskusi ›</a>
+                                </div>
+                            </div>
+                            <div class="discussion-group-card" style="margin-top: 16px;">
+                                <div class="group-header">
+                                    <h4>Mindfulness Harian</h4> <span class="time">3 jam lalu</span>
+                                </div>
+                                <p>156 anggota</p>
+                                <div class="group-footer">
+                                    <a href="#">Lihat Diskusi ›</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-section">
+                            <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>Direkomendasikan untuk Anda</h3>
+                            <div class="discussion-group-card recommendation">
+                                <h4>Kesehatan Mental di Tempat Kerja</h4>
+                                <p>87 anggota</p>
+                                <a href="#" class="btn btn-group"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>Gabung Grup</a>
+                            </div>
+                            <div class="discussion-group-card recommendation" style="margin-top: 16px;">
+                                <h4>Teknik Tidur Berkualitas</h4>
+                                <p>112 anggota</p>
+                                <a href="#" class="btn btn-group"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>Gabung Grup</a>
+                            </div>
+                            <div class="create-group-card" style="margin-top: 16px;">
+                                <h4>Buat Grup Baru</h4>
+                                <p>Mulai diskusi dengan topik pilihan Anda</p>
+                                <a href="#" class="btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>Buat Grup</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ==== Sidebar ==== -->
+        <aside class="sidebar">
+            <!-- 7. Kontak Cepat & Jadwal -->
+            <div class="card contact-card">
+                <h3>Kontak Cepat</h3>
+                <div style="margin: 16px 0;">
+                    <a href="#" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z">
+                            </path>
+                        </svg>Hubungi Terapis</a>
+                    <a href="#" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z">
+                            </path>
+                        </svg>Hubungi Admin</a>
+                </div>
+                <div class="emergency-box">
+                    <h3>Bantuan Darurat</h3>
+                    <p>Jika Anda dalam krisis, hubungi hotline 119</p>
+                </div>
+                <div class="divider"></div>
+                <h3 style="font-weight:600; font-size: 18px">Jadwal Hari Ini</h3>
+                <div class="schedule-header">
+                    <div class="date-box">
+                        <div class="month">Agustus</div>
+                        <div class="day">15</div>
+                    </div>
+                    <div class="schedule-info">
+                        <h3>Selasa</h3>
+                        <p>2 sesi terjadwal</p>
+                    </div>
+                </div>
+                <div class="appointment-list">
+                    <div class="appointment-item">
+                        <div class="timeline"></div>
+                        <div class="appointment-details">
+                            <h4>Terapi Individu</h4>
+                            <p>10:00 - 11:00</p>
+                            <p style="color:var(--dark-text); font-weight:500;">Dr. Maya Kusuma</p>
+                        </div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="timeline"></div>
+                        <div class="appointment-details">
+                            <h4>Grup Dukungan</h4>
+                            <p>15:00 - 16:00</p>
+                            <p style="color:var(--dark-text); font-weight:500;">Mengatasi Anxiety</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-secondary btn-large"><svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z">
+                        </path>
+                    </svg>Lihat Kalender Lengkap</a>
+            </div>
+
+            <!-- 6. Aktivitas Terbaru Card (Sidebar version) -->
+            <div class="card recent-activity-card">
+                <div class="card-header">
+                    <h2>Aktivitas Terbaru</h2>
+                    <a href="#" class="view-all">Lihat Semua</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon icon-book"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 14H8v-2h5v2zm3-4H8v-2h8v2zm0-4H8V6h8v2z">
+                                </path>
+                            </svg></div>
+                        <div class="activity-details">
+                            <p>Dr. Maya mengirim latihan baru</p>
+                            <span>Teknik Relaksasi Progresif - 15 menit</span>
+                            <span style="font-size: 12px; margin-top:2px;">2 jam lalu</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon icon-check"><svg xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
+                            </svg></div>
+                        <div class="activity-details">
+                            <p>Anda menyelesaikan asesmen mingguan</p>
+                            <span>Hasil: Perbaikan 15% dari minggu lalu</span>
+                            <span style="font-size: 12px; margin-top:2px;">kemarin</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon icon-chat"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z">
+                                </path>
+                            </svg></div>
+                        <div class="activity-details">
+                            <p>Grup diskusi memiliki postingan baru</p>
+                            <span>Mengatasi Anxiety - 5 postingan baru</span>
+                            <span style="font-size: 12px; margin-top:2px;">2 hari lalu</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon icon-calendar"><svg xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z">
+                                </path>
+                            </svg></div>
+                        <div class="activity-details">
+                            <p>Jadwal sesi terapi diperbarui</p>
+                            <span>Sesi dengan Dr. Hendra dipindahkan</span>
+                            <span style="font-size: 12px; margin-top:2px;">3 hari lalu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Aktivitas Komunitas (Sidebar) -->
+            <div class="card community-activity-card">
+                <div class="card-header">
+                    <h2>Aktivitas Komunitas</h2>
+                </div>
+                <div class="post-card">
+                    <div class="post-author">
+                        <img src="https://i.imgur.com/k2B85f6.jpeg" alt="Budi Santoso">
+                        <div class="author-info">
+                            <div class="name">Budi Santoso</div>
+                            <div class="topic">Mengatasi Anxiety</div>
+                        </div>
+                        <div class="time">15 menit lalu</div>
+                    </div>
+                    <p class="post-content">Bagikan teknik yang membantu Anda mengatasi serangan panik?</p>
+                    <div class="post-actions">
+                        <span class="replies">3 balasan</span>
+                        <span class="reply"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"></path>
+                            </svg>Balas</span>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-author">
+                        <img src="https://i.imgur.com/qdiTjYn.jpeg" alt="Siti Rahma">
+                        <div class="author-info">
+                            <div class="name">Siti Rahma</div>
+                            <div class="topic">Mindfulness Harian</div>
+                        </div>
+                        <div class="time">2 jam lalu</div>
+                    </div>
+                    <p class="post-content">Saya baru saja menyelesaikan meditasi 30 hari berturut-turut!</p>
+                    <div class="post-actions">
+                        <span class="replies">8 balasan</span>
+                        <span class="reply"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"></path>
+                            </svg>Balas</span>
+                    </div>
+                </div>
+                <a href="#" class="view-more">Lihat Lebih Banyak ›</a>
+            </div>
+        </aside>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mood selection handler
+            const moodOptions = document.querySelectorAll('.mood-option');
+            moodOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    moodOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                });
+            });
+
+            // Community tabs handler
+            const communityTabs = document.querySelectorAll('.community-tabs .tab-link');
+            communityTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    communityTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    // Di aplikasi nyata, di sini Anda akan memuat konten yang sesuai
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

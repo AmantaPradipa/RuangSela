@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Popup</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-green: #708d7a;
+            --chat-bg: #f8f8f8;
+            --bubble-user: #e9ecef;
+            --bubble-cs: #ffffff;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+            --online-status: #16a34a;
+            --check-blue: #53bdeb;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #dcdcdc;
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+        
+        .chat-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            /* === THE ONLY CHANGE IS HERE === */
+            width: 400px; /* REFINED: Widened from 370px */
+            max-width: 95vw; /* ADDED: Ensures it fits on very narrow screens */
+            /* === END OF CHANGE === */
+            max-height: 90vh;
+            background-color: var(--chat-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-size: 15px;
+        }
+
+        .chat-header {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: grid; place-items: center;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .avatar.cs { background-color: #89a192; }
+        .avatar.user { background-color: var(--bubble-user); color: var(--text-dark); }
+        .user-info .name { font-weight: 600; font-size: 16px; }
+        .user-info .status { font-size: 13px; display: flex; align-items: center; gap: 5px; opacity: 0.9; }
+        .user-info .status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background-color: var(--online-status); }
+        .header-right { display: flex; gap: 15px; }
+        .header-right button { background: none; border: none; color: rgba(255,255,255,0.8); font-size: 18px; cursor: pointer; }
+
+        .chat-body {
+            flex-grow: 1; padding: 20px;
+            overflow-y: auto; display: flex;
+            flex-direction: column; gap: 20px;
+        }
+        .chat-body::-webkit-scrollbar { width: 6px; }
+        .chat-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        
+        .message { display: flex; align-items: flex-end; gap: 10px; max-width: 85%; }
+        .message .avatar { width: 32px; height: 32px; font-size: 12px; font-weight: 500; }
+        .message.incoming { align-self: flex-start; }
+        .message.outgoing { align-self: flex-end; flex-direction: row-reverse; }
+
+        .message-bubble {
+            padding: 12px 16px; line-height: 1.5;
+            border-radius: 20px;
+        }
+        .message.incoming .message-bubble { background-color: var(--bubble-cs); border-top-left-radius: 6px; }
+        .message.outgoing .message-bubble { background-color: var(--bubble-user); border-top-right-radius: 6px; }
+        
+        .message-footer {
+            text-align: right; font-size: 12px;
+            color: var(--text-light); margin-top: 6px;
+        }
+        .message-footer i { margin-left: 4px; }
+        .message.outgoing .message-footer .fa-check-double { color: var(--check-blue); }
+
+        .typing-indicator .message-bubble { padding: 14px 18px; }
+        .typing-indicator .message-bubble span {
+            display: inline-block; width: 7px; height: 7px; margin: 0 1px;
+            border-radius: 50%; background-color: #b0b0b0;
+            animation: typing 1.2s infinite ease-in-out;
+        }
+        .typing-indicator .message-bubble span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator .message-bubble span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+
+        .chat-footer {
+            padding: 12px 15px; background-color: #fff;
+            border-top: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+        }
+        .chat-footer .icon-btn { background: none; border: none; font-size: 20px; color: var(--text-light); cursor: pointer; }
+        .chat-footer .message-input {
+            flex-grow: 1; border: none;
+            padding: 12px; outline: none;
+            background-color: var(--chat-bg);
+            border-radius: 10px; font-size: 14px;
+        }
+        .chat-footer .send-btn {
+            background-color: var(--primary-green); color: white;
+            border: none; width: 42px; height: 42px;
+            cursor: pointer; display: grid; place-items: center;
+            border-radius: 12px;
+        }
+        .chat-footer .send-btn i {
+            font-size: 18px; transform: rotate(-15deg); margin-left: -2px; margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-popup" id="chat-popup">
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="avatar cs">CS</div>
+                <div class="user-info">
+                    <div class="name">Customer Service</div>
+                    <div class="status">Online</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button title="Minimize"><i class="fa-solid fa-minus"></i></button>
+                <button title="Close" onclick="document.getElementById('chat-popup').style.display='none';"><i class="fa-solid fa-times"></i></button>
+            </div>
+        </header>
+        
+        <main class="chat-body" id="chat-body">
+            <div class="message incoming">
+                <div class="avatar cs">CS</div>
+                <div class="message-content">
+                    <div class="message-bubble">Halo! Selamat datang di RuangSela. Ada yang bisa kami bantu?</div>
+                    <div class="message-footer">09:41 <i class="fa-solid fa-check"></i></div>
+                </div>
+            </div>
+             <div class="message outgoing">
+                <div class="avatar user">YN</div>
+                <div class="message-content">
+                    <div class="message-bubble">Saya ingin bertanya tentang paket konsultasi</div>
+                    <div class="message-footer">09:42 <i class="fa-solid fa-check-double"></i></div>
+                </div>
+            </div>
+             <div class="message incoming" id="initial-typing">
+                <div class="avatar cs">CS</div>
+                <div class="message-content">
+                    <div class="message-bubble typing-indicator"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="chat-footer">
+            <button class="icon-btn" title="Attach file"><i class="fa-solid fa-paperclip"></i></button>
+            <input type="text" id="message-input" class="message-input" placeholder="Ketik pesan Anda...">
+            <button class="send-btn" id="send-btn" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+        </footer>
+    </div>
+    
+    <script>
+        const chatBody = document.getElementById('chat-body');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        setTimeout(() => {
+            const initialTyping = document.getElementById('initial-typing');
+            if (initialTyping) initialTyping.remove();
+        }, 2000);
+
+        const sendMessage = () => {
+            const messageText = messageInput.value.trim();
+            if (messageText === "") return;
+            
+            const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            const userMessageHTML = `
+                <div class="message outgoing">
+                    <div class="avatar user">YN</div>
+                    <div class="message-content">
+                        <div class="message-bubble">${messageText}</div>
+                        <div class="message-footer">${time} <i class="fa-solid fa-check-double"></i></div>
+                    </div>
+                </div>`;
+            chatBody.insertAdjacentHTML('beforeend', userMessageHTML);
+            messageInput.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            setTimeout(simulateReply, 1000);
+        };
+        
+        const simulateReply = () => {
+            const typingIndicatorHTML = `
+                <div class="message incoming typing-indicator" id="typing">
+                    <div class="avatar cs">CS</div>
+                    <div class="message-content">
+                        <div class="message-bubble"><span></span><span></span><span></span></div>
+                    </div>
+                </div>`;
+            chatBody.insertAdjacentHTML('beforeend', typingIndicatorHTML);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                document.getElementById('typing').remove();
+                const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const csReplyHTML = `
+                    <div class="message incoming">
+                        <div class="avatar cs">CS</div>
+                        <div class="message-content">
+                            <div class="message-bubble">Tentu, ada yang bisa saya jelaskan lebih detail mengenai paket-paket kami?</div>
+                            <div class="message-footer">${time} <i class="fa-solid fa-check"></i></div>
+                        </div>
+                    </div>`;
+                chatBody.insertAdjacentHTML('beforeend', csReplyHTML);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 2500);
+        };
+
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

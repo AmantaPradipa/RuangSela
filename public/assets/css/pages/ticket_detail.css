@@ -1,0 +1,120 @@
+/* public/assets/css/pages/ticket_detail.css */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.breadcrumbs {
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+.breadcrumbs a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 24px;
+}
+
+.content-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.content-sidebar .card {
+    padding: 20px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.info-item label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.info-item p {
+    font-size: 0.95rem;
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+.info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.response-list {
+    margin-top: 20px;
+}
+
+.response-item {
+    background-color: var(--bg-light-gray);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.response-item.admin-response {
+    background-color: var(--primary-light);
+    text-align: right;
+}
+
+.response-item .response-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--light-text);
+    margin-bottom: 8px;
+}
+
+.response-item.admin-response .response-header {
+    flex-direction: row-reverse;
+}
+
+.response-item .message {
+    font-size: 0.9rem;
+    color: var(--dark-text);
+    line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+    .content-layout {
+        grid-template-columns: 1fr;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    .info-item p {
+        font-size: 0.9rem;
+    }
+    .response-item .message {
+        font-size: 0.85rem;
+    }
+    .action-buttons {
+        flex-direction: column;
+    }
+}

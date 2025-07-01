@@ -1,0 +1,111 @@
+/* public/assets/css/pages/dashboard_admin.css */
+
+.page-container {
+    padding: 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--bg-white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-card .stat-icon.icon-users {
+    background-color: var(--accent-blue-light);
+    color: var(--accent-blue);
+}
+
+.stat-card .stat-icon.icon-therapists {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-main);
+}
+
+.stat-card .stat-icon.icon-articles {
+    background-color: rgba(229, 122, 68, 0.1);
+    color: var(--accent-orange);
+}
+
+.stat-card .stat-icon.icon-tickets {
+    background-color: rgba(255, 199, 0, 0.1);
+    color: var(--accent-yellow);
+}
+
+.stat-info .label {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 4px;
+}
+
+.stat-info .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table td .therapist-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.data-table td .therapist-info img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-card .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .stat-info .value {
+        font-size: 1.8rem;
+    }
+    .data-table td .therapist-info img {
+        width: 30px;
+        height: 30px;
+    }
+}

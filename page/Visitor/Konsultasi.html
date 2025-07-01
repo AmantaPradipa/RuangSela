@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paket Konsultasi Online</title>
+    <style>
+        /* === PENGATURAN GLOBAL & VARIABEL WARNA === */
+        :root {
+            /* Warna Primer */
+            --primary-color: #6c8c7c;
+            --primary-color-highlight: #648170;
+            --popular-banner: #fecb2f;
+            --star-color: #fcc419;
+
+            /* Warna Teks */
+            --dark-text: #2f3432;
+            --darker-text: #212529;
+            --medium-text: #3d413e;
+            --light-text: #6c757d;
+            --lighter-text: #6a706e;
+
+            /* Warna Latar Belakang & Border */
+            --section-bg-main: #f9fafa;
+            --section-bg-alt: #e6e9e6;
+            --card-background: #ffffff;
+            --border-color: #eaeaea;
+            --card-border-light: #e5e7eb;
+            --card-border-extra-light: #f1f3f5;
+            --avatar-bg: #e9ecef;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            background-color: var(--section-bg-main);
+            line-height: 1.6;
+        }
+
+        /* === BAGIAN 1: HEADER KONSULTASI === */
+        .consultation-section {
+            background-color: var(--section-bg-alt);
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .consultation-section .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .consultation-section .section-title .highlight-text {
+            color: var(--primary-color-highlight);
+        }
+
+        .consultation-section .section-description {
+            font-size: 1.1rem;
+            color: #505553;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* === BAGIAN 2: PILIHAN PAKET (PRICING) === */
+        .pricing-section {
+            background-color: var(--card-background);
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .pricing-header {
+            max-width: 700px;
+            margin: 0 auto 3.5rem auto;
+        }
+
+        .pricing-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 1rem;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .pricing-cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 360px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary-color);
+        }
+
+        .popular-banner {
+            position: absolute;
+            top: 18px;
+            right: -34px;
+            background-color: var(--popular-banner);
+            color: var(--dark-text);
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 6px 35px;
+            transform: rotate(45deg);
+            white-space: nowrap;
+        }
+
+        .package-name,
+        .package-price,
+        .package-duration {
+            text-align: left;
+        }
+
+        .package-name {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: 0;
+        }
+
+        .package-price {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin: 0.5rem 0 0.25rem 0;
+        }
+
+        .package-duration {
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--dark-text);
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 22px;
+            height: 22px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .cta-button {
+            display: table;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 2rem auto 0 auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #5a7569;
+        }
+
+        /* === BAGIAN 3: CARA MEMULAI === */
+        .how-it-works-section {
+            background-color: var(--card-background);
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .how-it-works-section .section-header {
+            max-width: 650px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .how-it-works-section .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--medium-text);
+            margin: 0 0 0.75rem 0;
+        }
+
+        .title-divider {
+            height: 3px;
+            width: 50px;
+            background-color: var(--primary-color);
+            margin: 0 auto 1.5rem auto;
+            border-radius: 2px;
+        }
+
+        .how-it-works-section .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--lighter-text);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step-card {
+            background-color: white;
+            border: 1px solid var(--card-border-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-icon {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .step-icon svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0 0 0.75rem 0;
+            color: var(--medium-text);
+        }
+
+        .step-description {
+            color: var(--lighter-text);
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .step-card .cta-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            width: 100%;
+            max-width: 250px;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* === BAGIAN 4: TESTIMONI === */
+        .testimonials-section {
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .testimonials-section .section-header {
+            max-width: 700px;
+            margin: 0 auto 3.5rem auto;
+        }
+
+        .testimonials-section .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--darker-text);
+            margin: 0 0 1rem 0;
+        }
+
+        .testimonials-section .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .testimonials-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border: 1px solid var(--card-border-extra-light);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+            width: 100%;
+            max-width: 350px;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background-color: var(--avatar-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar svg {
+            width: 24px;
+            height: 24px;
+            color: var(--light-text);
+        }
+
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--darker-text);
+            margin: 0;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .star-rating svg {
+            width: 18px;
+            height: 18px;
+            color: var(--star-color);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--light-text);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+
+        /* === DESAIN RESPONSIVE (GABUNGAN) === */
+        @media (max-width: 1200px) {
+            .testimonials-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .testimonial-card {
+                max-width: 600px;
+            }
+        }
+
+        @media (max-width: 1150px) {
+            .steps-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step-card {
+                max-width: 450px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .pricing-cards-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2.5rem;
+            }
+
+            .pricing-card {
+                max-width: 450px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .consultation-section {
+                padding: 3.5rem 1rem;
+            }
+
+            .consultation-section .section-title,
+            .pricing-title,
+            .how-it-works-section .section-title,
+            .testimonials-section .section-title {
+                font-size: 2rem;
+            }
+
+            .consultation-section .section-description,
+            .pricing-subtitle,
+            .how-it-works-section .section-subtitle,
+            .testimonials-section .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .pricing-section,
+            .how-it-works-section,
+            .testimonials-section {
+                padding: 4rem 1rem;
+            }
+
+            .step-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Placeholder untuk Header (Navbar) -->
+    <div id="header-placeholder"></div>
+
+    <main>
+
+    <!-- BAGIAN 1: HEADER UTAMA -->
+    <section class="consultation-section">
+        <h1 class="section-title">
+            Paket Konsultasi <span class="highlight-text">Online</span>
+        </h1>
+        <p class="section-description">
+            Pilih paket konsultasi yang paling sesuai dengan kebutuhan dan preferensi Anda untuk memulai perjalanan
+            menuju kesehatan mental yang lebih baik.
+        </p>
+    </section>
+
+    <!-- BAGIAN 2: PILIHAN PAKET -->
+    <section class="pricing-section">
+        <header class="pricing-header">
+            <h2 class="pricing-title">Pilihan Paket Fleksibel Kami</h2>
+            <p class="pricing-subtitle">Kami menyediakan berbagai pilihan paket untuk memastikan Anda mendapatkan
+                dukungan yang tepat dengan cara yang paling nyaman.</p>
+        </header>
+        <div class="pricing-cards-container">
+            <div class="pricing-card">
+                <h3 class="package-name">Paket Pengantar</h3>
+                <p class="package-price">Rp 199.999</p>
+                <p class="package-duration">Durasi: 3 Hari Akses</p>
+                <ul class="features-list">
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>1 Sesi Konsultasi Online (60 Menit)</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Artikel Edukasi</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Diskusi Komunitas</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Relaksasi Pure Tone</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses 1 Jenis Psikotes Pilihan</span></li>
+                </ul>
+                <a href="#" class="cta-button">Pilih Paket Ini</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-banner">Popular</div>
+                <h3 class="package-name">Paket Pendampingan</h3>
+                <p class="package-price">Rp 499.999</p>
+                <p class="package-duration">Durasi: 7 Hari Akses</p>
+                <ul class="features-list">
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>2 Sesi Konsultasi Online (masing-masing 60 Menit)</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Artikel Edukasi</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Diskusi Komunitas</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Relaksasi Pure Tone</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses 2 Jenis Psikotes Pilihan</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Laporan Perkembangan Singkat</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Prioritas Respon Pop-up Chat Admin</span></li>
+                </ul>
+                <a href="#" class="cta-button">Pilih Paket Ini</a>
+            </div>
+            <div class="pricing-card">
+                <h3 class="package-name">Paket Transformasi</h3>
+                <p class="package-price">Rp 749.999</p>
+                <p class="package-duration">Durasi: 30 Hari Akses</p>
+                <ul class="features-list">
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>4 Sesi Konsultasi Online (masing-masing 60 Menit)</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Artikel Edukasi Premium</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Diskusi Komunitas Eksklusif</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Penuh Relaksasi Pure Tone Frequency</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Akses Semua Jenis Psikotes</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Laporan Perkembangan Lengkap</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Sesi Review Bulanan dengan Psikolog</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Dukungan Penuh Pop-up Chat Admin 24/7</span></li>
+                    <li><svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                clip-rule="evenodd" />
+                        </svg><span>Prioritas Akses ke Event Komunitas Eksklusif</span></li>
+                </ul>
+                <a href="#" class="cta-button">Pilih Paket Ini</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BAGIAN 3: CARA MEMULAI -->
+    <section class="how-it-works-section">
+        <div class="section-header">
+            <h2 class="section-title">Bagaimana Cara Memulai Konsultasi?</h2>
+            <div class="title-divider"></div>
+            <p class="section-subtitle">Memulai konsultasi di RuangSela sangat mudah. Ikuti langkah-langkah sederhana...
+            </p>
+        </div>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <polyline points="17 11 19 13 23 9"></polyline>
+                    </svg></div>
+                <h3 class="step-title">Daftar & Pilih Paket</h3>
+                <p class="step-description">Buat akun RuangSela Anda dan pilih paket konsultasi yang paling sesuai
+                    dengan kebutuhan Anda.</p>
+                <a href="#" class="cta-button">Temukan Terapis Sekarang</a>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg></div>
+                <h3 class="step-title">Pilih Terapis Anda</h3>
+                <p class="step-description">Jelajahi profil terapis kami yang berpengalaman dan pilih yang paling cocok
+                    dengan preferensi Anda.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg></div>
+                <h3 class="step-title">Jadwalkan Sesi</h3>
+                <p class="step-description">Atur jadwal sesi konsultasi pertama Anda melalui platform kami pada waktu
+                    yang paling nyaman.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BAGIAN 4: TESTIMONI -->
+    <section class="testimonials-section">
+        <div class="section-header">
+            <h2 class="section-title">Pengalaman Konsultasi di RuangSela</h2>
+            <p class="section-subtitle">Simak apa kata mereka yang telah merasakan manfaat dari layanan konsultasi kami
+            </p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="card-header">
+                    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg></div>
+                    <div class="user-info">
+                        <h3 class="user-name">Ahmad Fauzi</h3>
+                        <div class="star-rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">"Sesi konsultasi video sangat membantu saya mengatasi kecemasan. Terapisnya
+                    sabar dan memberikan insight yang berharga. Terima kasih RuangSela!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="card-header">
+                    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg></div>
+                    <div class="user-info">
+                        <h3 class="user-name">Lina Marlina</h3>
+                        <div class="star-rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">"Layanan konsultasi RuangSela sangat profesional. Saya merasa nyaman berbagi
+                    masalah dan mendapatkan solusi yang praktis. Sangat direkomendasikan!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="card-header">
+                    <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg></div>
+                    <div class="user-info">
+                        <h3 class="user-name">Putri Ayu</h3>
+                        <div class="star-rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61483 7.84006L12.0006 0.5L15.3864 7.84006L23.4133 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">"RuangSela membantu saya menemukan keseimbangan mental. Konselor yang ramah
+                    dan penuh pengertian membuat proses konsultasi menjadi menyenangkan."</p>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Placeholder untuk Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Fungsi untuk memuat komponen HTML ke dalam placeholder
+            const loadComponent = (url, placeholderId, callback = null) => {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Gagal memuat ${url}: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(placeholderId).innerHTML = data;
+                        if (callback) {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error memuat komponen:", error);
+                        document.getElementById(placeholderId).innerHTML = `<p style="text-align:center; color:red;">Gagal memuat konten.</p>`;
+                    });
+            };
+
+            // Fungsi untuk mengatur kelas 'active' pada menu navigasi
+            const setActiveMenuItem = () => {
+                const currentPath = window.location.pathname.split('/').pop(); // Mengambil nama file dari URL
+                const navLinks = document.querySelectorAll('.header-nav ul li a');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkPath = link.getAttribute('href').split('/').pop();
+                    if (currentPath === linkPath) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            loadComponent('Header.html', 'header-placeholder', setActiveMenuItem);
+            loadComponent('Footer.html', 'footer-placeholder');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+/* public/assets/css/pages/common.css */
+
+/* General Page Structure */
+.page-container {
+    padding: 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    background-color: var(--bg-white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 25px;
+}
+
+.card .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.card .section-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Data Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.data-table thead th {
+    background-color: var(--bg-light-gray);
+    font-weight: 600;
+    color: var(--dark-text);
+    font-size: 14px;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--primary-light);
+}
+
+.data-table .tag {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.data-table .tag-orange {
+    background-color: rgba(229, 122, 68, 0.1);
+    color: var(--accent-orange);
+}
+
+.data-table .tag-green {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-main);
+}
+
+.data-table .tag-red {
+    background-color: var(--danger-bg);
+    color: var(--danger-main);
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.alert-success {
+    background-color: var(--success-bg);
+    color: var(--success-main);
+    border: 1px solid var(--success-main);
+}
+
+.alert-danger {
+    background-color: var(--danger-bg);
+    color: var(--danger-main);
+    border: 1px solid var(--danger-main);
+}
+
+.alert-danger ul {
+    padding-left: 20px;
+    margin: 0;
+}

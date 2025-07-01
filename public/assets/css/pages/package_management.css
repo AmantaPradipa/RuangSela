@@ -1,0 +1,146 @@
+/* public/assets/css/pages/package_management.css */
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.package-card {
+    padding: 30px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+
+.package-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--dark-text);
+}
+
+.package-card .price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.package-card .description {
+    font-size: 0.95rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.package-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.package-card ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+.package-card ul li i {
+    color: var(--success-main);
+    font-size: 1.1rem;
+}
+
+.package-card .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.package-card .btn-edit,
+.package-card .btn-delete {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.package-card .btn-edit {
+    background-color: var(--primary-color);
+    color: var(--white-text);
+    border: 1px solid var(--primary-color);
+}
+
+.package-card .btn-edit:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.package-card .btn-delete {
+    background-color: var(--danger-main);
+    color: var(--white-text);
+    border: 1px solid var(--danger-main);
+}
+
+.package-card .btn-delete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+    .package-card {
+        padding: 20px;
+    }
+    .package-card h3 {
+        font-size: 1.3rem;
+    }
+    .package-card .price {
+        font-size: 1.8rem;
+    }
+    .package-card .description,
+    .package-card ul li {
+        font-size: 0.85rem;
+    }
+    .package-card .btn-edit,
+    .package-card .btn-delete {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
