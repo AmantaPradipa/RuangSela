@@ -116,28 +116,8 @@ Pengaturan Akun
 
     <p class="footer-note">Terakhir diperbarui: <?= date('d F Y, H:i', strtotime($user['updated_at'])) ?></p>
 </div>
+<?= $this->endSection() ?>
 
 <?= $this->section('pageScripts') ?>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const profilePicInput = document.getElementById('profile-pic-input');
-        const profilePic = document.querySelector('.profile-pic');
-        const cameraIcon = document.querySelector('.camera-icon');
-
-        cameraIcon.addEventListener('click', function() {
-            profilePicInput.click();
-        });
-
-        profilePicInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profilePic.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
+<script src="<?= base_url('assets/js/profile.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -1,109 +1,81 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const audioPlayer = new Audio();
-    let currentPlayingCard = null;
-    let durationTimer = null;
+    let currentAudio = null;
+    let timeoutId = null;
 
-    const frequencyCards = document.querySelectorAll('.frequency-card');
+    const playButtons = document.querySelectorAll('.play-btn');
+    const durationButtons = document.querySelectorAll('.duration-btn');
 
-    frequencyCards.forEach(card => {
-        const playBtn = card.querySelector('.play-btn');
-        const audioSrc = playBtn.dataset.src;
-        const durationButtons = card.querySelectorAll('.duration-btn');
-
-        // Set 'Bebas' as active by default for each card
-        const defaultFreeButton = card.querySelector('.duration-btn[data-duration="free"]');
-        if (defaultFreeButton) {
-            defaultFreeButton.classList.add('active');
-        }
-
-        // Handle Play/Pause Button
-        playBtn.addEventListener('click', () => {
-            if (currentPlayingCard === card && !audioPlayer.paused) {
-                // Pause current audio
-                audioPlayer.pause();
-                clearTimeout(durationTimer);
-            } else {
-                // Stop any other audio
-                if (currentPlayingCard && currentPlayingCard !== card) {
-                    audioPlayer.pause();
-                    clearTimeout(durationTimer);
-                    // Reset UI of previously playing card
-                    const prevPlayBtn = currentPlayingCard.querySelector('.play-btn');
-                    if (prevPlayBtn) {
-                        prevPlayBtn.classList.remove('playing');
-                        prevPlayBtn.innerHTML = '<i class="ri-play-circle-fill"></i>';
-                    }
-                }
-                
-                // Play new audio
-                audioPlayer.src = audioSrc;
-                audioPlayer.play().catch(e => console.error("Audio play failed:", e));
-                currentPlayingCard = card;
-
-                // Set timer based on active duration
-                const activeDurationBtn = card.querySelector('.duration-btn.active');
-                if (activeDurationBtn) {
-                    setDuration(activeDurationBtn.dataset.duration);
-                }
+    function stopCurrentAudio() {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            const playingButton = document.querySelector('.play-btn .ri-pause-circle-fill');
+            if (playingButton) {
+                playingButton.classList.remove('ri-pause-circle-fill');
+                playingButton.classList.add('ri-play-circle-fill');
             }
-        });
-
-        // Handle Duration Buttons
-        durationButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                durationButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                if (currentPlayingCard === card && !audioPlayer.paused) {
-                    setDuration(button.dataset.duration);
-                }
-            });
-        });
-    });
-
-    // Update UI based on audio player state
-    audioPlayer.onplay = () => {
-        if (currentPlayingCard) {
-            const playBtn = currentPlayingCard.querySelector('.play-btn');
-            playBtn.classList.add('playing');
-            playBtn.innerHTML = '<i class="ri-pause-circle-fill"></i>';
         }
-    };
-
-    audioPlayer.onpause = () => {
-        if (currentPlayingCard) {
-            const playBtn = currentPlayingCard.querySelector('.play-btn');
-            playBtn.classList.remove('playing');
-            playBtn.innerHTML = '<i class="ri-play-circle-fill"></i>';
-            // Don't reset currentPlayingCard here, to allow resume
-        }
-        clearTimeout(durationTimer);
-    };
-
-    audioPlayer.onended = () => {
-        if (currentPlayingCard) {
-            const playBtn = currentPlayingCard.querySelector('.play-btn');
-            playBtn.classList.remove('playing');
-            playBtn.innerHTML = '<i class="ri-play-circle-fill"></i>';
-            currentPlayingCard = null;
-        }
-        clearTimeout(durationTimer);
-    };
-
-    function setDuration(durationMinutes) {
-        clearTimeout(durationTimer);
-        if (durationMinutes && durationMinutes !== 'free') {
-            const durationMs = parseInt(durationMinutes) * 60 * 1000;
-            durationTimer = setTimeout(() => {
-                audioPlayer.pause();
-            }, durationMs);
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
         }
     }
 
-    // Stop audio when leaving the page
-    window.addEventListener('beforeunload', () => {
-        if (!audioPlayer.paused) {
-            audioPlayer.pause();
-        }
+    playButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const audioSrc = this.dataset.src;
+            const icon = this.querySelector('i');
+
+            if (currentAudio && currentAudio.src === audioSrc) {
+                // Same audio, toggle play/pause
+                if (currentAudio.paused) {
+                    currentAudio.play();
+                    icon.classList.remove('ri-play-circle-fill');
+                    icon.classList.add('ri-pause-circle-fill');
+                } else {
+                    stopCurrentAudio();
+                }
+            } else {
+                // Different audio, stop current and play new
+                stopCurrentAudio();
+
+                currentAudio = new Audio(audioSrc);
+                currentAudio.play();
+                icon.classList.remove('ri-play-circle-fill');
+                icon.classList.add('ri-pause-circle-fill');
+
+                // Reset active duration button
+                durationButtons.forEach(btn => btn.classList.remove('active'));
+                this.closest('.frequency-card').querySelector('.duration-btn[data-duration="free"]').classList.add('active');
+            }
+        });
+    });
+
+    durationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const card = this.closest('.frequency-card');
+            const playBtn = card.querySelector('.play-btn');
+            const audioSrc = playBtn.dataset.src;
+            const duration = this.dataset.duration;
+
+            // Deactivate all duration buttons in this card
+            card.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
+            // Activate clicked button
+            this.classList.add('active');
+
+            stopCurrentAudio(); // Stop any currently playing audio
+
+            if (duration !== 'free') {
+                currentAudio = new Audio(audioSrc);
+                currentAudio.play();
+                playBtn.querySelector('i').classList.remove('ri-play-circle-fill');
+                playBtn.querySelector('i').classList.add('ri-pause-circle-fill');
+
+                timeoutId = setTimeout(() => {
+                    stopCurrentAudio();
+                    alert('Sesi audio ' + duration + ' menit telah berakhir.');
+                }, parseInt(duration) * 60 * 1000); // Convert minutes to milliseconds
+            }
+        });
     });
 });

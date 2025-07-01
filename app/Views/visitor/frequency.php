@@ -84,5 +84,5 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('pageScripts') ?>
-<script src="<?= base_url('assets/js/components/audio_player.js') ?>"></script>
+<script src="<?= base_url('public/assets/js/components/audio_player.js') ?>"></script>
 <?= $this->endSection() ?>

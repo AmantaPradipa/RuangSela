@@ -47,7 +47,7 @@ Pengaturan Akun Admin
         <?= csrf_field() ?>
         <input type="file" id="profile-pic-input" name="profile_picture" style="display: none;" accept="image/jpeg, image/png">
         <!-- Personal Information Card -->
-        <section class="card">
+        <section class="form-card">
             <h2>Informasi Pribadi</h2>
             <div class="form-grid">
                 <div class="form-group"><label for="first_name">Nama Depan</label><input type="text" id="first_name" name="first_name" class="form-control" value="<?= esc($user['first_name']) ?>"></div>
@@ -66,28 +66,8 @@ Pengaturan Akun Admin
 
     <p class="footer-note text-muted">Terakhir diperbarui: <?= date('d F Y, H:i', strtotime($user['updated_at'])) ?></p>
 </div>
+<?= $this->endSection() ?>
 
 <?= $this->section('pageScripts') ?>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const profilePicInput = document.getElementById('profile-pic-input');
-        const profilePic = document.querySelector('.profile-pic');
-        const cameraIcon = document.querySelector('.camera-icon');
-
-        cameraIcon.addEventListener('click', function() {
-            profilePicInput.click();
-        });
-
-        profilePicInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profilePic.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
+<script src="<?= base_url('assets/js/profile.js') ?>"></script>
 <?= $this->endSection() ?>
