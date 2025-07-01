@@ -16,10 +16,10 @@ class UserModel extends Model
     protected $allowedFields    = ['username', 'email', 'password', 'first_name', 'last_name', 'role', 'is_verified', 'is_active', 'profile_picture', 'id_card_file', 'phone', 'address', 'created_at', 'updated_at'];
 
     // Dates
-    protected $useTimestamps = true; // Changed to true for created_at and updated_at
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at'; // Added
-    protected $updatedField  = 'updated_at'; // Added
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
     protected $deletedField  = '';
 
     // Callbacks
@@ -28,32 +28,30 @@ class UserModel extends Model
 
     // Validation rules
     protected $validationRules = [
-        'username'      => 'required|alpha_numeric_space|min_length[3]|max_length[50]|is_unique[users.username]',
-        'email'         => 'required|valid_email|is_unique[users.email]',
-        'password'      => 'required|min_length[8]',
+        // Aturan is_unique akan lebih baik ditangani di controller untuk konteks update
+        'username'      => 'required|alpha_numeric_space|min_length[3]|max_length[50]|is_unique[users.username,id,{id}]',
+        'email'         => 'required|valid_email|is_unique[users.email,id,{id}]',
+        'password'      => 'permit_empty|min_length[8]', // Dibuat permit_empty karena tidak diupdate di form profil
         'first_name'    => 'required|string|max_length[50]',
         'last_name'     => 'permit_empty|string|max_length[50]',
         'role'          => 'permit_empty|in_list[client,therapist,admin]',
         'is_verified'   => 'permit_empty|in_list[0,1]',
         'is_active'     => 'permit_empty|in_list[0,1]',
         'profile_picture'=> 'permit_empty|string|max_length[255]',
+        'phone'         => 'permit_empty|alpha_numeric_punct|max_length[15]',
+        'address'       => 'permit_empty|string|max_length[255]',
     ];
     
     protected $validationMessages = [
         'username' => [
             'is_unique' => 'Maaf. Username tersebut sudah terdaftar.',
             'required' => 'Username wajib diisi.',
-            'alpha_numeric_space' => 'Username hanya boleh mengandung huruf, angka, dan spasi.',
-            'min_length' => 'Username minimal 3 karakter.',
-            'max_length' => 'Username maksimal 50 karakter.',
         ],
         'email' => [
             'is_unique' => 'Maaf. Email tersebut sudah terdaftar.',
             'required' => 'Email wajib diisi.',
-            'valid_email' => 'Email tidak valid.',
         ],
         'password' => [
-            'required' => 'Kata sandi wajib diisi.',
             'min_length' => 'Kata sandi minimal 8 karakter.',
         ],
         'first_name' => [
@@ -67,8 +65,12 @@ class UserModel extends Model
     
     protected function hashPassword(array $data)
     {
-        if (isset($data['data']['password'])) {
+        // Hanya hash password jika ada isinya
+        if (isset($data['data']['password']) && !empty($data['data']['password'])) {
             $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        } else {
+            // Hapus field password dari data update jika kosong
+            unset($data['data']['password']);
         }
 
         return $data;
