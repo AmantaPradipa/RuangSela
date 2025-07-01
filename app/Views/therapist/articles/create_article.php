@@ -37,7 +37,7 @@ Buat Artikel Baru
 
     <!-- Editor Card -->
     <div class="editor-card">
-        <form id="article-form" action="<?= site_url('therapist/articles/save') ?>" method="post" enctype="multipart/form-data">
+        <form id="article-form" action="<?= site_url('therapist/artikel/save') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <input type="text" name="title" class="title-input" placeholder="Judul Artikel Anda" value="<?= old('title') ?>">
 

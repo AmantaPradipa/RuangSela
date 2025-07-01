@@ -107,7 +107,7 @@ $routes->group('therapist', ['namespace' => 'App\Controllers\Therapist', 'filter
     $routes->delete('klien/delete-note/(:num)', 'ClientManagementController::deleteProgressNote/$1');
 
     // Manajemen Konten
-    $routes->get('artikel', 'ArticleController::index');
+    $routes->get('artikel', 'ArticleController::therapistArticlesIndex');
     $routes->get('artikel/create', 'ArticleController::create');
     $routes->post('artikel/save', 'ArticleController::save');
     $routes->get('artikel/edit/(:num)', 'ArticleController::edit/$1');
@@ -143,8 +143,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->post('therapists/reject/(:num)', 'TherapistVerificationController::reject/$1');
 
     // Manajemen Konten & Fitur
-    $routes->get('articles/create', 'ArticleManagementController::create');
-    $routes->resource('articles', ['controller' => 'ArticleManagementController', 'except' => 'show']);
+    // Manajemen Konten & Fitur (Articles)
+    $routes->get('articles', 'ArticleManagementController::adminArticleIndex');
+    $routes->get('articles/create', 'ArticleManagementController::adminArticleCreate');
+    $routes->post('articles/save', 'ArticleManagementController::adminArticleSave');
+    $routes->get('articles/edit/(:num)', 'ArticleManagementController::adminArticleEdit/$1');
+    $routes->post('articles/update/(:num)', 'ArticleManagementController::adminArticleUpdate/$1');
+    $routes->get('articles/delete/(:num)', 'ArticleManagementController::adminArticleDelete/$1');
     $routes->resource('packages', ['controller' => 'PackageManagementController', 'except' => 'show']);
     $routes->resource('faqs', ['controller' => 'FAQManagementController', 'except' => 'show']);
     $routes->resource('audio-tones', ['controller' => 'AudioToneManagementController', 'except' => 'show']);

@@ -11,7 +11,7 @@
             <li><a href="<?= site_url('therapist/dashboard') ?>" class="nav-link <?= (uri_string() == 'therapist/dashboard') ? 'active' : '' ?>"><i class="ri-dashboard-line"></i> <span>Dashboard</span></a></li>
             <li><a href="<?= site_url('therapist/jadwal') ?>" class="nav-link <?= (strpos(uri_string(), 'therapist/jadwal') !== false) ? 'active' : '' ?>"><i class="ri-calendar-2-line"></i> <span>Jadwal</span></a></li>
             <li><a href="<?= site_url('therapist/klien') ?>" class="nav-link <?= (strpos(uri_string(), 'therapist/klien') !== false) ? 'active' : '' ?>"><i class="ri-group-line"></i> <span>Klien</span></a></li>
-            <li><a href="<?= site_url('therapist/articles') ?>" class="nav-link <?= (strpos(uri_string(), 'therapist/articles') !== false) ? 'active' : '' ?>"><i class="ri-newspaper-line"></i> <span>Artikel</span></a></li>
+            <li><a href="<?= site_url('therapist/artikel') ?>" class="nav-link <?= (strpos(uri_string(), 'therapist/artikel') !== false) ? 'active' : '' ?>"><i class="ri-newspaper-line"></i> <span>Artikel</span></a></li>
             <li><a href="<?= site_url('therapist/komunitas') ?>" class="nav-link <?= (strpos(uri_string(), 'therapist/komunitas') !== false) ? 'active' : '' ?>"><i class="ri-message-3-line"></i> <span>Komunitas</span></a></li>
         </ul>
         <p class="menu-header">Akun</p>

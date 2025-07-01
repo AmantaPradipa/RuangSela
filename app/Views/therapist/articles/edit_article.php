@@ -37,7 +37,7 @@ Edit Artikel
 
     <!-- Editor Card -->
     <div class="editor-card">
-        <form id="article-form" action="<?= site_url('therapist/articles/update/' . $article['id']) ?>" method="post" enctype="multipart/form-data">
+        <form id="article-form" action="<?= site_url('therapist/artikel/update/' . $article['id']) ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="PUT"> <!-- Used for PUT method in CodeIgniter -->
             <input type="text" name="title" class="title-input" placeholder="Judul Artikel Anda" value="<?= old('title', $article['title']) ?>">

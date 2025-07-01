@@ -25,7 +25,7 @@ Manajemen Artikel
                 <a href="#" class="filter-tag" data-status="published">Dipublikasi</a>
                 <a href="#" class="filter-tag" data-status="draft">Draft</a>
             </div>
-            <a href="<?= site_url('therapist/articles/create') ?>" class="write-article-btn">
+            <a href="<?= site_url('therapist/artikel/create') ?>" class="write-article-btn">
                 <i class="ri-add-line"></i>
                 <span>Tulis Artikel</span>
             </a>
@@ -60,8 +60,8 @@ Manajemen Artikel
                             <span class="meta-item"><i class="ri-user-line"></i> <?= esc($user['first_name'] . ' ' . $user['last_name']) ?></span>
                         </div>
                         <div class="card-actions">
-                            <a href="<?= site_url('therapist/articles/edit/' . $article['id']) ?>" class="btn btn-sm btn-primary">Edit</a>
-                            <form action="<?= site_url('therapist/articles/delete/' . $article['id']) ?>" method="post" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                            <a href="<?= site_url('therapist/artikel/edit/' . $article['id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="<?= site_url('therapist/artikel/delete/' . $article['id']) ?>" method="post" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
